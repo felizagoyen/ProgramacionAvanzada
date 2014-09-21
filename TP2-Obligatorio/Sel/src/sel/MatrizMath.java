@@ -132,6 +132,14 @@ public class MatrizMath {
 		return norma;
 	}
 	
+	public Double frobenius(){
+		Double norma=0.0;
+		for(int i=0; i<fila; i++)
+			for(int j=0; j<columna; j++)
+				norma+=Math.pow(matriz[i][j], 2);
+		return Math.sqrt(norma);
+	}
+	
 	public MatrizMath identidad (int dim){
 		MatrizMath ident = new MatrizMath(dim,dim);
 		for(int i=0; i< dim; i++)
