@@ -89,10 +89,10 @@ public class MatrizMath {
 			throw new DistDimException("Dimensiones incorrectas");
 
 		MatrizMath resultado = new MatrizMath(this.fila,otra.columna);
-		for(int k=0; k<columna*fila; k++)
-			for(int i=0; i<fila; i++)
-				for(int j=0; j<columna; j++)
-					resultado.getMatriz()[i][j]+=getMatriz()[i][j]*otra.getMatriz()[i][j];
+		for(int i=0; i<fila; i++)
+			for(int j=0; j<columna; j++)
+				for(int k=0; k<fila; k++)
+					resultado.getMatriz()[i][j]+=getMatriz()[i][k]*otra.getMatriz()[k][j];
 		return resultado;
 	}
 
