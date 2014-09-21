@@ -179,6 +179,23 @@ public class MatrizMath {
 		return det;
 	}
 	
+	public String toString(){
+		StringBuilder cad = new StringBuilder("[");
+		for(int i=0; i<fila; i++){
+			cad.append("[");
+		   	for(int j=0; j<columna; j++){
+		   		cad.append(matriz[i][j]);
+		   		if(j!=columna-1)
+		   			cad.append(", ");
+		   	}
+		   	cad.append("]");
+		   	if(i!=fila-1)
+	   			cad.append(", ");
+		}
+		cad.append("]");
+		return cad.toString();
+	}
+	
 	/**
 	 * @param args
 	 */
