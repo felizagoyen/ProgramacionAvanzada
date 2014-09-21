@@ -174,21 +174,8 @@ public class MatrizMath {
 		if(fila==2)
 			return (matriz[0][0]*matriz[1][1] - matriz[1][0]*matriz[0][1]);
 
-		for(int i=0; i<columna; i++){
-			MatrizMath subMatriz = new MatrizMath(fila-1, columna-1);
-//			System.out.println(fila + " - " + columna);
-			int m,n=0;
-			for(int x=1; x<fila; x++) {
-				m = 0;
-				for(int y=0; y<columna; y++)
-					if(y!=i){
-						subMatriz.matriz[n][m] = matriz[x][y];
-						m++;
-					}
-				n++;
-			}
-			det+=matriz[0][i]*Math.pow(-1, i)*subMatriz.determinante();
-		}
+		for(int i=0; i<columna; i++)
+			det+=matriz[0][i]*Math.pow(-1, i)*this.subMatriz(0, i).determinante();
 		return det;
 	}
 	
