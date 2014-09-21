@@ -147,6 +147,24 @@ public class MatrizMath {
 		return ident;
 	}
 	
+	private MatrizMath subMatriz(Integer i, Integer j){
+		MatrizMath subMat = new MatrizMath(fila-1,columna-1);
+		int m=0;
+		for(int x=0; x<fila; x++){
+			int n=0;
+			if(i!=x){
+				for(int y=0; y<columna; y++){
+					 if(j!=y){
+						subMat.matriz[m][n]=matriz[x][y];
+						n++;
+					}
+				}
+				m++;
+			}
+		}
+		return subMat;
+	}
+	
 	public Double determinante() throws DistDimException {
 		Double det=0.0;
 		if(fila!=columna)
