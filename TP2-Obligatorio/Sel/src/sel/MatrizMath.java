@@ -179,6 +179,31 @@ public class MatrizMath {
 		return det;
 	}
 	
+	public MatrizMath transpuesta(){
+		MatrizMath resultado = new MatrizMath(columna, fila);
+		for(int i=0; i<fila; i++)
+		   	for(int j=0; j<columna; j++)
+		      	resultado.matriz[j][i] = matriz[i][j];
+		return resultado;
+	}
+	
+	public MatrizMath cofactor(){
+		MatrizMath resultado = new MatrizMath(fila, columna);
+		for(int i=0; i<fila; i++)
+		   	for(int j=0; j<columna; j++)
+		      	resultado.matriz[i][j] = Math.pow(-1, i+j)*this.subMatriz(i, j).determinante();
+		return resultado;
+	}
+	
+	
+	public MatrizMath adjunta(){
+		return this.cofactor().transpuesta();
+	}
+	
+	public MatrizMath inversa(){
+		return this.adjunta().multiplicar(1/this.determinante());
+	}
+	
 	public String toString(){
 		StringBuilder cad = new StringBuilder("[");
 		for(int i=0; i<fila; i++){
