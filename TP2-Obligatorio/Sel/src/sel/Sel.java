@@ -32,7 +32,6 @@ public class Sel {
 			String [] linea;
 			for(int i=0; i<numeroIncognitas*numeroIncognitas; i++){
 				linea = archivo.readLine().split(" ");
-				System.out.println(linea[0] + " " + linea[1] + " " + linea[2]);
 				MatrizCoeficientes.getMatriz()[Integer.parseInt(linea[0])]
 						   [Integer.parseInt(linea[1])]
 								   = Double.parseDouble(linea[2]);		

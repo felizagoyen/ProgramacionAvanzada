@@ -37,10 +37,8 @@ public class MatrizMath {
 			fila = Integer.parseInt(linea[0]);
 			columna = Integer.parseInt(linea[1]);
 			matriz = new Double[fila][columna];
-			System.out.println(fila + " - " + columna);
 			for(int i=0; i<fila*columna; i++){
 				linea = br.readLine().split(" ");
-				System.out.println(linea[0] + " " + linea[1] + " " + linea[2]);
 				getMatriz()[Integer.parseInt(linea[0])]
 						   [Integer.parseInt(linea[1])]
 								   = Double.parseDouble(linea[2]);		
@@ -208,6 +206,8 @@ public class MatrizMath {
 	public MatrizMath inversa(){
 		return this.adjunta().multiplicar(1/this.determinante());
 	}
+	
+	
 	
 	public MatrizMath inversaGaussiana(){
 		MatrizMath inv = new MatrizMath().identidad(fila);
