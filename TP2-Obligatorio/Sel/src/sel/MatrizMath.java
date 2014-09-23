@@ -3,6 +3,8 @@ package sel;
 import java.io.*;
 import java.util.Arrays;
 
+//import matrizMath.MatrizMath;
+
 public class MatrizMath {
 	private Integer fila, columna;
 	private Double [][] matriz;   
@@ -89,10 +91,13 @@ public class MatrizMath {
 			throw new DistDimException("Dimensiones incorrectas");
 
 		MatrizMath resultado = new MatrizMath(this.fila,otra.columna);
-		for(int i=0; i<fila; i++)
-			for(int j=0; j<columna; j++)
-				for(int k=0; k<fila; k++)
+		for(int i=0; i<resultado.fila; i++){
+			for(int j=0; j<resultado.columna; j++){
+				for(int k=0; k<columna; k++){
 					resultado.getMatriz()[i][j]+=getMatriz()[i][k]*otra.getMatriz()[k][j];
+				}
+			}
+		}
 		return resultado;
 	}
 
@@ -204,6 +209,46 @@ public class MatrizMath {
 		return this.adjunta().multiplicar(1/this.determinante());
 	}
 	
+	public MatrizMath inversaGaussiana(){
+		MatrizMath inv = new MatrizMath().identidad(fila);
+		//1-localizar la columna de la izq que no conste completamente de ceros
+		for(int j=0; j<columna; j++){
+			for(int i=0; i<fila; i++){
+				if(matriz[i][j]!=0){
+					//3-multiplicar renglon por 1/a 
+					Double escalar = matriz[i][j];
+					for(int k=j; k<columna; k++){
+						matriz[i][k]=matriz[i][k]*escalar;
+						inv.matriz[i][k]=inv.matriz[i][k]*escalar;
+					}
+				}
+				else{
+					//2-intercambiar renglones en caso de ser necesario
+					
+				}
+				//4-reducir a cero los terminos de esa columna
+				for(int y=i+1; y<fila; y++){
+					for(int x=j; x<columna; x++){
+						if(matriz[y][x]!=0){
+							matriz[y][x]*=(1-matriz[i][x]);
+							inv.matriz[y][x]*=(1-matriz[i][x]);
+						}
+					}
+				}
+			}
+		}
+		
+		
+		
+		
+		//5-aplicar lo mismo a la submatrix restante desde el paso 1
+		
+		//6-Empezando por el ultimo renglon diferente de ceroy trabajando hacia arriba, reducir a ceros.
+		
+		
+		return inv;
+	}
+	
 	public String toString(){
 		StringBuilder cad = new StringBuilder("[");
 		for(int i=0; i<fila; i++){
@@ -219,15 +264,6 @@ public class MatrizMath {
 		}
 		cad.append("]");
 		return cad.toString();
-	}
-	
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		MatrizMath m = new MatrizMath("matriz.in");
-		System.out.println(m.normaInf());
 	}
 	
 	
