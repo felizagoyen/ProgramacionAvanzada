@@ -253,6 +253,7 @@ public class MatrizMath {
 				//intercambiar filas
 				if(aumentada.matriz[k+1][k]!=0)
 					aumentada.intercambirFilas(k+1, k);
+				k--;
 			}
 		}
 		
