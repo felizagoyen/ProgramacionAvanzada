@@ -7,12 +7,12 @@ public class MatrizMath {
 	private Integer fila, columna;
 	private Double [][] matriz;   
 	
-	public MatrizMath(){
-		columna=0;
-		fila=0;
-		setMatriz(null);
+	public MatrizMath(int columna, int fila, Double [][] matriz){
+		this.columna = columna;
+		this.fila = fila;
+		this.matriz = matriz;
 	}
-	
+
 	public MatrizMath(int fila, int columna){
 		this.fila=fila;
 		this.columna=columna;
@@ -20,40 +20,6 @@ public class MatrizMath {
 		for(int i=0; i<fila; i++)
 			for(int j=0; j<columna; j++)
 				getMatriz()[i][j]=0.0;
-	}
-	
-	public MatrizMath(String nombre){
-		File archivo = null;
-		FileReader fr = null;
-		BufferedReader br = null;
-		
-		try{
-			archivo = new File(nombre);
-			fr=new FileReader(archivo);
-			br=new BufferedReader(fr);
-			String [] linea = br.readLine().split(" ");
-			fila = Integer.parseInt(linea[0]);
-			columna = Integer.parseInt(linea[1]);
-			matriz = new Double[fila][columna];
-			System.out.println(fila + " - " + columna);
-			for(int i=0; i<fila*columna; i++){
-				linea = br.readLine().split(" ");
-				System.out.println(linea[0] + " " + linea[1] + " " + linea[2]);
-				getMatriz()[Integer.parseInt(linea[0])]
-						   [Integer.parseInt(linea[1])]
-								   = Double.parseDouble(linea[2]);		
-			}
-			
-		}catch(Exception e){
-			e.printStackTrace();
-		}finally{
-			try{
-				if(fr!=null)
-					fr.close();
-			}catch(Exception e2){
-				e2.printStackTrace();
-			}
-		}
 	}
 	
 	public MatrizMath sumar (MatrizMath otra) throws DistDimException{
@@ -166,17 +132,6 @@ public class MatrizMath {
 		return det;
 	}
 	
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		MatrizMath m = new MatrizMath("matriz.in");
-		System.out.println(m.normaInf());
-	}
-	
-	
-
 	public Double [][] getMatriz() {
 		return matriz;
 	}

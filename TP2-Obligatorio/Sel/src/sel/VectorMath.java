@@ -19,6 +19,11 @@ public class VectorMath {
 		tam = 0;
 		vec = null;
 	}
+
+	public VectorMath(int dimension, Double [] vector){
+		tam = dimension;
+		vec = vector;
+	}
 	
 	public VectorMath(int tam){
 		this.tam = tam;
