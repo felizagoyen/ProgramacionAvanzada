@@ -2,6 +2,7 @@ package sel;
 import java.io.*;
 import java.util.Arrays;
 
+
 /** 
 * Vector Matem�tico
 * @author sarasa  
@@ -53,6 +54,10 @@ public class VectorMath {
 				e2.printStackTrace();
 			}
 		}
+	}
+	
+	public Double[] getVec(){
+		return vec;
 	}
 
 	public VectorMath sumar(VectorMath vec) throws DistDimException{
@@ -144,6 +149,15 @@ public class VectorMath {
 		return cad.toString();
 	}
 	
+	public MatrizMath toMatrizMathColumna (){
+		MatrizMath resultado = new MatrizMath(tam,1);
+		
+		for(int i=0; i<tam; i++)
+			resultado.getMatriz()[i][0]=vec[i];
+	
+		return resultado;
+	}
+	
 	/**
 	 * Metodo de prueba
 	 * @author sarasa
@@ -155,18 +169,7 @@ public class VectorMath {
 		return false;		
 	}
 	
-	public static void main(String[] args) {
-		VectorMath v1 = new VectorMath();
-		VectorMath v2 = new VectorMath(5);
-		VectorMath v3 = new VectorMath("vector.in");
-		
-		System.out.println(v1.tam);
-		System.out.println(v2.tam);
-		System.out.println(v3.tam);
-		System.out.println(v3);
-//		VectorMath.print(a, b);
-		v3.normaInf();
-	}
+	
 }
 
 

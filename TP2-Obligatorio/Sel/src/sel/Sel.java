@@ -1,43 +1,58 @@
 package sel;
 
 public class Sel {
-	private MatrizMath matriz;
-	private VectorMath vector;
-	private VectorMath resutlado;
+	private Integer numeroIncognitas;
+	private MatrizMath MatrizCoeficientes;
+	private VectorMath vectorFactoresIndependientes;
+	private VectorMath vectorSolucion;
 	
-	public Sel(String ruta) {
-		ReaderFile file = null;
+	public Sel(){
+		this(0);
+	}
+	
+	public Sel(Integer numeroIncognitas){
+		this.numeroIncognitas=numeroIncognitas;
+		MatrizCoeficientes = new MatrizMath (numeroIncognitas, numeroIncognitas);
+		for(int i=0; i<numeroIncognitas; i++)
+			for(int j=0; j<numeroIncognitas; j++)
+				MatrizCoeficientes.getMatriz()[i][j]=0.0;
+		vectorFactoresIndependientes = new VectorMath(numeroIncognitas);
+		for(int i=0; i<numeroIncognitas; i++){
+			vectorFactoresIndependientes.getVec()[i]=0.0;
+			vectorSolucion.getVec()[i]=0.0;
+		}
+	}
+	
+	public Sel(String nombre){
 		try {
-			file = new ReaderFile(ruta);
-			int dimension = Integer.parseInt(file.readLine());
+			ReaderFile archivo = new ReaderFile(nombre);
+			numeroIncognitas=Integer.parseInt(archivo.readLine());
+			MatrizCoeficientes = new MatrizMath (numeroIncognitas, numeroIncognitas);
+			vectorFactoresIndependientes = new VectorMath(numeroIncognitas);
 			String [] linea;
-			Double [][] matriz = new Double[dimension][dimension];
-
-			for(int i=0; i<dimension*dimension; i++){
-				linea = file.readLine().split(" ");
-				System.out.println(linea[0] + " " + linea[1] + " " + linea[2]);
-				matriz[Integer.parseInt(linea[0])]
+			for(int i=0; i<numeroIncognitas*numeroIncognitas; i++){
+				linea = archivo.readLine().split(" ");
+				MatrizCoeficientes.getMatriz()[Integer.parseInt(linea[0])]
 						   [Integer.parseInt(linea[1])]
 								   = Double.parseDouble(linea[2]);		
 			}
-			this.matriz = new MatrizMath(dimension,dimension,matriz);
-			
-			Double [] vector = new Double[dimension];
-			for(int i = 0; i < dimension; i++)
-				vector[i] = Double.parseDouble(file.readLine());
-			this.vector = new VectorMath(dimension, vector);
-			
-			
-		} catch(Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if(file != null)
-					file.close();	
-			} catch(Exception e) {
-				e.printStackTrace();
+			for(int i=0; i<numeroIncognitas; i++){
+				vectorFactoresIndependientes.getVec()[i]=Double.parseDouble(archivo.readLine());
 			}
-		}
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		
+		
+	}
+	
+	public void calcular(){
+		MatrizMath matrizSolucion = MatrizCoeficientes.inversaGaussJordan().multiplicar(vectorFactoresIndependientes.toMatrizMathColumna());
+		System.out.println("gaussjordar "+matrizSolucion);
+		MatrizMath matrizSolucion1 = MatrizCoeficientes.inversa().multiplicar(vectorFactoresIndependientes.toMatrizMathColumna());
+		System.out.println("cofactor "+matrizSolucion1);
 	}
 	
 	/**
@@ -45,7 +60,8 @@ public class Sel {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
+		Sel sistemaEcuacionesLineales = new Sel("sel.in");
+		sistemaEcuacionesLineales.calcular();
 	}
 
 }
