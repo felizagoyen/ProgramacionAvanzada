@@ -143,7 +143,7 @@ public class MatrizMath {
 		return Math.sqrt(norma);
 	}
 	
-	public MatrizMath identidad (int dim){
+	public static MatrizMath identidad (int dim){
 		MatrizMath ident = new MatrizMath(dim,dim);
 		for(int i=0; i< dim; i++)
 			ident.matriz[i][i]=1.0;
@@ -236,7 +236,7 @@ public class MatrizMath {
 	}
 	
 	public MatrizMath inversaGaussJordan() throws DistDimException{
-		MatrizMath aumentada = this.ampliar(new MatrizMath().identidad(fila));
+		MatrizMath aumentada = this.ampliar(MatrizMath.identidad(fila));
 		MatrizMath inversa = new MatrizMath(fila,columna);
 		// System.out.println("inicio: "+aumentada); funciona
 		for(int k=0; k<columna; k++){
@@ -282,8 +282,6 @@ public class MatrizMath {
 		return inversa;
 	}
 	
-<<<<<<< HEAD
-=======
 	public String toString(){
 		StringBuilder cad = new StringBuilder("[");
 		for(int i=0; i<fila; i++){
@@ -301,9 +299,6 @@ public class MatrizMath {
 		return cad.toString();
 	}
 	
-	
-
->>>>>>> f147625623d67ebabcd05c077e78c219c21c66f3
 	public Double [][] getMatriz() {
 		return matriz;
 	}
