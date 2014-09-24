@@ -235,7 +235,7 @@ public class MatrizMath {
 		}
 	}
 	
-	public MatrizMath inversaGaussJordan(){
+	public MatrizMath inversaGaussJordan() throws DistDimException{
 		MatrizMath aumentada = this.ampliar(new MatrizMath().identidad(fila));
 		MatrizMath inversa = new MatrizMath(fila,columna);
 		// System.out.println("inicio: "+aumentada); funciona
@@ -251,9 +251,14 @@ public class MatrizMath {
 			}
 			else{
 				//intercambiar filas
-				if(aumentada.matriz[k+1][k]!=0)
-					aumentada.intercambirFilas(k+1, k);
-				k--;
+				Integer unoPrincipalActual=k;
+				while(aumentada.matriz[k+1][unoPrincipalActual]!=0 && k+1<columna){
+					aumentada.intercambirFilas(k+1, unoPrincipalActual);
+					k++;
+				}
+				if(k==columna)
+					throw new DistDimException("No tiene solucion, la matriz no tiene inversa");
+				k=unoPrincipalActual-1;
 			}
 		}
 		
