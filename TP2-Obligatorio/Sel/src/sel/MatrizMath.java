@@ -252,7 +252,7 @@ public class MatrizMath {
 			else{
 				//intercambiar filas
 				Integer unoPrincipalActual=k;
-				while(aumentada.matriz[k+1][unoPrincipalActual]!=0 && k+1<columna){
+				while(aumentada.matriz[k][unoPrincipalActual]==0 && k+1<columna){
 					aumentada.intercambirFilas(k+1, unoPrincipalActual);
 					k++;
 				}
