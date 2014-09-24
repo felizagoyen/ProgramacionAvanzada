@@ -207,46 +207,72 @@ public class MatrizMath {
 		return this.adjunta().multiplicar(1/this.determinante());
 	}
 	
+	public MatrizMath ampliar(MatrizMath segundaParte){
+		MatrizMath aumentada = new MatrizMath(fila, columna+segundaParte.columna);
+		for(int i=0; i<aumentada.fila; i++)
+			for(int j=0; j<columna; j++){
+				aumentada.matriz[i][j]=this.matriz[i][j];
+				aumentada.matriz[i][j+columna]=segundaParte.matriz[i][j];
+			}
+		return aumentada;
+	}
 	
+	public void multiplicarFila(Integer fila, Double escalar){
+		for(int j=0; j<columna; j++)
+			matriz[fila][j]*=escalar;
+	}
 	
-	public MatrizMath inversaGaussiana(){
-		MatrizMath inv = new MatrizMath().identidad(fila);
-		//1-localizar la columna de la izq que no conste completamente de ceros
+	public void restarUnaFilaAOtra(Integer filaOrigen, Integer filaDestino, Double escalar){
+		for(int j=0; j<columna; j++)
+			matriz[filaDestino][j]-=matriz[filaOrigen][j]*escalar;
+	}
+	
+	public void intercambirFilas(Integer filaOrigen, Integer filaDestino){
 		for(int j=0; j<columna; j++){
-			for(int i=0; i<fila; i++){
-				if(matriz[i][j]!=0){
-					//3-multiplicar renglon por 1/a 
-					Double escalar = matriz[i][j];
-					for(int k=j; k<columna; k++){
-						matriz[i][k]=matriz[i][k]*escalar;
-						inv.matriz[i][k]=inv.matriz[i][k]*escalar;
-					}
-				}
-				else{
-					//2-intercambiar renglones en caso de ser necesario
-					
-				}
-				//4-reducir a cero los terminos de esa columna
-				for(int y=i+1; y<fila; y++){
-					for(int x=j; x<columna; x++){
-						if(matriz[y][x]!=0){
-							matriz[y][x]*=(1-matriz[i][x]);
-							inv.matriz[y][x]*=(1-matriz[i][x]);
-						}
+			Double aux = matriz[filaDestino][j];
+			matriz[filaDestino][j]=matriz[filaOrigen][j];
+			matriz[filaOrigen][j]=aux;
+		}
+	}
+	
+	public MatrizMath inversaGaussJordan(){
+		MatrizMath aumentada = this.ampliar(new MatrizMath().identidad(fila));
+		MatrizMath inversa = new MatrizMath(fila,columna);
+		// System.out.println("inicio: "+aumentada); funciona
+		for(int k=0; k<columna; k++){
+			if(aumentada.matriz[k][k]!=0){
+				aumentada.multiplicarFila(k, 1/aumentada.matriz[k][k]);
+				for(int i=k+1; i<fila; i++){
+					if(aumentada.matriz[i][k]!=0){
+						Double escalar = aumentada.matriz[i][k];
+						aumentada.restarUnaFilaAOtra(k, i, escalar);
 					}
 				}
 			}
+			else{
+				//intercambiar filas
+				if(aumentada.matriz[k+1][k]!=0)
+					aumentada.intercambirFilas(k+1, k);
+			}
 		}
 		
+		System.out.println("gauss: " +aumentada);
 		
+		for(int k=columna-1; k>=0; k--){
+			for(int i=k-1; i>=0; i--){
+				if(aumentada.matriz[i][k]!=0){
+					Double escalar = aumentada.matriz[i][k];
+					aumentada.restarUnaFilaAOtra(k, i, escalar);
+				}
+			}
+		}
+		System.out.println("jordan"+aumentada);
+			
+		for(int i=0; i<fila; i++)
+			for(int j=0; j<columna; j++)
+				inversa.matriz[i][j]=aumentada.matriz[i][columna+j];
 		
-		
-		//5-aplicar lo mismo a la submatrix restante desde el paso 1
-		
-		//6-Empezando por el ultimo renglon diferente de ceroy trabajando hacia arriba, reducir a ceros.
-		
-		
-		return inv;
+		return inversa;
 	}
 	
 	public String toString(){

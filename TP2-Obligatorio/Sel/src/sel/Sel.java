@@ -49,8 +49,10 @@ public class Sel {
 	}
 	
 	public void calcular(){
-		MatrizMath matrizSolucion = MatrizCoeficientes.inversa().multiplicar(vectorFactoresIndependientes.toMatrizMathColumna());
-		System.out.println(matrizSolucion);
+		MatrizMath matrizSolucion = MatrizCoeficientes.inversaGaussJordan().multiplicar(vectorFactoresIndependientes.toMatrizMathColumna());
+		System.out.println("gaussjordar "+matrizSolucion);
+		MatrizMath matrizSolucion1 = MatrizCoeficientes.inversa().multiplicar(vectorFactoresIndependientes.toMatrizMathColumna());
+		System.out.println("cofactor "+matrizSolucion1);
 	}
 	
 	/**
