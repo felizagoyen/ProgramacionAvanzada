@@ -1,0 +1,39 @@
+	public MatrizMath inversaGaussJordan() throws DistDimException {
+
+		MatrizMath aumentada = this.ampliar(MatrizMath.identidad(filas));
+		MatrizMath inversa = new MatrizMath(filas, col);
+		for (int k = 0; k < col; k++) {
+			if (aumentada.mat[k][k] != 0) {
+				aumentada.multiplicarFila(k, 1 / aumentada.mat[k][k]);
+				for (int i = k + 1; i < filas; i++) {
+					if (aumentada.mat[i][k] != 0) {
+						Double escalar = aumentada.mat[i][k];
+						aumentada.restarUnaFilaAOtra(k, i, escalar);
+					}
+				}
+			} else {
+				// intercambiar filas
+				Integer unoPrincipalActual = k;
+				while (aumentada.mat[k][unoPrincipalActual] == 0 && k + 1 < col) {
+					if (aumentada.mat[k + 1][unoPrincipalActual] != 0)
+						aumentada.intercambirFilas(k + 1, unoPrincipalActual);
+					k++;
+				}
+				if (k == col - 1)
+				  throw new DistDimException("No tiene solucion, la matriz no tiene inversa");
+				k = unoPrincipalActual - 1;
+			}
+		}
+		for (int k = col - 1; k >= 0; k--) {
+			for (int i = k - 1; i >= 0; i--) {
+				if (aumentada.mat[i][k] != 0) {
+					Double escalar = aumentada.mat[i][k];
+					aumentada.restarUnaFilaAOtra(k, i, escalar);
+				}
+			}
+		}
+		for (int i = 0; i < filas; i++)
+			for (int j = 0; j < col; j++)
+				inversa.mat[i][j] = aumentada.mat[i][col + j];
+		return inversa;
+	}
