@@ -24,7 +24,7 @@ public class MatrizMath {
 
 	public MatrizMath sumar(MatrizMath otra) throws DistDimException {
 		if (this.filas != otra.filas || this.columnas != otra.columnas)
-			throw new DistDimException("Las matrices a sumar no tienen la misma dimenson");
+			throw new DistDimException("Las matrices a sumar no tienen la misma dimension");
 
 		MatrizMath resultado = new MatrizMath(otra.filas, otra.columnas);
 		for (int i = 0; i < filas; i++)
@@ -38,7 +38,7 @@ public class MatrizMath {
 			throw new DistDimException("Otra es NULL!");
 
 		if (!this.filas.equals(otra.filas) || !this.columnas.equals(otra.columnas))
-			throw new DistDimException("Las matrices a sumar no tienen la misma dimenson");
+			throw new DistDimException("Las matrices a sumar no tienen la misma dimension");
 
 		MatrizMath resultado = new MatrizMath(otra.filas, otra.columnas);
 		for (int i = 0; i < filas; i++)
@@ -110,17 +110,14 @@ public class MatrizMath {
 		MatrizMath aumentada = this.ampliar();
 		MatrizMath inversa = new MatrizMath(filas, columnas);
 
-		//Triangulacion inferior
+		//Triangulacion
 		for (int i = 0; i < columnas; i++) {
 			if(aumentada.matriz[i][i] == 0) 
 				aumentada.intercambiarFilas(i);
 			aumentada.multiplicarFila(i);
 			aumentada.restarFilasHaciaAbajo(i);
-		}
-
-		//Triangulacion superior
-		for (int i = columnas - 1; i >= 0; i--) 
 			aumentada.restarFilasHaciaArriba(i);
+		}
 
 		//Obtener solo la inversa de la aumentada
 		for (int i = 0; i < filas; i++)
@@ -184,21 +181,21 @@ public class MatrizMath {
 			matriz[fila][j] *= escalar;
 	}
 	
-	private void restarFilasHaciaAbajo(int fila) {
-		for (int i = fila + 1; i < filas; i++) 
-			if (matriz[i][fila] != 0) {
-				Double escalar = matriz[i][fila];
-				for (int j = 0; j < columnas; j++) 
-					matriz[i][j] -= matriz[fila][j] * escalar;
+	private void restarFilasHaciaAbajo(int unoPrincipal) {
+		for (int i = unoPrincipal + 1; i < filas; i++) 
+			if (matriz[i][unoPrincipal] != 0) {
+				Double escalar = matriz[i][unoPrincipal];
+				for (int j = unoPrincipal; j < columnas; j++) 
+					matriz[i][j] -= matriz[unoPrincipal][j] * escalar;
 			}
 	}
 	
-	private void restarFilasHaciaArriba(int fila) {
-		for (int i = fila - 1; i >= 0; i--) 
-			if (matriz[i][fila] != 0) {
-				Double escalar = matriz[i][fila];
-				for (int j = 0; j < columnas; j++)
-					matriz[i][j] -= matriz[fila][j] * escalar;
+	private void restarFilasHaciaArriba(int unoPrincipal) {
+		for (int i = unoPrincipal - 1; i >= 0; i--) 
+			if (matriz[i][unoPrincipal] != 0) {
+				Double escalar = matriz[i][unoPrincipal];
+				for (int j = unoPrincipal; j<columnas; j++)
+					matriz[i][j] -= matriz[unoPrincipal][j] * escalar;
 			}
 	}
 
