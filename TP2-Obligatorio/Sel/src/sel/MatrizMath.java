@@ -161,7 +161,9 @@ public class MatrizMath {
 	}
 	
 	private void intercambiarFilas(int fila) throws DistDimException {
-		for(int actual = fila; matriz[actual][fila] == 0 && actual + 1 < columnas; actual++) {
+		for(int actual = fila; matriz[actual][fila] == 0 && actual < filas; actual++) {
+			if (actual == filas - 1)
+				throw new DistDimException("No tiene solucion, la matriz no tiene inversa");
 			if (matriz[actual + 1][fila] != 0) {
 				for (int j = 0; j < columnas; j++) {
 					Double aux = matriz[actual][j];
@@ -170,8 +172,6 @@ public class MatrizMath {
 				}
 				break;
 			}
-			if (actual == columnas - 1)
-				throw new DistDimException("No tiene solucion, la matriz no tiene inversa");
 		}
 	}
 		
