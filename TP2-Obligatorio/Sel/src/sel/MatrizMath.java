@@ -103,56 +103,6 @@ public class MatrizMath {
 		return ident;
 	}
 
-	private MatrizMath ampliar() {
-		MatrizMath aumentada = new MatrizMath(filas, columnas*2);
-		MatrizMath identidad = identidad(filas);
-		for (int i = 0; i < aumentada.filas; i++)
-			for (int j = 0; j < columnas; j++) {
-				aumentada.matriz[i][j] = this.matriz[i][j];
-				aumentada.matriz[i][j + columnas] = identidad.matriz[i][j];
-			}
-		return aumentada;
-	}
-
-	private void intercambiarFilas(int fila) throws DistDimException {
-		for(int actual = fila; matriz[actual][fila] == 0 && actual + 1 < columnas; actual++) {
-			if (matriz[actual + 1][fila] != 0) {
-				for (int j = 0; j < columnas; j++) {
-					Double aux = matriz[actual][j];
-					matriz[actual][j] = matriz[fila + 1][j];
-					matriz[fila + 1][j] = aux;
-				}
-				break;
-			}
-			if (actual == columnas - 1)
-				throw new DistDimException("No tiene solucion, la matriz no tiene inversa");
-		}
-	}
-	
-
-	private void multiplicarFila(int fila) {
-		Double escalar = (1/matriz[fila][fila]);
-		for (int j = 0; j < columnas; j++)
-			matriz[fila][j] *= escalar;
-	}
-
-	private void restarFilasHaciaAbajo(int fila) {
-		for (int i = fila + 1; i < filas; i++) 
-			if (matriz[i][fila] != 0) {
-				Double escalar = matriz[i][fila];
-				for (int j = 0; j < columnas; j++) 
-					matriz[i][j] -= matriz[fila][j] * escalar;
-			}
-	}
-
-	private void restarFilasHaciaArriba(int fila) {
-		for (int i = fila - 1; i >= 0; i--) 
-			if (matriz[i][fila] != 0) {
-				Double escalar = matriz[i][fila];
-				for (int j = 0; j < columnas; j++)
-					matriz[i][j] -= matriz[fila][j] * escalar;
-			}
-	}
 
 	
 	public MatrizMath inversa() throws DistDimException {
@@ -200,6 +150,56 @@ public class MatrizMath {
 	
 	public Integer getFilas() {
 		return filas;
+	}
+	
+	private MatrizMath ampliar() {
+		MatrizMath aumentada = new MatrizMath(filas, columnas*2);
+		MatrizMath identidad = identidad(filas);
+		for (int i = 0; i < aumentada.filas; i++)
+			for (int j = 0; j < columnas; j++) {
+				aumentada.matriz[i][j] = this.matriz[i][j];
+				aumentada.matriz[i][j + columnas] = identidad.matriz[i][j];
+			}
+		return aumentada;
+	}
+	
+	private void intercambiarFilas(int fila) throws DistDimException {
+		for(int actual = fila; matriz[actual][fila] == 0 && actual + 1 < columnas; actual++) {
+			if (matriz[actual + 1][fila] != 0) {
+				for (int j = 0; j < columnas; j++) {
+					Double aux = matriz[actual][j];
+					matriz[actual][j] = matriz[fila + 1][j];
+					matriz[fila + 1][j] = aux;
+				}
+				break;
+			}
+			if (actual == columnas - 1)
+				throw new DistDimException("No tiene solucion, la matriz no tiene inversa");
+		}
+	}
+		
+	private void multiplicarFila(int fila) {
+		Double escalar = (1/matriz[fila][fila]);
+		for (int j = 0; j < columnas; j++)
+			matriz[fila][j] *= escalar;
+	}
+	
+	private void restarFilasHaciaAbajo(int fila) {
+		for (int i = fila + 1; i < filas; i++) 
+			if (matriz[i][fila] != 0) {
+				Double escalar = matriz[i][fila];
+				for (int j = 0; j < columnas; j++) 
+					matriz[i][j] -= matriz[fila][j] * escalar;
+			}
+	}
+	
+	private void restarFilasHaciaArriba(int fila) {
+		for (int i = fila - 1; i >= 0; i--) 
+			if (matriz[i][fila] != 0) {
+				Double escalar = matriz[i][fila];
+				for (int j = 0; j < columnas; j++)
+					matriz[i][j] -= matriz[fila][j] * escalar;
+			}
 	}
 
 }
