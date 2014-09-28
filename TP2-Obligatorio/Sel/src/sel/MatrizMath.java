@@ -1,58 +1,34 @@
 package sel;
 
+import java.text.DecimalFormatSymbols;
 import java.util.Arrays;
 
 public class MatrizMath {
-	private Integer fila, columna;
+	private Integer filas, columnas;
 	private Double[][] matriz;
 
-	public MatrizMath(int columna, int fila, Double[][] matriz) {
-		this.columna = columna;
-		this.fila = fila;
+	public MatrizMath(int columnas, int filas, Double[][] matriz) {
+		this.columnas = columnas;
+		this.filas = filas;
 		this.matriz = matriz;
 	}
 
-	public MatrizMath(int fila, int columna) {
-		this.fila = fila;
-		this.columna = columna;
-		matriz = new Double[fila][columna];
-		for (int i = 0; i < fila; i++)
-			for (int j = 0; j < columna; j++)
+	public MatrizMath(int filas, int columnas) {
+		this.filas = filas;
+		this.columnas = columnas;
+		matriz = new Double[filas][columnas];
+		for (int i = 0; i < filas; i++)
+			for (int j = 0; j < columnas; j++)
 				matriz[i][j] = 0.0;
 	}
 
-	public MatrizMath(String nombre) {
-		ReaderFile archivo = null;
-		try {
-			archivo = new ReaderFile(nombre);
-			String[] linea = archivo.readLine().split(" ");
-			fila = Integer.parseInt(linea[0]);
-			columna = Integer.parseInt(linea[1]);
-			matriz = new Double[fila][columna];
-			for (int i = 0; i < fila * columna; i++) {
-				linea = archivo.readLine().split(" ");
-				matriz[Integer.parseInt(linea[0])][Integer.parseInt(linea[1])] = Double.parseDouble(linea[2]);
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (archivo != null)
-					archivo.close();
-			} catch (Exception e2) {
-				e2.printStackTrace();
-			}
-		}
-	}
-
 	public MatrizMath sumar(MatrizMath otra) throws DistDimException {
-		if (this.fila != otra.fila || this.columna != otra.columna)
+		if (this.filas != otra.filas || this.columnas != otra.columnas)
 			throw new DistDimException("Las matrices a sumar no tienen la misma dimenson");
 
-		MatrizMath resultado = new MatrizMath(otra.fila, otra.columna);
-		for (int i = 0; i < fila; i++)
-			for (int j = 0; j < columna; j++)
+		MatrizMath resultado = new MatrizMath(otra.filas, otra.columnas);
+		for (int i = 0; i < filas; i++)
+			for (int j = 0; j < columnas; j++)
 				resultado.matriz[i][j] = matriz[i][j] + otra.matriz[i][j];
 		return resultado;
 	}
@@ -61,12 +37,12 @@ public class MatrizMath {
 		if (otra == null)
 			throw new DistDimException("Otra es NULL!");
 
-		if (this.fila != otra.fila || this.columna != otra.columna)
+		if (!this.filas.equals(otra.filas) || !this.columnas.equals(otra.columnas))
 			throw new DistDimException("Las matrices a sumar no tienen la misma dimenson");
 
-		MatrizMath resultado = new MatrizMath(otra.fila, otra.columna);
-		for (int i = 0; i < fila; i++)
-			for (int j = 0; j < columna; j++)
+		MatrizMath resultado = new MatrizMath(otra.filas, otra.columnas);
+		for (int i = 0; i < filas; i++)
+			for (int j = 0; j < columnas; j++)
 				resultado.matriz[i][j] = matriz[i][j] - otra.matriz[i][j];
 		return resultado;
 	}
@@ -75,59 +51,49 @@ public class MatrizMath {
 		if (otra == null)
 			throw new DistDimException("Otra es NULL!");
 
-		if (this.columna != otra.fila)
+		if (!this.columnas.equals(otra.filas))
 			throw new DistDimException("Dimensiones incorrectas");
 
-		MatrizMath resultado = new MatrizMath(this.fila, otra.columna);
-		for (int i = 0; i < resultado.fila; i++)
-			for (int j = 0; j < resultado.columna; j++)
-				for (int k = 0; k < columna; k++)
+		MatrizMath resultado = new MatrizMath(this.filas, otra.columnas);
+		for (int i = 0; i < resultado.filas; i++)
+			for (int j = 0; j < resultado.columnas; j++)
+				for (int k = 0; k < columnas; k++)
 					resultado.matriz[i][j] += matriz[i][k] * otra.matriz[k][j];
 		return resultado;
 	}
 
 	public MatrizMath multiplicar(double n) {
-		MatrizMath resultado = new MatrizMath(fila, columna);
-		for (int i = 0; i < fila; i++)
-			for (int j = 0; j < columna; j++)
+		MatrizMath resultado = new MatrizMath(filas, columnas);
+		for (int i = 0; i < filas; i++)
+			for (int j = 0; j < columnas; j++)
 				resultado.matriz[i][j] = matriz[i][j] * n;
 		return resultado;
 	}
 
-	public double norma1() {
-		double[] norma = new double[columna];
-
-		for (int i = 0; i < columna; i++)
-			for (int j = 0; j < fila; j++)
+	public double normaUno() {
+		double[] norma = new double[columnas];
+		for (int i = 0; i < columnas; i++)
+			for (int j = 0; j < filas; j++)
 				norma[i] += Math.abs(matriz[j][i]);
 		Arrays.sort(norma);
-		return norma[columna - 1];
+		return norma[columnas - 1];
 	}
 
-	public double normaInf() {
-		double[] norma = new double[fila];
-
-		for (int i = 0; i < fila; i++)
-			for (int j = 0; j < columna; j++)
+	public double normaInfinito() {
+		double[] norma = new double[filas];
+		for (int i = 0; i < filas; i++)
+			for (int j = 0; j < columnas; j++)
 				norma[i] += Math.abs(matriz[i][j]);
 		Arrays.sort(norma);
-		return norma[fila - 1];
+		return norma[filas - 1];
 	}
 
-	public double norma2() {
+	public double normaDos() {
 		double norma = 0.0;
-		for (int i = 0; i < fila; i++)
-			for (int j = 0; j < columna; j++)
+		for (int i = 0; i < filas; i++)
+			for (int j = 0; j < columnas; j++)
 				norma = Math.abs(matriz[i][j]);
 		return norma;
-	}
-
-	public Double frobenius() {
-		Double norma = 0.0;
-		for (int i = 0; i < fila; i++)
-			for (int j = 0; j < columna; j++)
-				norma += Math.pow(matriz[i][j], 2);
-		return Math.sqrt(norma);
 	}
 
 	public static MatrizMath identidad(int dimension) {
@@ -137,158 +103,103 @@ public class MatrizMath {
 		return ident;
 	}
 
-	private MatrizMath subMatriz(Integer i, Integer j) {
-		MatrizMath subMat = new MatrizMath(fila - 1, columna - 1);
-		int m = 0;
-		for (int x = 0; x < fila; x++) {
-			int n = 0;
-			if (i != x) {
-				for (int y = 0; y < columna; y++)
-					if (j != y) {
-						subMat.matriz[m][n] = matriz[x][y];
-						n++;
-					}
-				m++;
-			}
-		}
-		return subMat;
-	}
-
-	public Double determinante() throws DistDimException {
-		Double det = 0.0;
-		if (fila != columna)
-			throw new DistDimException("La matriz no es cuadrada" + fila + " - " + columna);
-		if (matriz == null)
-			throw new DistDimException("Matriz NULL!");
-		if (fila == 2)
-			return (matriz[0][0] * matriz[1][1] - matriz[1][0] * matriz[0][1]);
-
-		for (int i = 0; i < columna; i++)
-			det += matriz[0][i] * Math.pow(-1, i) * this.subMatriz(0, i).determinante();
-		return det;
-	}
-
-	public MatrizMath transpuesta() {
-		MatrizMath resultado = new MatrizMath(columna, fila);
-		for (int i = 0; i < fila; i++)
-			for (int j = 0; j < columna; j++)
-				resultado.matriz[j][i] = matriz[i][j];
-		return resultado;
-	}
-
-	public MatrizMath cofactor() {
-		MatrizMath resultado = new MatrizMath(fila, columna);
-		for (int i = 0; i < fila; i++)
-			for (int j = 0; j < columna; j++)
-				resultado.matriz[i][j] = Math.pow(-1, i + j) * this.subMatriz(i, j).determinante();
-		return resultado;
-	}
-
-	public MatrizMath adjunta() {
-		return this.cofactor().transpuesta();
-	}
-
-	public MatrizMath inversa() {
-		return this.adjunta().multiplicar(1 / this.determinante());
-	}
-
-	public MatrizMath ampliar(MatrizMath segundaParte) {
-		MatrizMath aumentada = new MatrizMath(fila, columna + segundaParte.columna);
-		for (int i = 0; i < aumentada.fila; i++)
-			for (int j = 0; j < columna; j++) {
+	private MatrizMath ampliar() {
+		MatrizMath aumentada = new MatrizMath(filas, columnas*2);
+		MatrizMath identidad = identidad(filas);
+		for (int i = 0; i < aumentada.filas; i++)
+			for (int j = 0; j < columnas; j++) {
 				aumentada.matriz[i][j] = this.matriz[i][j];
-				aumentada.matriz[i][j + columna] = segundaParte.matriz[i][j];
+				aumentada.matriz[i][j + columnas] = identidad.matriz[i][j];
 			}
 		return aumentada;
 	}
 
-	public void multiplicarFila(Integer fila, Double escalar) {
-		for (int j = 0; j < columna; j++)
+	private void intercambiarFilas(int fila) throws DistDimException {
+		for(int actual = fila; matriz[actual][fila] == 0 && actual + 1 < columnas; actual++) {
+			if (matriz[actual + 1][fila] != 0) {
+				for (int j = 0; j < columnas; j++) {
+					Double aux = matriz[actual][j];
+					matriz[actual][j] = matriz[fila + 1][j];
+					matriz[fila + 1][j] = aux;
+				}
+				break;
+			}
+			if (actual == columnas - 1)
+				throw new DistDimException("No tiene solucion, la matriz no tiene inversa");
+		}
+	}
+	
+
+	private void multiplicarFila(int fila) {
+		Double escalar = (1/matriz[fila][fila]);
+		for (int j = 0; j < columnas; j++)
 			matriz[fila][j] *= escalar;
 	}
 
-	public void restarUnaFilaAOtra(Integer filaOrigen, Integer filaDestino,	Double escalar) {
-		for (int j = 0; j < columna; j++)
-			matriz[filaDestino][j] -= matriz[filaOrigen][j] * escalar;
+	private void restarFilasHaciaAbajo(int fila) {
+		for (int i = fila + 1; i < filas; i++) 
+			if (matriz[i][fila] != 0) {
+				Double escalar = matriz[i][fila];
+				for (int j = 0; j < columnas; j++) 
+					matriz[i][j] -= matriz[fila][j] * escalar;
+			}
 	}
 
-	public void intercambirFilas(Integer filaOrigen, Integer filaDestino) {
-		for (int j = 0; j < columna; j++) {
-			Double aux = matriz[filaDestino][j];
-			matriz[filaDestino][j] = matriz[filaOrigen][j];
-			matriz[filaOrigen][j] = aux;
-		}
+	private void restarFilasHaciaArriba(int fila) {
+		for (int i = fila - 1; i >= 0; i--) 
+			if (matriz[i][fila] != 0) {
+				Double escalar = matriz[i][fila];
+				for (int j = 0; j < columnas; j++)
+					matriz[i][j] -= matriz[fila][j] * escalar;
+			}
 	}
 
-	public MatrizMath inversaGaussJordan() throws DistDimException {
-		MatrizMath aumentada = this.ampliar(MatrizMath.identidad(fila));
-		MatrizMath inversa = new MatrizMath(fila, columna);
-		// System.out.println("inicio: "+aumentada); funciona
-		for (int k = 0; k < columna; k++) {
-			if (aumentada.matriz[k][k] != 0) {
-				aumentada.multiplicarFila(k, 1 / aumentada.matriz[k][k]);
-				for (int i = k + 1; i < fila; i++) {
-					if (aumentada.matriz[i][k] != 0) {
-						Double escalar = aumentada.matriz[i][k];
-						aumentada.restarUnaFilaAOtra(k, i, escalar);
-					}
-				}
-			} else {
-				// intercambiar filas
-				Integer unoPrincipalActual = k;
-				while (aumentada.matriz[k][unoPrincipalActual] == 0 && k + 1 < columna) {
-					if (aumentada.matriz[k + 1][unoPrincipalActual] != 0)
-						aumentada.intercambirFilas(k + 1, unoPrincipalActual);
-					k++;
-				}
-				if (k == columna)
-					throw new DistDimException("No tiene solucion, la matriz no tiene inversa");
-				k = unoPrincipalActual - 1;
-			}
+	
+	public MatrizMath inversa() throws DistDimException {
+
+		MatrizMath aumentada = this.ampliar();
+		MatrizMath inversa = new MatrizMath(filas, columnas);
+
+		//Triangulacion inferior
+		for (int i = 0; i < columnas; i++) {
+			if(aumentada.matriz[i][i] == 0) 
+				aumentada.intercambiarFilas(i);
+			aumentada.multiplicarFila(i);
+			aumentada.restarFilasHaciaAbajo(i);
 		}
 
-		System.out.println("gauss: " + aumentada);
+		//Triangulacion superior
+		for (int i = columnas - 1; i >= 0; i--) 
+			aumentada.restarFilasHaciaArriba(i);
 
-		for (int k = columna - 1; k >= 0; k--) {
-			for (int i = k - 1; i >= 0; i--) {
-				if (aumentada.matriz[i][k] != 0) {
-					Double escalar = aumentada.matriz[i][k];
-					aumentada.restarUnaFilaAOtra(k, i, escalar);
-				}
-			}
-		}
-		System.out.println("jordan" + aumentada);
-
-		for (int i = 0; i < fila; i++)
-			for (int j = 0; j < columna; j++)
-				inversa.matriz[i][j] = aumentada.matriz[i][columna + j];
+		//Obtener solo la inversa de la aumentada
+		for (int i = 0; i < filas; i++)
+			for (int j = 0; j < columnas; j++)
+				inversa.matriz[i][j] = aumentada.matriz[i][columnas + j];
 
 		return inversa;
 	}
-
+	
 	public String toString() {
-		StringBuilder cad = new StringBuilder("[");
-		for (int i = 0; i < fila; i++) {
-			cad.append("[");
-			for (int j = 0; j < columna; j++) {
-				cad.append(matriz[i][j]);
-				if (j != columna - 1)
-					cad.append(", ");
+		DecimalFormatSymbols simbolo = new DecimalFormatSymbols();
+		simbolo.setDecimalSeparator('.');
+		StringBuilder matriz = new StringBuilder();
+		for (int i = 0; i < filas; i++) {
+			for (int j = 0; j < columnas; j++) {
+				matriz.append(this.matriz[i][j]);
+				matriz.append("  ");
 			}
-			cad.append("]");
-			if (i != fila - 1)
-				cad.append(", ");
+			matriz.append("\n");
 		}
-		cad.append("]");
-		return cad.toString();
+		return matriz.toString();
 	}
 
 	public Double[][] getMatriz() {
 		return matriz;
 	}
-
-	public void setMatriz(Double[][] matriz) {
-		this.matriz = matriz;
+	
+	public Integer getFilas() {
+		return filas;
 	}
 
 }

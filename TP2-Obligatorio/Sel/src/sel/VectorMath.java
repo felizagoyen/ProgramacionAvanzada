@@ -3,121 +3,87 @@ package sel;
 import java.io.*;
 import java.util.Arrays;
 
-/**
- * Vector Matematico
- * 
- * @author sarasa
- */
-
 public class VectorMath {
 
-	private Integer tam;
-	private Double[] vec;
+	private Integer dimension;
+	private Double[] vector;
 
-	/**
-	 * Constructor por defecto
-	 */
 	public VectorMath() {
-		tam = 0;
-		vec = null;
+		dimension = 0;
+		vector = null;
 	}
 
 	public VectorMath(int dimension, Double[] vector) {
-		tam = dimension;
-		vec = vector;
+		this.dimension = dimension;
+		this.vector = vector;
 	}
 
-	public VectorMath(int tam) {
-		this.tam = tam;
-		vec = new Double[tam];
+	public VectorMath(int dimension) {
+		this.dimension = dimension;
+		this.vector = new Double[dimension];
 	}
 
-	public VectorMath(String nombre) {
-		File archivo = new File(nombre);
-		FileReader fr = null;
-		BufferedReader br = null;
-		try {
-			fr = new FileReader(archivo);
-			br = new BufferedReader(fr);
-
-			tam = Integer.parseInt(br.readLine());
-			vec = new Double[tam];
-
-			for (int i = 0; i < tam; i++)
-				vec[i] = Double.parseDouble(br.readLine());
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (fr != null)
-					fr.close();
-			} catch (Exception e2) {
-				e2.printStackTrace();
-			}
-		}
+	public Double[] getVector() {
+		return vector;
 	}
 
-	public Double[] getVec() {
-		return vec;
-	}
-
-	public VectorMath sumar(VectorMath vec) throws DistDimException {
-		if (tam != vec.tam)
+	public VectorMath sumar(VectorMath vector) throws DistDimException {
+		if (dimension != vector.dimension)
 			throw new DistDimException(" Distinta Dimension ");
 
-		VectorMath aux = new VectorMath(tam);
-		for (int i = 0; i < tam; i++)
-			aux.vec[i] = this.vec[i] + vec.vec[i];
-		return aux;
+		VectorMath vectorResultado = new VectorMath(dimension);
+		for (int i = 0; i < dimension; i++)
+			vectorResultado.vector[i] = this.vector[i] + vector.vector[i];
+		return vectorResultado;
 	}
 
-	public VectorMath restar(VectorMath vec) throws DistDimException {
-		if (tam != vec.tam)
+	public VectorMath restar(VectorMath vector) throws DistDimException {
+		if (dimension != vector.dimension)
 			throw new DistDimException(" Distinta Dimension ");
 
-		VectorMath aux = new VectorMath(tam);
-		for (int i = 0; i < tam; i++)
-			aux.vec[i] = this.vec[i] - vec.vec[i];
-		return aux;
+		VectorMath vectorResultado = new VectorMath(dimension);
+		for (int i = 0; i < dimension; i++)
+			vectorResultado.vector[i] = this.vector[i] - vector.vector[i];
+		return vectorResultado;
 	}
 
 	public VectorMath multiplicar(Double valor) {
-		VectorMath aux = new VectorMath(tam);
-		for (int i = 0; i < tam; i++)
-			aux.vec[i] = this.vec[i] * valor;
-		return aux;
+		VectorMath vectorResultado = new VectorMath(dimension);
+		for (int i = 0; i < dimension; i++)
+			vectorResultado.vector[i] = this.vector[i] * valor;
+		return vectorResultado;
 	}
 
-	public Double multiplicar(VectorMath vec) throws DistDimException {
-		if (tam != vec.tam)
+	public Double multiplicar(VectorMath vector) throws DistDimException {
+		if (dimension != vector.dimension)
 			throw new DistDimException(" Distinta Dimension ");
 
-		Double aux = 0.0;
-		for (int i = 0; i < tam; i++)
-			aux += this.vec[i] * vec.vec[i];
-		return aux;
+		Double resultado = 0.0;
+		for (int i = 0; i < dimension; i++)
+			resultado += this.vector[i] * vector.vector[i];
+		return resultado;
 	}
 
 	public Double norma1() {
 		Double norma = 0.0;
-		for (int i = 0; i < this.tam; i++)
-			norma += Math.abs(this.vec[i]);
+		for (int i = 0; i < this.dimension; i++)
+			norma += Math.abs(this.vector[i]);
 		return norma;
 	}
 
 	public Double norma2() {
 		Double norma = 0.0;
-		for (int i = 0; i < this.tam; i++)
-			norma += this.vec[i] * this.vec[i];
+		for (int i = 0; i < this.dimension; i++)
+			norma += this.vector[i] * this.vector[i];
 		return Math.sqrt(norma);
 	}
 
 	public Double normaInf() {
-		VectorMath v = new VectorMath(tam);
-		for (int i = 0; i < this.tam; i++)
-			v.vec[i] = Math.abs(vec[i]);
-		Arrays.sort(v.vec);
-		return v.vec[this.tam - 1];
+		VectorMath vector = new VectorMath(dimension);
+		for (int i = 0; i < this.dimension; i++)
+			vector.vector[i] = Math.abs(this.vector[i]);
+		Arrays.sort(vector.vector);
+		return vector.vector[this.dimension - 1];
 	}
 
 	@Override
@@ -129,48 +95,35 @@ public class VectorMath {
 		if (getClass() != obj.getClass())
 			return false;
 		VectorMath other = (VectorMath) obj;
-		if (tam == null) {
-			if (other.tam != null)
+		if (dimension == null) {
+			if (other.dimension != null)
 				return false;
-		} else if (!tam.equals(other.tam))
+		} else if (!dimension.equals(other.dimension))
 			return false;
-		if (!Arrays.equals(vec, other.vec))
+		if (!Arrays.equals(vector, other.vector))
 			return false;
 		return true;
 	}
 
 	public String toString() {
-		StringBuilder cad = new StringBuilder("["); // Recibe el string inicial
-		for (int i = 0; i < tam; i++) {
-			cad.append(vec[i]); // Agrega al final
-			if (i != tam - 1)
-				cad.append(", ");
+		StringBuilder cadena = new StringBuilder("[");
+		for (int i = 0; i < dimension; i++) {
+			cadena.append(vector[i]);
+			if (i != dimension - 1)
+				cadena.append(", ");
 		}
-		cad.append("]");
-		return cad.toString();
+		cadena.append("]");
+		return cadena.toString();
 	}
 
 	public MatrizMath toMatrizMathColumna() {
-		MatrizMath resultado = new MatrizMath(tam, 1);
-
-		for (int i = 0; i < tam; i++)
-			resultado.getMatriz()[i][0] = vec[i];
-
+		MatrizMath resultado = new MatrizMath(dimension, 1);
+		for (int i = 0; i < dimension; i++)
+			resultado.getMatriz()[i][0] = vector[i];
 		return resultado;
 	}
-
-	/**
-	 * Metodo de prueba
-	 * 
-	 * @author sarasa
-	 * @param a
-	 *            Valor numerico
-	 * @param b
-	 *            Cadena
-	 * @return Flag de Error
-	 */
-	public static boolean print(int a, String b) {
-		return false;
+	
+	public Integer getDimension() {
+		return dimension;
 	}
-
 }
