@@ -119,7 +119,7 @@ public class MatrizMath {
 			aumentada.restarFilasHaciaArriba(i);
 		}
 
-		//Obtener solo la inversa de la aumentada
+		//Extraer la matriz inversa de la aumentada
 		for (int i = 0; i < filas; i++)
 			for (int j = 0; j < columnas; j++)
 				inversa.matriz[i][j] = aumentada.matriz[i][columnas + j];
