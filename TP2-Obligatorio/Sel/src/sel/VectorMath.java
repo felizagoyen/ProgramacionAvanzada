@@ -1,6 +1,5 @@
 package sel;
 
-import java.io.*;
 import java.util.Arrays;
 
 public class VectorMath {
