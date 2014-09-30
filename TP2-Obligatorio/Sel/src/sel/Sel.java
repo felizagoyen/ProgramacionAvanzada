@@ -66,7 +66,7 @@ public class Sel {
 		try {
 			archivo = new CreateFile(nombre);
 			if (marca == false)
-				archivo.writeLine("El sistema no tiene solución.");
+				archivo.writeLine("No se pudo resolver el sistema de ecuaciones.");
 			else {
 				archivo.writeLine(vectorColumnaSolucion.getFilas().toString());
 				for (int i = 0; i < vectorColumnaSolucion.getFilas(); i++) {
