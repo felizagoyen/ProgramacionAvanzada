@@ -29,7 +29,7 @@ public class VectorMath {
 	}
 
 	public VectorMath sumar(VectorMath vector) throws DistDimException {
-		if (dimension != vector.dimension)
+		if (!dimension.equals(vector.dimension))
 			throw new DistDimException(" Distinta Dimension ");
 
 		VectorMath vectorResultado = new VectorMath(dimension);
@@ -39,7 +39,7 @@ public class VectorMath {
 	}
 
 	public VectorMath restar(VectorMath vector) throws DistDimException {
-		if (dimension != vector.dimension)
+		if (!dimension.equals(vector.dimension))
 			throw new DistDimException(" Distinta Dimension ");
 
 		VectorMath vectorResultado = new VectorMath(dimension);
@@ -56,7 +56,7 @@ public class VectorMath {
 	}
 
 	public Double multiplicar(VectorMath vector) throws DistDimException {
-		if (dimension != vector.dimension)
+		if (!dimension.equals(vector.dimension))
 			throw new DistDimException(" Distinta Dimension ");
 
 		Double resultado = 0.0;
@@ -66,7 +66,7 @@ public class VectorMath {
 	}
 
 	public VectorMath multiplicar(MatrizMath matriz) throws DistDimException {
-		if (dimension != matriz.getFilas())
+		if (!dimension.equals(matriz.getFilas()))
 			throw new DistDimException(" Distinta Dimension ");
 
 		VectorMath resultado = new VectorMath(dimension);

@@ -23,7 +23,7 @@ public class MatrizMath {
 	}
 
 	public MatrizMath sumar(MatrizMath otra) throws DistDimException {
-		if (this.filas != otra.filas || this.columnas != otra.columnas)
+		if (!this.filas.equals(otra.filas) || !this.columnas.equals(otra.columnas))
 			throw new DistDimException("Las matrices a sumar no tienen la misma dimension");
 
 		MatrizMath resultado = new MatrizMath(otra.filas, otra.columnas);

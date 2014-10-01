@@ -42,7 +42,6 @@ public class Sel {
 		try {
 			vectorIncognitas = matrizCoeficientes.inversa().multiplicar(vectorTerminosIndependientes);
 		} catch (Exception e) {
-			e.printStackTrace();
 			return false;
 		}
 		return true;
