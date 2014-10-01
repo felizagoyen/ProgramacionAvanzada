@@ -62,6 +62,21 @@ public class MatrizMath {
 		return resultado;
 	}
 
+	public VectorMath multiplicar(VectorMath vector) throws DistDimException {
+		if (vector == null)
+			throw new DistDimException("Otra es NULL!");
+
+		if (!this.columnas.equals(vector.getDimension()))
+			throw new DistDimException("Dimensiones incorrectas");
+
+		//MatrizMath resultado = new MatrizMath(this.filas, otra.columnas);
+		VectorMath resultado = new VectorMath(vector.getDimension());
+		for (int i = 0; i < this.filas; i++)
+			for (int j = 0; j < this.columnas; j++)
+				resultado.getVector()[i] += matriz[i][j] * vector.getVector()[j];
+		return resultado;
+	}
+	
 	public MatrizMath multiplicar(double n) {
 		MatrizMath resultado = new MatrizMath(filas, columnas);
 		for (int i = 0; i < filas; i++)
@@ -147,6 +162,10 @@ public class MatrizMath {
 	
 	public Integer getFilas() {
 		return filas;
+	}
+	
+	public Integer getColumnas() {
+		return columnas;
 	}
 	
 	private MatrizMath ampliar() {

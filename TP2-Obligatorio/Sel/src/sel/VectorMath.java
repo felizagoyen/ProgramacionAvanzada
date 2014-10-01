@@ -20,6 +20,8 @@ public class VectorMath {
 	public VectorMath(int dimension) {
 		this.dimension = dimension;
 		this.vector = new Double[dimension];
+		for(int i = 0; i < dimension; i++)
+			vector[i] = 0.0;
 	}
 
 	public Double[] getVector() {
@@ -60,6 +62,17 @@ public class VectorMath {
 		Double resultado = 0.0;
 		for (int i = 0; i < dimension; i++)
 			resultado += this.vector[i] * vector.vector[i];
+		return resultado;
+	}
+
+	public VectorMath multiplicar(MatrizMath matriz) throws DistDimException {
+		if (dimension != matriz.getFilas())
+			throw new DistDimException(" Distinta Dimension ");
+
+		VectorMath resultado = new VectorMath(dimension);
+		for(int i = 0; i < matriz.getColumnas(); i++)
+			for (int j = 0; j < dimension; j++)
+				resultado.vector[i] += this.vector[j] * matriz.getMatriz()[i][j];
 		return resultado;
 	}
 
@@ -115,6 +128,7 @@ public class VectorMath {
 		return cadena.toString();
 	}
 
+	//borrar
 	public MatrizMath toMatrizMathColumna() {
 		MatrizMath resultado = new MatrizMath(dimension, 1);
 		for (int i = 0; i < dimension; i++)

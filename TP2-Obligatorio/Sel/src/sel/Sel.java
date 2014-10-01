@@ -7,7 +7,7 @@ public class Sel {
 
 	private MatrizMath matrizCoeficientes;
 	private VectorMath vectorResultado;
-	private MatrizMath vectorColumnaSolucion;
+	private VectorMath vectorColumnaSolucion;
 
 	public Sel(String nombre) {
 		ReaderFile archivo = null;
@@ -40,11 +40,10 @@ public class Sel {
 	}
 
 	public boolean resolverSistema() {
-		vectorColumnaSolucion = new MatrizMath(vectorResultado.getDimension(),
-				1);
+		vectorColumnaSolucion = new VectorMath(vectorResultado.getDimension());
 		try {
 			vectorColumnaSolucion = matrizCoeficientes.inversa().multiplicar(
-					vectorResultado.toMatrizMathColumna());
+					vectorResultado);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
@@ -53,10 +52,8 @@ public class Sel {
 	}
 
 	public Double calcularError() {
-		MatrizMath resultadoMultiplicacion = matrizCoeficientes
-				.multiplicar(vectorColumnaSolucion);
-		double error = vectorResultado.toMatrizMathColumna()
-				.restar(resultadoMultiplicacion).normaDos();
+		VectorMath resultadoMultiplicacion = matrizCoeficientes.multiplicar(vectorColumnaSolucion);
+		double error = vectorResultado.restar(resultadoMultiplicacion).norma2();
 		return error;
 	}
 
@@ -68,10 +65,9 @@ public class Sel {
 			if (marca == false)
 				archivo.writeLine("No se pudo resolver el sistema de ecuaciones.");
 			else {
-				archivo.writeLine(vectorColumnaSolucion.getFilas().toString());
-				for (int i = 0; i < vectorColumnaSolucion.getFilas(); i++) {
-					archivo.writeLine(vectorColumnaSolucion.getMatriz()[i][0]
-							.toString());
+				archivo.writeLine(vectorColumnaSolucion.getDimension().toString());
+				for (int i = 0; i < vectorColumnaSolucion.getDimension(); i++) {
+					archivo.writeLine(vectorColumnaSolucion.getVector()[i].toString());
 				}
 				archivo.writeLine("");
 				archivo.writeLine(calcularError().toString());
@@ -102,7 +98,7 @@ public class Sel {
 		
 		long diff = tFin.getTimeInMillis() - tIni.getTimeInMillis();
 
-		System.out.println(Math.round(diff / 1000));
+		System.out.println(diff / 1000);
 
 		sel.guardarSolucion("sel.out", marca);
 	}
