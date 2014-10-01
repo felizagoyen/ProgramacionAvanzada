@@ -76,21 +76,21 @@ public class VectorMath {
 		return resultado;
 	}
 
-	public Double norma1() {
+	public Double normaUno() {
 		Double norma = 0.0;
 		for (int i = 0; i < this.dimension; i++)
 			norma += Math.abs(this.vector[i]);
 		return norma;
 	}
 
-	public Double norma2() {
+	public Double normaDos() {
 		Double norma = 0.0;
 		for (int i = 0; i < this.dimension; i++)
 			norma += this.vector[i] * this.vector[i];
 		return Math.sqrt(norma);
 	}
 
-	public Double normaInf() {
+	public Double normaInfinito() {
 		VectorMath vector = new VectorMath(dimension);
 		for (int i = 0; i < this.dimension; i++)
 			vector.vector[i] = Math.abs(this.vector[i]);
@@ -128,14 +128,6 @@ public class VectorMath {
 		return cadena.toString();
 	}
 
-	//borrar
-	public MatrizMath toMatrizMathColumna() {
-		MatrizMath resultado = new MatrizMath(dimension, 1);
-		for (int i = 0; i < dimension; i++)
-			resultado.getMatriz()[i][0] = vector[i];
-		return resultado;
-	}
-	
 	public Integer getDimension() {
 		return dimension;
 	}
