@@ -7,7 +7,7 @@ public class MatrizMath {
 	private Integer filas, columnas;
 	private Double[][] matriz;
 
-	public MatrizMath(int columnas, int filas, Double[][] matriz) {
+	public MatrizMath(int filas, int columnas, Double[][] matriz) {
 		this.columnas = columnas;
 		this.filas = filas;
 		this.matriz = matriz;
