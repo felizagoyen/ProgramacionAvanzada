@@ -20,7 +20,7 @@ public class GenerarSel {
 			
 			for (int i=0; i<dim; i++){
 				for (int j=0; j<dim; j++)
-					pw.println(i + " " + j + " " + Math.tan(Math.random() * (Math.PI) - Math.PI/2));
+					pw.println(i + " " + j + " " + Math.round(Math.random()*100));
 			}
 			
 			for (int i=0; i<dim; i++)
