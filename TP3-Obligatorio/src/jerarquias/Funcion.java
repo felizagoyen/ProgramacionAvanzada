@@ -94,7 +94,7 @@ public class Funcion {
 		if(expresion.equals("/")) return new Division(pila.pop(), pila.pop());
 		if(expresion.equals("^")) return new Potencia(pila.pop(), pila.pop());
 		
-		if(expresion.equals("log")) return new LogaritmoNatural(pila.pop());
+		if(expresion.equals("ln")) return new LogaritmoNatural(pila.pop());
 
 		if(expresion.toLowerCase().equals("x")) return new Variable("x");
 		if(expresion.toLowerCase().equals("y")) return new Variable("y");
