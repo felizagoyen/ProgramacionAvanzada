@@ -17,7 +17,8 @@ public class ClientConection extends Thread {
 	}
 
 	public void run() {
-		//while (true) {
+		Boolean end = false;
+		while (!end) {
 			try {
 				ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
 				ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
@@ -25,14 +26,16 @@ public class ClientConection extends Thread {
 				Object packageOut = null;
 				
 				switch((Integer) inputStream.readObject()) {
-				case 1:
+				case 1: //Pedido de logeo del cliente
 					LoginRequest login = (LoginRequest) inputStream.readObject();
 					Integer clientType = validateClient(login);
 					idPackageOut = 1;
-					Boolean isValid = clientType.equals(-1) ? false : true;
-					packageOut = new LoginResponse(isValid, clientType); 
-				case 2:
-				
+					if(clientType.equals(-1)) end = true;
+					packageOut = new LoginResponse(clientType); 
+				case 2: //Creacion de partida
+					
+				case 3: //Jugador uniendose a paritda
+					
 				}
 
 				outputStream.writeObject(idPackageOut);
@@ -43,7 +46,7 @@ public class ClientConection extends Thread {
 			} catch(Exception e) {
 				e.printStackTrace();
 			}
-		//}
+		}
 	}
 	
 	private Integer validateClient(LoginRequest client) {
