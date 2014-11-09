@@ -5,14 +5,14 @@ import java.io.Serializable;
 public class LoginResponse implements Serializable {
 
 	private static final long serialVersionUID = 3832731611489649571L;
-	private Integer tipoUsuario;
+	private Integer userType;
 	
-	public LoginResponse(Integer tipoUsuario) {
-		this.tipoUsuario = tipoUsuario;
+	public LoginResponse(Integer userType) {
+		this.userType = userType;
 	}
 	
-	public Integer getTipoUsuario() {
-		return tipoUsuario;
+	public Integer getUserType() {
+		return userType;
 	}
 	
 }
