@@ -14,8 +14,8 @@ public class ClientePreguntados {
 			ObjectOutputStream outputObject = new ObjectOutputStream(socket.getOutputStream());
 			ObjectInputStream inputObject = new ObjectInputStream(socket.getInputStream());
 
-			Integer idPaquete = 1;
-			outputObject.writeObject(idPaquete);
+			//Integer idPaquete = 1;
+			//outputObject.writeObject(idPaquete);
 			
 			LoginRequest l = new LoginRequest("pepe", "1234");
 			outputObject.writeObject(l);

@@ -5,6 +5,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 import Packages.*;
+import Packages.Package;
 
 public class ClientConection extends Thread {
 
@@ -33,14 +34,15 @@ public class ClientConection extends Thread {
 				Integer idPackageOut = null;
 				Object packageOut = null;
 				
-				switch((Integer) inputStream.readObject()) {
+				Package packageIn = (Package) inputStream.readObject();
+				
+				switch(packageIn.getPackageID()) {
 				case LOGINREQUESTID: //Pedido de logeo del cliente
-					LoginRequest loginRequest = (LoginRequest) inputStream.readObject();
+					LoginRequest loginRequest = (LoginRequest) packageIn;
 					Integer clientType = validateClient(loginRequest);
-					idPackageOut = LOGINRESPONSEID;
 				 	packageOut = new LoginResponse(clientType);
 				case CREATEGAMEREQUESTID: //Creacion de partida
-					GameRequest gameRequest = (GameRequest) inputStream.readObject();
+					GameRequest gameRequest = (GameRequest) packageIn;
 					Game game = Game.getGame();
 					game.setGameName(gameRequest.getGameName());
 					game.setMaxPlayers(gameRequest.getMaxPlayers());
@@ -59,10 +61,8 @@ public class ClientConection extends Thread {
 					endConection = true;
 				}
 				
-				if(!endConection) {
-					outputStream.writeObject(idPackageOut);
-					outputStream.writeObject(packageOut);
-				}
+				if(!endConection) outputStream.writeObject(packageOut);
+				
 				outputStream.close();
 				inputStream.close();
 			} catch(Exception e) {
