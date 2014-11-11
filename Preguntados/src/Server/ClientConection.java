@@ -82,7 +82,7 @@ public class ClientConection extends Thread {
 	}
 
 	private Integer validateClient(LoginRequest client) {
-		return -1;
+		return 0;
 	}
 
 }
