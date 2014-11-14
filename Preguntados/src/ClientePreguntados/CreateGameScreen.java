@@ -67,6 +67,13 @@ public class CreateGameScreen extends JFrame {
 		textField_1.setColumns(10);
 		
 		JButton btnElegirPreguntas = new JButton("Elegir preguntas");
+		btnElegirPreguntas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ChooseQuestionsScreen choosequestionsscreen = new ChooseQuestionsScreen();
+				choosequestionsscreen.setVisible(true);
+				setVisible(false);
+			}
+		});
 		btnElegirPreguntas.setBounds(23, 164, 131, 20);
 		contentPane.add(btnElegirPreguntas);
 		

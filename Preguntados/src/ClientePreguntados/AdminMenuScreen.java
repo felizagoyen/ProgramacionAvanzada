@@ -61,6 +61,9 @@ public class AdminMenuScreen extends JFrame {
 		jCrearPartidaButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		jCrearPartidaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				CreateGameScreen creategamescreen = new CreateGameScreen();
+				creategamescreen.setVisible(true);
+				setVisible(false);
 			}
 		});
 		jCrearPartidaButton.setBounds(65, 140, 162, 23);
