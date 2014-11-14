@@ -1,9 +1,5 @@
 package ClientePreguntados;
 
-import java.awt.BorderLayout;
-
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -12,11 +8,14 @@ import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.SwingConstants;
 import java.awt.Color;
 
 public class UserMenuScreen extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2554687664946344696L;
 	private JPanel contentPane;
 
 	/**
@@ -60,6 +59,7 @@ public class UserMenuScreen extends JFrame {
 		jUnirsePartidaButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		jUnirsePartidaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+			
 			}
 		});
 		jUnirsePartidaButton.setBounds(65, 133, 162, 23);

@@ -1,8 +1,5 @@
 package ClientePreguntados;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -15,12 +12,14 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-import javax.swing.SwingConstants;
-
 import Packages.EndClientConectionRequest;
 
 public class AdminMenuScreen extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8573202483454046346L;
 	private JPanel contentPane;
 
 	/**

@@ -1,9 +1,9 @@
 package ClientePreguntados;
 
 import java.io.ObjectInputStream;
+
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import Packages.*;
 
 public class ClientePreguntados {
 

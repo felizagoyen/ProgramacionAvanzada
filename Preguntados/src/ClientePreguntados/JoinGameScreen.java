@@ -1,18 +1,20 @@
 package ClientePreguntados;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
-import java.awt.Color;
 import javax.swing.JButton;
 
 public class JoinGameScreen extends JFrame {
 
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7283759339771931238L;
 	private JPanel contentPane;
 
 	/**

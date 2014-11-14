@@ -1,13 +1,11 @@
 package ClientePreguntados;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import javax.swing.JEditorPane;
 import javax.swing.JTextArea;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
@@ -16,6 +14,10 @@ import java.awt.event.ActionEvent;
 
 public class AddQuestionScreen extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4009979497918877231L;
 	private JPanel contentPane;
 	private JTextField jRespuestaCorrectaTextField;
 	private JTextField jRespuestaInc1tf;
@@ -94,7 +96,7 @@ public class AddQuestionScreen extends JFrame {
 		lblCategora.setBounds(23, 369, 57, 14);
 		contentPane.add(lblCategora);
 		
-		JComboBox jCategoriaComboBox = new JComboBox();
+		JComboBox<String> jCategoriaComboBox = new JComboBox<String>();
 		jCategoriaComboBox.setBounds(90, 369, 176, 20);
 		contentPane.add(jCategoriaComboBox);
 		

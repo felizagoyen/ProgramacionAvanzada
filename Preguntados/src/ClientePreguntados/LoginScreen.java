@@ -1,7 +1,5 @@
 package ClientePreguntados;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -104,8 +102,7 @@ public class LoginScreen extends JFrame {
 					LoginResponse loginresponse = (LoginResponse) cliente.recibirPaquete();
 					setVisible(false);
 					if (loginresponse.getUserType() == 0) {
-						AdminMenuScreen adminscreen = new AdminMenuScreen(
-								cliente);
+						AdminMenuScreen adminscreen = new AdminMenuScreen(cliente);
 						adminscreen.setVisible(true);
 					} else {
 						if(loginresponse.getUserType() == 1){
