@@ -1,7 +1,5 @@
 package ClientePreguntados;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -23,24 +21,24 @@ public class CreateGameScreen extends JFrame {
 
 	/**
 	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					CreateGameScreen frame = new CreateGameScreen();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	 */
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					CreateGameScreen frame = new CreateGameScreen();
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the frame.
 	 */
-	public CreateGameScreen() {
+	public CreateGameScreen(final ClientePreguntados cliente) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -69,7 +67,7 @@ public class CreateGameScreen extends JFrame {
 		JButton btnElegirPreguntas = new JButton("Elegir preguntas");
 		btnElegirPreguntas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ChooseQuestionsScreen choosequestionsscreen = new ChooseQuestionsScreen();
+				ChooseQuestionsScreen choosequestionsscreen = new ChooseQuestionsScreen(cliente);
 				choosequestionsscreen.setVisible(true);
 				setVisible(false);
 			}

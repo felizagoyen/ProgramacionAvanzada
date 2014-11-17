@@ -9,8 +9,12 @@ import javax.swing.JTextField;
 import javax.swing.JTextArea;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
+
+import Packages.Question;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 
 public class AddQuestionScreen extends JFrame {
 
@@ -24,25 +28,27 @@ public class AddQuestionScreen extends JFrame {
 	private JTextField jRespuestaInc2tf;
 	private JTextField jRespuestaInc3tf;
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					AddQuestionScreen frame = new AddQuestionScreen();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					AddQuestionScreen frame = new AddQuestionScreen();
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the frame.
 	 */
-	public AddQuestionScreen() {
+	public AddQuestionScreen(final ClientePreguntados cliente) {
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 300, 500);
+		setTitle("Preguntados");
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -52,7 +58,7 @@ public class AddQuestionScreen extends JFrame {
 		lblPregunta.setBounds(21, 36, 71, 14);
 		contentPane.add(lblPregunta);
 		
-		JTextArea jPreguntaTextArea = new JTextArea();
+		final JTextArea jPreguntaTextArea = new JTextArea();
 		jPreguntaTextArea.setBounds(33, 61, 233, 69);
 		contentPane.add(jPreguntaTextArea);
 		
@@ -96,22 +102,46 @@ public class AddQuestionScreen extends JFrame {
 		lblCategora.setBounds(23, 369, 57, 14);
 		contentPane.add(lblCategora);
 		
-		JComboBox<String> jCategoriaComboBox = new JComboBox<String>();
+		final JComboBox<String> jCategoriaComboBox = new JComboBox<String>();
 		jCategoriaComboBox.setBounds(90, 369, 176, 20);
 		contentPane.add(jCategoriaComboBox);
+		jCategoriaComboBox.addItem("Deportes");
+		jCategoriaComboBox.addItem("Entretenimiento");
+		jCategoriaComboBox.addItem("Geografía");
+		jCategoriaComboBox.addItem("Historia");
+		jCategoriaComboBox.addItem("Arte");
+		jCategoriaComboBox.addItem("Ciencia");
+		
+		
 		
 		JButton jAgregarPreguntaButton = new JButton("Agregar Pregunta");
 		jAgregarPreguntaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				Question question = new Question (jPreguntaTextArea.getText(), jRespuestaCorrectaTextField.getText(),
-//									jRespuestaInc1tf.getText(),jRespuestaInc2tf.getText(), jRespuestaInc3tf.getText());
+				ArrayList <String> incorrectas = new ArrayList <String> ();
+				incorrectas.add(jRespuestaInc1tf.getText());
+				incorrectas.add(jRespuestaInc2tf.getText());
+				incorrectas.add(jRespuestaInc3tf.getText());
+				String categoria = new String ();
+				categoria = (String)jCategoriaComboBox.getSelectedItem();
 				
+				
+				Question question = new Question (jPreguntaTextArea.getText(), categoria, jRespuestaCorrectaTextField.getText(), incorrectas);
+
+	
 			}
 		});
 		jAgregarPreguntaButton.setBounds(23, 416, 243, 23);
 		contentPane.add(jAgregarPreguntaButton);
 		
 		JButton jAtrasButton = new JButton("Atr\u00E1s");
+		jAtrasButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				AdminMenuScreen ams = new AdminMenuScreen(cliente);
+				ams.setVisible(true);
+				setVisible(false);
+				
+			}
+		});
 		jAtrasButton.setBounds(177, 11, 89, 23);
 		contentPane.add(jAtrasButton);
 	}

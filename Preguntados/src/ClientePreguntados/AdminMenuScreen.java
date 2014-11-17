@@ -61,7 +61,7 @@ public class AdminMenuScreen extends JFrame {
 		jCrearPartidaButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		jCrearPartidaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				CreateGameScreen creategamescreen = new CreateGameScreen();
+				CreateGameScreen creategamescreen = new CreateGameScreen(cliente);
 				creategamescreen.setVisible(true);
 				setVisible(false);
 			}
@@ -101,6 +101,13 @@ public class AdminMenuScreen extends JFrame {
 		contentPane.add(jSalirButton);
 
 		JButton btnNewButton_2 = new JButton("Agregar pregunta ");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				AddQuestionScreen aq = new AddQuestionScreen(cliente);
+				aq.setVisible(true);
+				dispose();
+			}
+		});
 		btnNewButton_2.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		btnNewButton_2.setBounds(65, 240, 162, 23);
 		contentPane.add(btnNewButton_2);

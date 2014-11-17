@@ -1,9 +1,11 @@
 package Packages;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Question {
+public class Question implements Serializable {
 
+	private static final long serialVersionUID = 946827401315759467L;
 		private String question;
 		private String category;
 		private String correctAnswer;

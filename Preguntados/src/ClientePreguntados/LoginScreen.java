@@ -19,8 +19,52 @@ import javax.swing.JPasswordField;
 import Packages.EndClientConectionRequest;
 import Packages.LoginRequest;
 import Packages.LoginResponse;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class LoginScreen extends JFrame {
+
+	public final class ActionLogin implements ActionListener {
+		private final JTextArea jUsuarioInexistenteTextArea;
+		private final ClientePreguntados cliente;
+		private final JTextArea jCamposVaciosTextArea;
+
+		public ActionLogin(JTextArea jUsuarioInexistenteTextArea,
+				ClientePreguntados cliente, JTextArea jCamposVaciosTextArea) {
+			this.jUsuarioInexistenteTextArea = jUsuarioInexistenteTextArea;
+			this.cliente = cliente;
+			this.jCamposVaciosTextArea = jCamposVaciosTextArea;
+		}
+
+		public void actionPerformed(ActionEvent arg0) {
+
+			if (jUserTextField.getText().isEmpty() || jPasswordField.getPassword().toString().isEmpty()){
+				jUsuarioInexistenteTextArea.setVisible(false);
+				jCamposVaciosTextArea.setVisible(true);					
+			}
+			else {
+				LoginRequest loginrequest = new LoginRequest(jUserTextField.getText(), jPasswordField.getPassword().toString());
+				// ClientePreguntados cliente = new ClientePreguntados();
+				cliente.enviarPaquete(loginrequest);
+				LoginResponse loginresponse = (LoginResponse) cliente.recibirPaquete();
+				setVisible(false);
+				if (loginresponse.getUserType() == 0) {
+					AdminMenuScreen adminscreen = new AdminMenuScreen(cliente);
+					adminscreen.setVisible(true);
+				} else {
+					if(loginresponse.getUserType() == 1){
+						UserMenuScreen userscreen = new UserMenuScreen(cliente);
+						userscreen.setVisible(true);
+					}else
+					{
+						jCamposVaciosTextArea.setVisible(false);
+						jUsuarioInexistenteTextArea.setVisible(true);
+					}
+				}
+
+			}
+		}
+	}
 
 	private static final long serialVersionUID = -560582234414629430L;
 	private JPanel contentPane;
@@ -88,40 +132,20 @@ public class LoginScreen extends JFrame {
 		contentPane.add(jUsuarioInexistenteTextArea);
 
 		JButton jLoginButton = new JButton("Entrar");
-		jLoginButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+		
 
-				if (jUserTextField.getText().isEmpty() || jPasswordField.getPassword().toString().isEmpty()){
-					jUsuarioInexistenteTextArea.setVisible(false);
-					jCamposVaciosTextArea.setVisible(true);					
-				}
-				else {
-					LoginRequest loginrequest = new LoginRequest(jUserTextField.getText(), jPasswordField.getPassword().toString());
-					// ClientePreguntados cliente = new ClientePreguntados();
-					cliente.enviarPaquete(loginrequest);
-					LoginResponse loginresponse = (LoginResponse) cliente.recibirPaquete();
-					setVisible(false);
-					if (loginresponse.getUserType() == 0) {
-						AdminMenuScreen adminscreen = new AdminMenuScreen(cliente);
-						adminscreen.setVisible(true);
-					} else {
-						if(loginresponse.getUserType() == 1){
-							UserMenuScreen userscreen = new UserMenuScreen(cliente);
-							userscreen.setVisible(true);
-						}else
-						{
-							jCamposVaciosTextArea.setVisible(false);
-							jUsuarioInexistenteTextArea.setVisible(true);
-						}
-					}
-
-				}
-			}
-		});
+		jLoginButton.addActionListener(new ActionLogin(jUsuarioInexistenteTextArea, cliente, jCamposVaciosTextArea));
 		jLoginButton.setBounds(84, 209, 89, 23);
 		contentPane.add(jLoginButton);
 
 		jPasswordField = new JPasswordField();
+		
+		jPasswordField.addKeyListener(new KeyAdapter() {
+			public void keyReleased(KeyEvent arg0) {
+				if(arg0.getKeyCode() == KeyEvent.VK_ENTER)
+					new ActionLogin (jUsuarioInexistenteTextArea, cliente, jCamposVaciosTextArea).actionPerformed(null);
+			}
+		});
 		jPasswordField.setBounds(136, 157, 86, 20);
 		contentPane.add(jPasswordField);
 

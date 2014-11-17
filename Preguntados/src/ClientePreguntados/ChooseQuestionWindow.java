@@ -15,6 +15,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 
+import Packages.QuestionsRequest;
+import Packages.QuestionsResponse;
+import Packages.StringQuestion;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -25,6 +29,7 @@ public class ChooseQuestionWindow extends JDialog {
 	 */
 	private static final long serialVersionUID = 2375532637553844038L;
 	private final JPanel contentPanel = new JPanel();
+	
 
 	/**
 	 * Launch the application.
@@ -42,8 +47,9 @@ public class ChooseQuestionWindow extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public ChooseQuestionWindow(final JComboBox combo) {
+	public ChooseQuestionWindow(final JComboBox combo, final ClientePreguntados cliente) {
 		setBounds(100, 100, 571, 411);
+		setTitle("Preguntados");
 		getContentPane().setLayout(null);
 		contentPanel.setBounds(0, 0, 545, 339);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -59,6 +65,7 @@ public class ChooseQuestionWindow extends JDialog {
 			questionList.setBackground(Color.ORANGE);
 			questionList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 			questionList.setModel(new AbstractListModel() {
+
 				String[] values = new String[] {};
 				public int getSize() {
 					return values.length;
@@ -67,14 +74,14 @@ public class ChooseQuestionWindow extends JDialog {
 					return values[index];
 				}
 			});
-			questionList.setBounds(1, 1, 242, 133);
+			questionList.setBounds(41, 0, 407, 265);
 			contentPanel.add(questionList);
 			JScrollPane barraDesplazamiento = new JScrollPane(questionList);
-			barraDesplazamiento.setBounds(28, 61, 507, 267);
+			barraDesplazamiento.setBounds(37, 56, 465, 261);
 			contentPanel.add(barraDesplazamiento);
 			final DefaultListModel<String> modelo = new DefaultListModel<String>();
 			
-			final JComboBox categoriaComboBox = new JComboBox();
+			final JComboBox<String> categoriaComboBox = new JComboBox<String>();
 			categoriaComboBox.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					modelo.removeAllElements();
@@ -83,6 +90,12 @@ public class ChooseQuestionWindow extends JDialog {
 					case "Deportes":
 						modelo.addElement("¿Cuantas copas libertadores tiene Boca Juniors?");
 						modelo.addElement("¿En que año descendió River Plate a la Segunda Division del futbol argentino?");
+						modelo.addElement("¿Quien erró el unico penal en la serie de penales en la semifinal de la Copa Libertadores 2004 entre Boca y River?");
+						cliente.enviarPaquete(new QuestionsRequest(categoriaComboBox.getSelectedItem().toString()));
+						QuestionsResponse qResponse = (QuestionsResponse) cliente.recibirPaquete();
+						for(StringQuestion cadauno : qResponse.getQuestions()){
+							modelo.addElement(cadauno.getQuestion());							
+						}
 						questionList.setModel(modelo);				
 						break;
 					case "Entretenimiento":
@@ -98,11 +111,11 @@ public class ChooseQuestionWindow extends JDialog {
 						questionList.setModel(modelo);				
 						break;
 					case "Arte":
-						modelo.addElement("¿En que año se termino de construir la Capilla Sixtina?");
+						modelo.addElement("¿En que año se terminó de construir la Capilla Sixtina?");
 						questionList.setModel(modelo);				
 						break;
 					case "Geografía":
-						modelo.addElement("¿De donde son originarios los Moai?");
+						modelo.addElement("¿De dónde son originarios los Moai?");
 						questionList.setModel(modelo);				
 						break;
 						
@@ -125,10 +138,7 @@ public class ChooseQuestionWindow extends JDialog {
 						
 					}
 
-//					private void sendQuestion(String selectedValue) {
-//						// TODO Auto-generated method stub
-//						
-//					}
+
 				});
 				okButton.setBounds(322, 5, 91, 23);
 				okButton.setActionCommand("OK");

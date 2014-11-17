@@ -16,6 +16,7 @@ public class ClientConection extends Thread {
 	private static final int POINTSTABLEREQUESTID = 8;
 	private static final int ADDQUESTIONREQUESTID = 9;
 	private static final int ENDCONECTIONREQUESTID = 10;
+	private static final int QUESTIONSREQUESTID = 11;
 	private Socket socket;
 
 	// private Integer clientID;
@@ -43,6 +44,11 @@ public class ClientConection extends Thread {
 				case LOGINREQUESTID: // Pedido de logeo del cliente
 					LoginRequest loginRequest = (LoginRequest) packageIn;
 					packageOut = new LoginResponse(validateClient(loginRequest));
+					break;
+				case QUESTIONSREQUESTID:  // Lo agregamos para probar si como cliente recibiamos correcamente las preguntas 
+										  //que nos mandaría la base da datos para hacer la elección al crear la partida.
+					QuestionsRequest questionsRequest = (QuestionsRequest) packageIn;
+					packageOut = new QuestionsResponse ();
 					break;
 				case CREATEGAMEREQUESTID: // Creacion de partida
 					GameRequest gameRequest = (GameRequest) packageIn;

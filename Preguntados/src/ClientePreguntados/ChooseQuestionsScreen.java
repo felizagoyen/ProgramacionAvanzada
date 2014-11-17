@@ -28,23 +28,23 @@ public class ChooseQuestionsScreen extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ChooseQuestionsScreen frame = new ChooseQuestionsScreen();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					ChooseQuestionsScreen frame = new ChooseQuestionsScreen();
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the frame.
 	 */
-	public ChooseQuestionsScreen() {
+	public ChooseQuestionsScreen(final ClientePreguntados cliente) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 548, 347);
 		contentPane = new JPanel();
@@ -104,7 +104,7 @@ public class ChooseQuestionsScreen extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if(combo1.getSelectedItem().toString().equals("Seleccionar pregunta..."))
 				{
-					ChooseQuestionWindow choosequestionwindow = new ChooseQuestionWindow(combo1);
+					ChooseQuestionWindow choosequestionwindow = new ChooseQuestionWindow(combo1, cliente);
 					setEnabled(false);
 					choosequestionwindow.setVisible(true);
 				}
@@ -125,7 +125,7 @@ public class ChooseQuestionsScreen extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if(combo2.getSelectedItem().toString().equals("Seleccionar pregunta..."))
 				{
-					ChooseQuestionWindow choosequestionwindow = new ChooseQuestionWindow(combo2);
+					ChooseQuestionWindow choosequestionwindow = new ChooseQuestionWindow(combo2, cliente);
 					setEnabled(false);
 					choosequestionwindow.setVisible(true);
 				}
@@ -146,7 +146,7 @@ public class ChooseQuestionsScreen extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if(combo3.getSelectedItem().toString().equals("Seleccionar pregunta..."))
 				{
-					ChooseQuestionWindow choosequestionwindow = new ChooseQuestionWindow(combo3);
+					ChooseQuestionWindow choosequestionwindow = new ChooseQuestionWindow(combo3, cliente);
 					setEnabled(false);
 					choosequestionwindow.setVisible(true);
 				}
@@ -167,7 +167,7 @@ public class ChooseQuestionsScreen extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if(combo4.getSelectedItem().toString().equals("Seleccionar pregunta..."))
 				{
-					ChooseQuestionWindow choosequestionwindow = new ChooseQuestionWindow(combo4);
+					ChooseQuestionWindow choosequestionwindow = new ChooseQuestionWindow(combo4, cliente);
 					setEnabled(false);
 					choosequestionwindow.setVisible(true);
 				}
@@ -188,7 +188,7 @@ public class ChooseQuestionsScreen extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if(combo5.getSelectedItem().toString().equals("Seleccionar pregunta..."))
 				{
-					ChooseQuestionWindow choosequestionwindow = new ChooseQuestionWindow(combo5);
+					ChooseQuestionWindow choosequestionwindow = new ChooseQuestionWindow(combo5, cliente);
 					setEnabled(false);
 					choosequestionwindow.setVisible(true);
 				}
@@ -209,7 +209,7 @@ public class ChooseQuestionsScreen extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if(combo6.getSelectedItem().toString().equals("Seleccionar pregunta..."))
 				{
-					ChooseQuestionWindow choosequestionwindow = new ChooseQuestionWindow(combo6);
+					ChooseQuestionWindow choosequestionwindow = new ChooseQuestionWindow(combo6, cliente);
 					setEnabled(false);
 					choosequestionwindow.setVisible(true);
 				}
@@ -230,7 +230,7 @@ public class ChooseQuestionsScreen extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if(combo7.getSelectedItem().toString().equals("Seleccionar pregunta..."))
 				{
-					ChooseQuestionWindow choosequestionwindow = new ChooseQuestionWindow(combo7);
+					ChooseQuestionWindow choosequestionwindow = new ChooseQuestionWindow(combo7, cliente);
 					setEnabled(false);
 					choosequestionwindow.setVisible(true);
 				}
@@ -251,7 +251,7 @@ public class ChooseQuestionsScreen extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if(combo8.getSelectedItem().toString().equals("Seleccionar pregunta..."))
 				{
-					ChooseQuestionWindow choosequestionwindow = new ChooseQuestionWindow(combo8);
+					ChooseQuestionWindow choosequestionwindow = new ChooseQuestionWindow(combo8, cliente);
 					setEnabled(false);
 					choosequestionwindow.setVisible(true);
 				}
@@ -272,7 +272,7 @@ public class ChooseQuestionsScreen extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if(combo9.getSelectedItem().toString().equals("Seleccionar pregunta..."))
 				{
-					ChooseQuestionWindow choosequestionwindow = new ChooseQuestionWindow(combo9);
+					ChooseQuestionWindow choosequestionwindow = new ChooseQuestionWindow(combo9, cliente);
 					setEnabled(false);
 					choosequestionwindow.setVisible(true);
 				}
@@ -293,7 +293,7 @@ public class ChooseQuestionsScreen extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if(combo10.getSelectedItem().toString().equals("Seleccionar pregunta..."))
 				{
-					ChooseQuestionWindow choosequestionwindow = new ChooseQuestionWindow(combo10);
+					ChooseQuestionWindow choosequestionwindow = new ChooseQuestionWindow(combo10, cliente);
 					setEnabled(false);
 					choosequestionwindow.setVisible(true);
 				}
