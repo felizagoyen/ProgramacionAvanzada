@@ -7,7 +7,7 @@ public class LogaritmoNatural extends OperadorUnario {
 	}
 
 	public Double resolver() {
-		return Math.log(super.getExpresiones().resolver());
+		return Math.log(super.getExpresion().resolver());
 	}
 	
 }

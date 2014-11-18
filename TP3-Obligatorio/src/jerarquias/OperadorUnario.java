@@ -1,17 +1,15 @@
 package jerarquias;
 
-import java.util.ArrayList;
-
 abstract class OperadorUnario extends Expresion {
 	
-	private ArrayList<Expresion> expresiones = new ArrayList<Expresion>();
+	private Expresion expresion;
 	
 	public OperadorUnario(Expresion expresion) {
-		expresiones.add(expresion);
+		this.expresion = expresion;
 	}
 
-	public Expresion getExpresiones() {
-		return expresiones.get(0);
+	public Expresion getExpresion() {
+		return expresion;
 	}
 
 }

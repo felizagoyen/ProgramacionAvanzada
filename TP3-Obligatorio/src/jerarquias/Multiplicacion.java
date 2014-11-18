@@ -7,7 +7,7 @@ public class Multiplicacion extends OperadorBinario {
 	}
 	
 	public Double resolver() {
-		return super.getExpresion(0).resolver() * super.getExpresion(1).resolver();
+		return super.getExpresion1().resolver() * super.getExpresion2().resolver();
 	}
 		
 }

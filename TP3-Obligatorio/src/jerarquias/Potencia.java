@@ -7,7 +7,7 @@ public class Potencia extends OperadorBinario {
 	}
 	
 	public Double resolver() {
-		return Math.pow(super.getExpresion(1).resolver(), super.getExpresion(0).resolver());
+		return Math.pow(super.getExpresion1().resolver(), super.getExpresion2().resolver());
 	}
 		
 }

@@ -7,7 +7,7 @@ public class Division extends OperadorBinario {
 	}
 	
 	public Double resolver() {
-		return super.getExpresion(1).resolver() / super.getExpresion(0).resolver();
+		return super.getExpresion1().resolver() / super.getExpresion2().resolver();
 	}
 		
 }
