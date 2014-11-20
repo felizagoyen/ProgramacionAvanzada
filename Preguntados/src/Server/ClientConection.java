@@ -46,7 +46,7 @@ public class ClientConection extends Thread {
 					packageOut = new LoginResponse(validateClient(loginRequest));
 					break;
 				case QUESTIONSREQUESTID:  // Lo agregamos para probar si como cliente recibiamos correcamente las preguntas 
-										  //que nos mandaría la base da datos para hacer la elección al crear la partida.
+										  //que nos mandarÃ­a la base da datos para hacer la elecciÃ³n al crear la partida.
 					QuestionsRequest questionsRequest = (QuestionsRequest) packageIn;
 					packageOut = new QuestionsResponse ();
 					break;
@@ -88,7 +88,16 @@ public class ClientConection extends Thread {
 	}
 
 	private Integer validateClient(LoginRequest client) {
-		return 0;
+		DataBaseUtil db = new DataBaseUtil();
+		User user = db.getUserDB(client.getUser());
+		if(user.getPass().equals(client.getPassword())){
+			if(user.getTipo()==1)
+				return 1;
+			else
+				return 0;
+		}
+		else
+			return -1;
 	}
 
 }
