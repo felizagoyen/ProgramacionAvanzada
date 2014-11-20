@@ -33,21 +33,17 @@ public class DataBaseUtil {
 	}
 	
 	
-	public static void main(String[] args) {
-		DataBaseUtil db = new DataBaseUtil();
-		ArrayList<User> users = new ArrayList<User>();
-		try {
-			ResultSet rs = db.queryDB("SELECT * FROM `cuentas`");
-			while(rs.next()){
-				users.add(new User(rs.getString("user"), rs.getString("pass")));
+	public User getUserDB(String user){
+		ResultSet rs = queryDB("SELECT * FROM `cuentas` WHERE `user` = '"+ user +"'");
+		if(rs!=null){
+			try {
+				while(rs.next())
+					return new User(rs.getString("user"), rs.getString("pass"), rs.getInt("TIPO"));
+			} catch (SQLException e) {
+				e.printStackTrace();
 			}
-			for(User user: users){
-				System.out.println(user);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
 		}
-		db.DataBaseClose();
+		return null;
 	}
 	
 }
