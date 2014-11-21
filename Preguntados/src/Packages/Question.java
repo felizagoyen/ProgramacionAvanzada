@@ -6,6 +6,7 @@ import java.util.ArrayList;
 public class Question implements Serializable {
 
 	private static final long serialVersionUID = 946827401315759467L;
+		private Integer id;
 		private String question;
 		private String category;
 		private String correctAnswer;
@@ -16,6 +17,11 @@ public class Question implements Serializable {
 			this.category = category;
 			this.correctAnswer = correctAnswer;
 			this.wrongAnswers = wrongAnswers;
+		}
+		
+		public Question(Integer id, String question) {
+			this.id = id;
+			this.question = question;
 		}
 		
 		public String getQuestion() {
