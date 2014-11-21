@@ -9,6 +9,7 @@ import Packages.Package;
 
 public class ServerThread extends Thread {
 
+
 	private static final int LOGINREQUESTID = 1;
 	private static final int CREATEGAMEREQUESTID = 2;
 	private static final int PLAYERJOINREQUESTID = 3;
@@ -46,7 +47,7 @@ public class ServerThread extends Thread {
 					packageOut = new LoginResponse(validateClient(loginRequest));
 					break;
 				case QUESTIONSREQUESTID:  // Lo agregamos para probar si como cliente recibiamos correcamente las preguntas 
-										  //que nos mandar�a la base da datos para hacer la elecci�n al crear la partida.
+										  //que nos mandaría la base da datos para hacer la elección al crear la partida.
 					QuestionsRequest questionsRequest = (QuestionsRequest) packageIn;
 					packageOut = new QuestionsResponse ();
 					break;
@@ -88,7 +89,16 @@ public class ServerThread extends Thread {
 	}
 
 	private Integer validateClient(LoginRequest client) {
-		return 0;
+		DataBaseUtil db = new DataBaseUtil();
+		User user = db.getUserDB(client.getUser());
+		if(user.getPass().equals(client.getPassword())){
+			if(user.getTipo()==1)
+				return 1;
+			else
+				return 0;
+		}
+		else
+			return -1;
 	}
 
 }
