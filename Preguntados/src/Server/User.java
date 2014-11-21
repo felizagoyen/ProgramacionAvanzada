@@ -1,7 +1,6 @@
 package Server;
 
 public class User {
-	public class User {
 	private String user;
 	private String pass;
 	private Integer tipo;
