@@ -3,6 +3,8 @@ package Server;
 import java.sql.*;
 import java.util.ArrayList;
 
+import Packages.Question;
+
 public class DataBaseUtil {
 	private ConectionDB conection = null;
 	private Connection con = null;
@@ -54,20 +56,10 @@ public class DataBaseUtil {
 			try {
 				while(rs.next()){
 					ArrayList<String> answer = new ArrayList<String>();
-					Integer correctOption=(int) Math.round(Math.random()*10);
-					if(correctOption<25)
-						correctOption=0;
-					else if(correctOption<50)
-						correctOption=1;
-					else if(correctOption<75)
-						correctOption=2;
-					else
-						correctOption=3;
 					answer.add(rs.getString("respuesta1"));
 					answer.add(rs.getString("respuesta2"));
 					answer.add(rs.getString("respuesta3"));
-					answer.set(correctOption, rs.getString("respuestaCorrecta"));
-					questions.add(new Question(rs.getString("pregunta"), answer, correctOption, rs.getString("categoria")));
+					questions.add(new Question(rs.getString("pregunta"), rs.getString("categoria"),rs.getString("respuestaCorrecta"),answer));
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
