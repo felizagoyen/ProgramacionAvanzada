@@ -83,12 +83,30 @@ public class DataBaseUtil {
 		return categorias;
 	}
 	
+	public void setQuestionDB(Question question){
+		try {
+			PreparedStatement ps = con.prepareStatement("INSERT INTO `preguntados`.`preguntas` (`ID`, `pregunta`, `respuesta1`, `respuesta2`, `respuesta3`, `respuestaCorrecta`, `categoria`) VALUES (NULL, ?, ?, ?, ?, ?, ?)");
+			ps.setString(1, question.getQuestion());
+			ps.setString(2, question.getWrongAnswers().get(0));
+			ps.setString(3, question.getWrongAnswers().get(1));
+			ps.setString(4, question.getWrongAnswers().get(2));
+			ps.setString(5, question.getCorrectAnswer());
+			ps.setString(6, question.getCategory());
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	
+	}
+	
 	public static void main(String[] args) {
 		DataBaseUtil db = new DataBaseUtil();
-		ArrayList<String> categorias = db.getCategoryDB();
-		for(String category: categorias){
-			System.out.println(category);
-		}
+		ArrayList<String> wrongAnswers = new ArrayList<String>();
+		wrongAnswers.add("incorreta1");
+		wrongAnswers.add("incorreta2");
+		wrongAnswers.add("incorreta3");
+		Question question = new Question("Cuanto?", "categoria", "correcta", wrongAnswers);
+		db.setQuestionDB(question);
 	}
 	
 }
