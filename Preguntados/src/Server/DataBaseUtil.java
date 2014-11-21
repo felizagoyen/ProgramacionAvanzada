@@ -2,15 +2,16 @@ package Server;
 
 import java.sql.*;
 import java.util.ArrayList;
+import Packages.*;
 
 import Packages.Question;
 
 public class DataBaseUtil {
-	private ConectionDB conection = null;
+	private ConnectionDB conection = null;
 	private Connection con = null;
 	
 	public DataBaseUtil() {
-		conection = ConectionDB.getConection();
+		conection = ConnectionDB.getConection();
 		con = conection.getCon();
 	}
 	

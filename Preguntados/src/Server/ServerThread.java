@@ -7,7 +7,8 @@ import java.net.Socket;
 import Packages.*;
 import Packages.Package;
 
-public class ClientConection extends Thread {
+public class ServerThread extends Thread {
+
 
 	private static final int LOGINREQUESTID = 1;
 	private static final int CREATEGAMEREQUESTID = 2;
@@ -21,7 +22,7 @@ public class ClientConection extends Thread {
 
 	// private Integer clientID;
 
-	public ClientConection(Integer clientID, Socket socket) {
+	public ServerThread(Integer clientID, Socket socket) {
 		// this.clientID = clientID;
 		this.socket = socket;
 	}

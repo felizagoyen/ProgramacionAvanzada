@@ -16,7 +16,7 @@ public class AcceptClient extends Thread {
 			try {
 				clientSocket = serverSocket.accept();
 				System.out.println("Conexion Aceptada");
-				new ClientConection(1, clientSocket).start(); //Crea una conexion nueva de escucha para cada cliente
+				new ServerThread(1, clientSocket).start(); //Crea una conexion nueva de escucha para cada cliente
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

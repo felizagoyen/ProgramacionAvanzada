@@ -2,10 +2,10 @@ package Server;
 
 import java.sql.*;
 
-public class ConectionDB {
-	private static ConectionDB conection = new ConectionDB();
+public class ConnectionDB {
+	private static ConnectionDB conection = new ConnectionDB();
 	private static Connection con;
-	private ConectionDB() {
+	private ConnectionDB() {
 		try{
 			Class.forName("com.mysql.jdbc.Driver");
 			String ip = "127.0.0.1";
@@ -21,7 +21,7 @@ public class ConectionDB {
 		
 	}
 	
-	public static ConectionDB getConection() {
+	public static ConnectionDB getConection() {
 		return conection;
 	}
 	
