@@ -20,9 +20,9 @@ public class ClientThread extends Thread {
 	private static final int PLAYERJOINREQUESTID = 3;
 	private static final int STARTGAMEREQUESTID = 4;
 	private static final int POINTSTABLEREQUESTID = 8;
-	private static final int ADDQUESTIONREESPONSEID = 9;
+	private static final int QUESTIONSRESPONSEID = 9;
 	private static final int ENDCONNECTIONRESPONSEID = 10;
-	private static final int QUESTIONSRESPONSEID = 11;
+	private static final int ADDQUESTIONREESPONSEID = 11;
 	private Boolean endConnection = false;
 	
 	public ClientThread(LoginScreen loginscreen){

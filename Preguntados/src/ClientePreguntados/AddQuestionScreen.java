@@ -128,7 +128,7 @@ public class AddQuestionScreen extends JFrame {
 				incorrectas.add(jRespuestaInc3tf.getText());
 				String categoria = new String ();
 				categoria = (String)jCategoriaComboBox.getSelectedItem();
-				Question question = new Question (jPreguntaTextArea.getText(), categoria, jRespuestaCorrectaTextField.getText(), incorrectas);
+				Question question = new Question (null, jPreguntaTextArea.getText(), categoria, jRespuestaCorrectaTextField.getText(), incorrectas);
 				Connection.sendPackage(question);
 			}
 		});

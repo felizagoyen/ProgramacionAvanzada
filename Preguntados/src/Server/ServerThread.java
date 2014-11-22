@@ -17,13 +17,10 @@ public class ServerThread extends Thread {
 	private static final int ADDQUESTIONREQUESTID = 9;
 	private static final int ENDCONECTIONREQUESTID = 10;
 	private static final int QUESTIONSREQUESTID = 11;
-	private Socket socket;
+	private Integer clientID;
 
-	// private Integer clientID;
-
-	public ServerThread(Integer clientID, Socket socket) {
-		// this.clientID = clientID;
-		this.socket = socket;
+	public ServerThread(Integer clientID) {
+		this.clientID = clientID;
 	}
 
 	public void run() {
@@ -32,13 +29,16 @@ public class ServerThread extends Thread {
 		ObjectInputStream inputStream = null;
 
 		try {
+			ClientSocket clientSocketInstance = ClientSocket.getInstance();
+			Socket socket = clientSocketInstance.getClientSocket(clientID);
 			outputStream = new ObjectOutputStream(socket.getOutputStream());
 			inputStream = new ObjectInputStream(socket.getInputStream());
-
+			
 			while (!endConection) {
 				Package packageOut = null;
 				Package packageIn = (Package) inputStream.readObject();
-
+				clientSocketInstance.blockSocket(clientID);
+				
 				switch (packageIn.getPackageID()) {
 				case LOGINREQUESTID: // Pedido de logeo del cliente
 					LoginRequest loginRequest = (LoginRequest) packageIn;
@@ -57,7 +57,7 @@ public class ServerThread extends Thread {
 					game.setQuestionsID(gameRequest.getQuestionsID());
 					break;
 				case PLAYERJOINREQUESTID: // Jugador uniendose a partida
-					Game.getGame().addPlayer(socket);
+					Game.getGame().addPlayer(clientID);
 					break;
 				case STARTGAMEREQUESTID: // Comenzar partida
 					Game.getGame().start();
@@ -78,7 +78,7 @@ public class ServerThread extends Thread {
 				}
 
 				if(packageOut != null) outputStream.writeObject(packageOut);
-
+				clientSocketInstance.releaseSocket(clientID);
 			}
 			if (outputStream != null) outputStream.close();
 			if (inputStream != null) inputStream.close();

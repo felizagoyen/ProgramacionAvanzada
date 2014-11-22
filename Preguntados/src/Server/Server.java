@@ -5,7 +5,7 @@ import java.net.ServerSocket;
 public class Server {
 
 	private static final int PORT = 10000;
-	private static final int MAXCONECTIONS = 10;
+	private static final int MAXCONNECTIONS = 10;
 	
 	public Server() {
 		ServerSocket serverSocket;
@@ -13,7 +13,7 @@ public class Server {
 		try {
 			serverSocket = new ServerSocket(PORT);
 			System.out.println("Puerto: " + PORT);
-			System.out.println("Conexiones maximas: " + MAXCONECTIONS);
+			System.out.println("Conexiones maximas: " + MAXCONNECTIONS);
 			System.out.println("Esperando conexiones...");
 			new AcceptClient(serverSocket).start(); //Hilo que se encarga de aceptar conecciones
 			

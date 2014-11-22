@@ -49,6 +49,19 @@ public class DataBaseUtil {
 		return null;
 	}
 	
+	public Question getQuestionByID(Integer id) {
+		ResultSet rs = queryDB("SELECT * FROM `preguntas` WHERE `id` = '"+ id +"'");
+		ArrayList<String> wrongAnswers = new ArrayList<String>();
+		try {
+			wrongAnswers.add(rs.getString("respuesta1"));
+			wrongAnswers.add(rs.getString("respuesta2"));
+			wrongAnswers.add(rs.getString("respuesta3"));
+			return new Question(id, rs.getString("pregunta"), rs.getString("categoria"), rs.getString("respuestaCorrecta"), wrongAnswers);
+		} catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 	
 	public ArrayList<Question> getQuestionDB(String categoria){
 		ResultSet rs = queryDB("SELECT * FROM `preguntas` WHERE `categoria` = '"+ categoria +"'");
@@ -60,7 +73,7 @@ public class DataBaseUtil {
 					answer.add(rs.getString("respuesta1"));
 					answer.add(rs.getString("respuesta2"));
 					answer.add(rs.getString("respuesta3"));
-					questions.add(new Question(rs.getString("pregunta"), rs.getString("categoria"),rs.getString("respuestaCorrecta"),answer));
+					questions.add(new Question(null, rs.getString("pregunta"), rs.getString("categoria"),rs.getString("respuestaCorrecta"),answer));
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -85,12 +98,8 @@ public class DataBaseUtil {
 	
 	public void setQuestionDB(Question question){
 		try {
-			ResultSet rs = queryDB("SELECT MAX(`ID`) FROM `preguntas`");
-			rs.next();
-			int id = rs.getInt(1);
-			
 			PreparedStatement ps = con.prepareStatement("INSERT INTO `preguntados`.`preguntas` (`ID`, `pregunta`, `respuesta1`, `respuesta2`, `respuesta3`, `respuestaCorrecta`, `categoria`) VALUES (?, ?, ?, ?, ?, ?, ?)");
-			ps.setInt(1, id + 1);
+			ps.setInt(1, getMaxQuestionId() + 1);
 			ps.setString(2, question.getQuestion());
 			ps.setString(3, question.getWrongAnswers().get(0));
 			ps.setString(4, question.getWrongAnswers().get(1));
@@ -104,13 +113,24 @@ public class DataBaseUtil {
 	
 	}
 	
+	public int getMaxQuestionId() {
+		ResultSet rs = queryDB("SELECT MAX(`ID`) FROM `preguntas`");
+		try {
+			rs.next();
+			return rs.getInt(1);	
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		}
+	}
+	
 	public static void main(String[] args) {
 		DataBaseUtil db = new DataBaseUtil();
 		ArrayList<String> wrongAnswers = new ArrayList<String>();
 		wrongAnswers.add("incorreta1");
 		wrongAnswers.add("incorreta2");
 		wrongAnswers.add("incorreta3");
-		Question question = new Question("Cuanto?", "categoria", "correcta", wrongAnswers);
+		Question question = new Question(null, "Cuanto?", "categoria", "correcta", wrongAnswers);
 		db.setQuestionDB(question);
 	}
 	
