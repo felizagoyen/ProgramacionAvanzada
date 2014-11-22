@@ -69,8 +69,8 @@ public class ServerThread extends Thread {
 					// solicito
 					break;
 				case ADDQUESTIONREQUESTID: // Agregar pregunta
-					// Question question = (Question) inputStream.readObject();
-					// Guardar en la DB
+					Question question = (Question) inputStream.readObject();
+					addQuestionToDB(question);
 					break;
 				case ENDCONECTIONREQUESTID: // Fin conexion
 					endConection = true;
@@ -93,6 +93,11 @@ public class ServerThread extends Thread {
 		if(user != null && user.getPass().equals(client.getPassword()))
 			return user.getTipo();
 		return -1;
+	}
+	
+	private void addQuestionToDB(Question question) {
+		DataBaseUtil db = new DataBaseUtil();
+		db.setQuestionDB(question);
 	}
 
 }

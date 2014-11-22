@@ -43,7 +43,7 @@ public class LoginScreen extends JFrame {
 				jCamposVaciosTextArea.setVisible(true);					
 			}
 			else {
-				LoginRequest loginrequest = new LoginRequest(jUserTextField.getText(), jPasswordField.getPassword().toString());
+				LoginRequest loginrequest = new LoginRequest(jUserTextField.getText(), new String(jPasswordField.getPassword()));
 				// ClientePreguntados cliente = new ClientePreguntados();
 				cliente.enviarPaquete(loginrequest);
 				LoginResponse loginresponse = (LoginResponse) cliente.recibirPaquete();

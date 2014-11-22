@@ -85,13 +85,18 @@ public class DataBaseUtil {
 	
 	public void setQuestionDB(Question question){
 		try {
-			PreparedStatement ps = con.prepareStatement("INSERT INTO `preguntados`.`preguntas` (`ID`, `pregunta`, `respuesta1`, `respuesta2`, `respuesta3`, `respuestaCorrecta`, `categoria`) VALUES (NULL, ?, ?, ?, ?, ?, ?)");
-			ps.setString(1, question.getQuestion());
-			ps.setString(2, question.getWrongAnswers().get(0));
-			ps.setString(3, question.getWrongAnswers().get(1));
-			ps.setString(4, question.getWrongAnswers().get(2));
-			ps.setString(5, question.getCorrectAnswer());
-			ps.setString(6, question.getCategory());
+			ResultSet rs = queryDB("SELECT MAX(`ID`) FROM `preguntas`");
+			rs.next();
+			int id = rs.getInt(1);
+			
+			PreparedStatement ps = con.prepareStatement("INSERT INTO `preguntados`.`preguntas` (`ID`, `pregunta`, `respuesta1`, `respuesta2`, `respuesta3`, `respuestaCorrecta`, `categoria`) VALUES (?, ?, ?, ?, ?, ?, ?)");
+			ps.setInt(1, id + 1);
+			ps.setString(2, question.getQuestion());
+			ps.setString(3, question.getWrongAnswers().get(0));
+			ps.setString(4, question.getWrongAnswers().get(1));
+			ps.setString(5, question.getWrongAnswers().get(2));
+			ps.setString(6, question.getCorrectAnswer());
+			ps.setString(7, question.getCategory());
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
