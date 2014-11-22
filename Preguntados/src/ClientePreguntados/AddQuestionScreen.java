@@ -1,6 +1,5 @@
 package ClientePreguntados;
 
-import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -44,7 +43,7 @@ public class AddQuestionScreen extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public AddQuestionScreen(final ClientePreguntados cliente) {
+	public AddQuestionScreen() {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 300, 500);
@@ -123,9 +122,9 @@ public class AddQuestionScreen extends JFrame {
 				incorrectas.add(jRespuestaInc3tf.getText());
 				String categoria = new String ();
 				categoria = (String)jCategoriaComboBox.getSelectedItem();
-				
-				
 				Question question = new Question (jPreguntaTextArea.getText(), categoria, jRespuestaCorrectaTextField.getText(), incorrectas);
+				
+				
 
 	
 			}
@@ -136,7 +135,7 @@ public class AddQuestionScreen extends JFrame {
 		JButton jAtrasButton = new JButton("Atr\u00E1s");
 		jAtrasButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				AdminMenuScreen ams = new AdminMenuScreen(cliente);
+				AdminMenuScreen ams = new AdminMenuScreen();
 				ams.setVisible(true);
 				setVisible(false);
 				
