@@ -1,6 +1,7 @@
 package ClientePreguntados;
 
 import java.awt.EventQueue;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -126,8 +127,9 @@ public class AddQuestionScreen extends JFrame {
 				
 				
 				Question question = new Question (jPreguntaTextArea.getText(), categoria, jRespuestaCorrectaTextField.getText(), incorrectas);
-
-	
+				cliente.enviarPaquete(question);
+				cliente.endConection();
+				System.exit(NORMAL);
 			}
 		});
 		jAgregarPreguntaButton.setBounds(23, 416, 243, 23);
