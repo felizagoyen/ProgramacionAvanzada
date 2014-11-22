@@ -73,10 +73,12 @@ public class ServerThread extends Thread {
 					addQuestionToDB(question);
 					break;
 				case ENDCONECTIONREQUESTID: // Fin conexion
+					packageOut = new EndClientConnectionResponse();
 					endConection = true;
 				}
 
-				if(!endConection && packageOut != null) outputStream.writeObject(packageOut);
+				//if(!endConection && packageOut != null) outputStream.writeObject(packageOut);
+				outputStream.writeObject(packageOut);
 
 			}
 			if (outputStream != null) outputStream.close();

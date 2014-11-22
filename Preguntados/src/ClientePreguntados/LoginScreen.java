@@ -42,7 +42,7 @@ public class LoginScreen extends JFrame {
 				jCamposVaciosTextArea.setVisible(true);					
 			}
 			else {
-				LoginRequest loginrequest = new LoginRequest(jUserTextField.getText(), jPasswordField.getPassword().toString());
+				LoginRequest loginrequest = new LoginRequest(jUserTextField.getText(), new String (jPasswordField.getPassword()));
 				Connection.sendPackage(loginrequest);
 			}
 		}
@@ -139,7 +139,6 @@ public class LoginScreen extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				EndClientConectionRequest er = new EndClientConectionRequest();
 				Connection.sendPackage(er);
-				Connection.endConnection();
 				System.exit(NORMAL);
 			}
 		});
@@ -151,7 +150,6 @@ public class LoginScreen extends JFrame {
 	
 	
 	public void actionLogin(LoginResponse loginresponse){
-		setVisible(false);
 		if (loginresponse.getUserType() == 0) {
 			AdminMenuScreen adminscreen = new AdminMenuScreen();
 			adminscreen.setVisible(true);

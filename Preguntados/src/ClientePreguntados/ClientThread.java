@@ -20,10 +20,9 @@ public class ClientThread extends Thread {
 	private static final int STARTGAMEREQUESTID = 4;
 	private static final int POINTSTABLEREQUESTID = 8;
 	private static final int ADDQUESTIONREQUESTID = 9;
-	private static final int ENDCONECTIONREQUESTID = 10;
+	private static final int ENDCONNECTIONRESPONSEID = 10;
 	private static final int QUESTIONSRESPONSEID = 11;
-	
-	public static boolean ok;
+	private Boolean endConnection = false;
 	
 	public ClientThread(LoginScreen loginscreen){
 		this.loginscreen = loginscreen;
@@ -31,12 +30,12 @@ public class ClientThread extends Thread {
 	}
 	
 	public void run() {
-		Boolean endConection = false;
+		
 
 		try {
 
 
-			while (!endConection) {
+			while (!endConnection) {
 
 				packageIn = (Package) Connection.recievePackage();
 
@@ -67,17 +66,16 @@ public class ClientThread extends Thread {
 				case ADDQUESTIONREQUESTID: // Agregar pregunta
 		
 					break;
-				case ENDCONECTIONREQUESTID: // Fin conexion
-					endConection = true;
+				case ENDCONNECTIONRESPONSEID: // Fin conexion
+					endConnection = true;
+					Connection.endConnection();
 				}
 
-				if(!endConection && packageOut != null) Connection.sendPackage(packageOut);
-
+//					if(!endConnection && packageOut != null) Connection.sendPackage(packageOut);
 			}
-//			if (Conection. != null) outputStream.close();
-//			if (inputStream != null) inputStream.close();
 			System.out.println("Conexion Finalizada");
-		} catch (Exception e) {
+		} catch (Exception 
+				e) {
 			e.printStackTrace();
 		}
 	}
@@ -95,6 +93,7 @@ public class ClientThread extends Thread {
 	public static void recieveScreen(JFrame screen){
 		JFrameScreen = screen;
 	}
+	
 
 
 }

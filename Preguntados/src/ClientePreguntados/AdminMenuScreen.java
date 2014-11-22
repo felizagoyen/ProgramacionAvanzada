@@ -92,7 +92,6 @@ public class AdminMenuScreen extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				EndClientConectionRequest er = new EndClientConectionRequest();
 				Connection.sendPackage(er);
-				Connection.endConnection();
 				System.exit(NORMAL);
 			}
 		});
