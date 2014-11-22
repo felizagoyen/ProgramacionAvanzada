@@ -27,6 +27,7 @@ public class AddQuestionScreen extends JFrame {
 	 */
 	private static final long serialVersionUID = -4009979497918877231L;
 	private JPanel contentPane;
+	private JTextArea jPreguntaTextArea;
 	private JTextField jRespuestaCorrectaTextField;
 	private JTextField jRespuestaInc1tf;
 	private JTextField jRespuestaInc2tf;
@@ -62,7 +63,7 @@ public class AddQuestionScreen extends JFrame {
 		lblPregunta.setBounds(21, 36, 71, 14);
 		contentPane.add(lblPregunta);
 		
-		final JTextArea jPreguntaTextArea = new JTextArea();
+		jPreguntaTextArea = new JTextArea();
 		jPreguntaTextArea.setBounds(33, 61, 233, 69);
 		contentPane.add(jPreguntaTextArea);
 		
@@ -145,5 +146,13 @@ public class AddQuestionScreen extends JFrame {
 		});
 		jAtrasButton.setBounds(177, 11, 89, 23);
 		contentPane.add(jAtrasButton);
+	}
+	
+	public void clearScreen(){
+		jPreguntaTextArea.setText("");
+		jRespuestaCorrectaTextField.setText("");
+		jRespuestaInc1tf.setText("");
+		jRespuestaInc2tf.setText("");
+		jRespuestaInc3tf.setText("");
 	}
 }

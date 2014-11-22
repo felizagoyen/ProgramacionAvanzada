@@ -158,6 +158,7 @@ public class LoginScreen extends JFrame {
 			if(loginresponse.getUserType() == 1){
 				UserMenuScreen userscreen = new UserMenuScreen();
 				userscreen.setVisible(true);
+				setVisible(false);
 			}else
 			{
 				jCamposVaciosTextArea.setVisible(false);

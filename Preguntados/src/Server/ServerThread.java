@@ -37,7 +37,6 @@ public class ServerThread extends Thread {
 
 			while (!endConection) {
 				Package packageOut = null;
-
 				Package packageIn = (Package) inputStream.readObject();
 
 				switch (packageIn.getPackageID()) {
@@ -69,16 +68,16 @@ public class ServerThread extends Thread {
 					// solicito
 					break;
 				case ADDQUESTIONREQUESTID: // Agregar pregunta
-					Question question = (Question) inputStream.readObject();
+					Question question = (Question) packageIn;
 					addQuestionToDB(question);
+					packageOut = new AddQuestionResponse(true);
 					break;
 				case ENDCONECTIONREQUESTID: // Fin conexion
 					packageOut = new EndClientConnectionResponse();
 					endConection = true;
 				}
 
-				//if(!endConection && packageOut != null) outputStream.writeObject(packageOut);
-				outputStream.writeObject(packageOut);
+				if(packageOut != null) outputStream.writeObject(packageOut);
 
 			}
 			if (outputStream != null) outputStream.close();

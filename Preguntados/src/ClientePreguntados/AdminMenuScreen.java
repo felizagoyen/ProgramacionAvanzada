@@ -104,6 +104,7 @@ public class AdminMenuScreen extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				AddQuestionScreen aq = new AddQuestionScreen();
 				aq.setVisible(true);
+				ClientThread.recieveScreen(aq);
 				dispose();
 			}
 		});

@@ -15,6 +15,7 @@ public class Question implements Serializable, Package {
 
 	public Question(String question, String category, String correctAnswer,
 			ArrayList<String> wrongAnswers) {
+		this.id = 0;
 		this.question = question;
 		this.category = category;
 		this.correctAnswer = correctAnswer;

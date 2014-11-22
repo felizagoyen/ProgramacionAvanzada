@@ -3,6 +3,7 @@ package ClientePreguntados;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 
+import Packages.AddQuestionResponse;
 import Packages.LoginResponse;
 import Packages.Package;
 import Packages.QuestionsResponse;
@@ -19,7 +20,7 @@ public class ClientThread extends Thread {
 	private static final int PLAYERJOINREQUESTID = 3;
 	private static final int STARTGAMEREQUESTID = 4;
 	private static final int POINTSTABLEREQUESTID = 8;
-	private static final int ADDQUESTIONREQUESTID = 9;
+	private static final int ADDQUESTIONREESPONSEID = 9;
 	private static final int ENDCONNECTIONRESPONSEID = 10;
 	private static final int QUESTIONSRESPONSEID = 11;
 	private Boolean endConnection = false;
@@ -63,8 +64,10 @@ public class ClientThread extends Thread {
 				case POINTSTABLEREQUESTID:
 			
 					break;
-				case ADDQUESTIONREQUESTID: // Agregar pregunta
-		
+				case ADDQUESTIONREESPONSEID: // Agregar pregunta
+					AddQuestionResponse addResponse = (AddQuestionResponse) packageIn;
+					if(addResponse.getValid() == true)
+							((AddQuestionScreen)JFrameScreen).clearScreen();
 					break;
 				case ENDCONNECTIONRESPONSEID: // Fin conexion
 					endConnection = true;
