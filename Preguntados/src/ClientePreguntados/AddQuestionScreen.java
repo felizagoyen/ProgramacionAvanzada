@@ -1,10 +1,10 @@
 package ClientePreguntados;
 
-<<<<<<< HEAD
-=======
+
 import java.awt.EventQueue;
 
->>>>>>> origin/master
+
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -128,17 +128,7 @@ public class AddQuestionScreen extends JFrame {
 				String categoria = new String ();
 				categoria = (String)jCategoriaComboBox.getSelectedItem();
 				Question question = new Question (jPreguntaTextArea.getText(), categoria, jRespuestaCorrectaTextField.getText(), incorrectas);
-				
-				
-<<<<<<< HEAD
-
-	
-=======
-				Question question = new Question (jPreguntaTextArea.getText(), categoria, jRespuestaCorrectaTextField.getText(), incorrectas);
-				cliente.enviarPaquete(question);
-				//cliente.endConection();
-				//System.exit(NORMAL);
->>>>>>> origin/master
+				Connection.sendPackage(question);
 			}
 		});
 		jAgregarPreguntaButton.setBounds(23, 416, 243, 23);
