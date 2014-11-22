@@ -1,4 +1,4 @@
-DROP DATABASE preguntados;
+DROP DATABASE IF EXISTS preguntados;
 CREATE DATABASE preguntados;
 
 USE preguntados;
