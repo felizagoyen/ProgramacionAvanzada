@@ -15,7 +15,6 @@ public class Game extends Thread {
 	private Integer maxPlayers;
 	private ArrayList<Integer> questionsID = new ArrayList<Integer>();
 	private ArrayList<Integer> players = new ArrayList<Integer>();
-	private Integer roundNumber;
 	
 	private Game() {
 		
@@ -37,10 +36,6 @@ public class Game extends Thread {
 		this.questionsID = questionsID;
 	}
 	
-	public void setRoundNumber(Integer roundNumber) {
-		this.roundNumber = roundNumber;
-	}
-	
 	public void addPlayer(Integer playerID) {
 		players.add(playerID);
 	}
@@ -53,27 +48,21 @@ public class Game extends Thread {
 		return maxPlayers;
 	}
 	
-	public Integer getQuestionID() {
-		return questionsID.get(roundNumber);
-	}
-	
-	public Integer getRoundNumber() {
-		return roundNumber;
-	}
-	
 	public void run() {
 		DataBaseUtil db = new DataBaseUtil();
 		ClientSocket clientSocketInstance = ClientSocket.getInstance();
 
-		for(int round = 0; round < MAXROUND; round++) {
+		for(int roundNumber = 0; roundNumber < MAXROUND; roundNumber++) {
 			Integer questionId = questionsID.get(roundNumber);
 			Question question = null;
 
 			if(questionId == null) {
 				int maxId = db.getMaxQuestionId();
-				while(!questionId.equals(-1) && !questionsID.contains(questionId)) {
+				questionId = (int) Math.ceil((Math.random() * (maxId - 1)) + 1);
+				while(!questionId.equals(-1) && questionsID.contains(questionId)) {
 					questionId = (int) Math.ceil((Math.random() * (maxId - 1)) + 1);
 				}
+				questionsID.set(roundNumber, questionId);
 			} 
 			question = db.getQuestionByID(questionId);
 			
@@ -81,7 +70,9 @@ public class Game extends Thread {
 				try {
 					clientSocketInstance.blockSocket(eachPlayerID);
 					ObjectOutputStream outputStream = new ObjectOutputStream(clientSocketInstance.getClientSocket(eachPlayerID).getOutputStream());
+					System.out.println(question.getQuestion() + " - " + question.getCorrectAnswer() + " - " + question.getCategory());
 					outputStream.writeObject(question);
+					Thread.sleep(4000);
 					clientSocketInstance.releaseSocket(eachPlayerID);
 				} catch(Exception e) {
 					e.printStackTrace();

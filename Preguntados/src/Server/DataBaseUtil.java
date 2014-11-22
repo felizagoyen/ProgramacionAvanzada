@@ -53,6 +53,7 @@ public class DataBaseUtil {
 		ResultSet rs = queryDB("SELECT * FROM `preguntas` WHERE `id` = '"+ id +"'");
 		ArrayList<String> wrongAnswers = new ArrayList<String>();
 		try {
+			rs.next();
 			wrongAnswers.add(rs.getString("respuesta1"));
 			wrongAnswers.add(rs.getString("respuesta2"));
 			wrongAnswers.add(rs.getString("respuesta3"));
