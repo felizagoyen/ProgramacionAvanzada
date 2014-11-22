@@ -7,7 +7,7 @@ import java.net.Socket;
 import Packages.*;
 import Packages.Package;
 
-public class ClientConection extends Thread {
+public class ServerThread extends Thread {
 
 	private static final int LOGINREQUESTID = 1;
 	private static final int CREATEGAMEREQUESTID = 2;
@@ -21,7 +21,7 @@ public class ClientConection extends Thread {
 
 	// private Integer clientID;
 
-	public ClientConection(Integer clientID, Socket socket) {
+	public ServerThread(Integer clientID, Socket socket) {
 		// this.clientID = clientID;
 		this.socket = socket;
 	}
@@ -46,7 +46,7 @@ public class ClientConection extends Thread {
 					packageOut = new LoginResponse(validateClient(loginRequest));
 					break;
 				case QUESTIONSREQUESTID:  // Lo agregamos para probar si como cliente recibiamos correcamente las preguntas 
-										  //que nos mandaría la base da datos para hacer la elección al crear la partida.
+										  //que nos mandarÃ­a la base da datos para hacer la elecciÃ³n al crear la partida.
 					QuestionsRequest questionsRequest = (QuestionsRequest) packageIn;
 					packageOut = new QuestionsResponse ();
 					break;
@@ -69,8 +69,8 @@ public class ClientConection extends Thread {
 					// solicito
 					break;
 				case ADDQUESTIONREQUESTID: // Agregar pregunta
-					// Question question = (Question) inputStream.readObject();
-					// Guardar en la DB
+					Question question = (Question) inputStream.readObject();
+					addQuestionToDB(question);
 					break;
 				case ENDCONECTIONREQUESTID: // Fin conexion
 					endConection = true;
@@ -88,7 +88,16 @@ public class ClientConection extends Thread {
 	}
 
 	private Integer validateClient(LoginRequest client) {
-		return 0;
+		DataBaseUtil db = new DataBaseUtil();
+		User user = db.getUserDB(client.getUser());
+		if(user != null && user.getPass().equals(client.getPassword()))
+			return user.getTipo();
+		return -1;
+	}
+	
+	private void addQuestionToDB(Question question) {
+		DataBaseUtil db = new DataBaseUtil();
+		db.setQuestionDB(question);
 	}
 
 }

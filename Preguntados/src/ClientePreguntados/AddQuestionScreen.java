@@ -1,5 +1,10 @@
 package ClientePreguntados;
 
+<<<<<<< HEAD
+=======
+import java.awt.EventQueue;
+
+>>>>>>> origin/master
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -106,7 +111,7 @@ public class AddQuestionScreen extends JFrame {
 		contentPane.add(jCategoriaComboBox);
 		jCategoriaComboBox.addItem("Deportes");
 		jCategoriaComboBox.addItem("Entretenimiento");
-		jCategoriaComboBox.addItem("Geografía");
+		jCategoriaComboBox.addItem("Geografï¿½a");
 		jCategoriaComboBox.addItem("Historia");
 		jCategoriaComboBox.addItem("Arte");
 		jCategoriaComboBox.addItem("Ciencia");
@@ -125,8 +130,15 @@ public class AddQuestionScreen extends JFrame {
 				Question question = new Question (jPreguntaTextArea.getText(), categoria, jRespuestaCorrectaTextField.getText(), incorrectas);
 				
 				
+<<<<<<< HEAD
 
 	
+=======
+				Question question = new Question (jPreguntaTextArea.getText(), categoria, jRespuestaCorrectaTextField.getText(), incorrectas);
+				cliente.enviarPaquete(question);
+				//cliente.endConection();
+				//System.exit(NORMAL);
+>>>>>>> origin/master
 			}
 		});
 		jAgregarPreguntaButton.setBounds(23, 416, 243, 23);

@@ -80,9 +80,6 @@ public class Game extends Thread {
 					e.printStackTrace();
 				}
 			}
-			
-			
 		}
 	}
-	
 }

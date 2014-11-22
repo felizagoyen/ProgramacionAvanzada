@@ -2,13 +2,16 @@ package Server;
 
 import java.sql.*;
 import java.util.ArrayList;
+import Packages.*;
+
+import Packages.Question;
 
 public class DataBaseUtil {
-	private ConectionDB conection = null;
+	private ConnectionDB conection = null;
 	private Connection con = null;
 	
 	public DataBaseUtil() {
-		conection = ConectionDB.getConection();
+		conection = ConnectionDB.getConection();
 		con = conection.getCon();
 	}
 	
@@ -33,21 +36,82 @@ public class DataBaseUtil {
 	}
 	
 	
-	public static void main(String[] args) {
-		DataBaseUtil db = new DataBaseUtil();
-		ArrayList<User> users = new ArrayList<User>();
+	public User getUserDB(String user){
+		ResultSet rs = queryDB("SELECT * FROM `cuentas` WHERE `user` = '"+ user +"'");
+		if(rs!=null){
+			try {
+				while(rs.next())
+					return new User(rs.getString("USER"), rs.getString("PASS"), rs.getInt("TIPO"));
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+	
+	
+	public ArrayList<Question> getQuestionDB(String categoria){
+		ResultSet rs = queryDB("SELECT * FROM `preguntas` WHERE `categoria` = '"+ categoria +"'");
+		ArrayList<Question> questions = new ArrayList<Question>();
+		if(rs!=null){
+			try {
+				while(rs.next()){
+					ArrayList<String> answer = new ArrayList<String>();
+					answer.add(rs.getString("respuesta1"));
+					answer.add(rs.getString("respuesta2"));
+					answer.add(rs.getString("respuesta3"));
+					questions.add(new Question(rs.getString("pregunta"), rs.getString("categoria"),rs.getString("respuestaCorrecta"),answer));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return questions;
+	}
+	
+	public ArrayList<String> getCategoryDB(){
+		ResultSet rs = queryDB("SELECT DISTINCT `categoria` FROM `preguntas`");
+		ArrayList<String> categorias = new ArrayList<String>();
+		if(rs!=null){
+			try {
+				while(rs.next())
+					categorias.add(rs.getString("categoria"));
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return categorias;
+	}
+	
+	public void setQuestionDB(Question question){
 		try {
-			ResultSet rs = db.queryDB("SELECT * FROM `cuentas`");
-			while(rs.next()){
-				users.add(new User(rs.getString("user"), rs.getString("pass")));
-			}
-			for(User user: users){
-				System.out.println(user);
-			}
+			ResultSet rs = queryDB("SELECT MAX(`ID`) FROM `preguntas`");
+			rs.next();
+			int id = rs.getInt(1);
+			
+			PreparedStatement ps = con.prepareStatement("INSERT INTO `preguntados`.`preguntas` (`ID`, `pregunta`, `respuesta1`, `respuesta2`, `respuesta3`, `respuestaCorrecta`, `categoria`) VALUES (?, ?, ?, ?, ?, ?, ?)");
+			ps.setInt(1, id + 1);
+			ps.setString(2, question.getQuestion());
+			ps.setString(3, question.getWrongAnswers().get(0));
+			ps.setString(4, question.getWrongAnswers().get(1));
+			ps.setString(5, question.getWrongAnswers().get(2));
+			ps.setString(6, question.getCorrectAnswer());
+			ps.setString(7, question.getCategory());
+			ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		db.DataBaseClose();
+	
+	}
+	
+	public static void main(String[] args) {
+		DataBaseUtil db = new DataBaseUtil();
+		ArrayList<String> wrongAnswers = new ArrayList<String>();
+		wrongAnswers.add("incorreta1");
+		wrongAnswers.add("incorreta2");
+		wrongAnswers.add("incorreta3");
+		Question question = new Question("Cuanto?", "categoria", "correcta", wrongAnswers);
+		db.setQuestionDB(question);
 	}
 	
 }
