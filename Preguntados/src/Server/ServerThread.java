@@ -9,7 +9,6 @@ import Packages.Package;
 
 public class ServerThread extends Thread {
 
-
 	private static final int LOGINREQUESTID = 1;
 	private static final int CREATEGAMEREQUESTID = 2;
 	private static final int PLAYERJOINREQUESTID = 3;
@@ -91,14 +90,9 @@ public class ServerThread extends Thread {
 	private Integer validateClient(LoginRequest client) {
 		DataBaseUtil db = new DataBaseUtil();
 		User user = db.getUserDB(client.getUser());
-		if(user.getPass().equals(client.getPassword())){
-			if(user.getTipo()==1)
-				return 1;
-			else
-				return 0;
-		}
-		else
-			return -1;
+		if(user != null && user.getPass().equals(client.getPassword()))
+			return user.getTipo();
+		return -1;
 	}
 
 }
