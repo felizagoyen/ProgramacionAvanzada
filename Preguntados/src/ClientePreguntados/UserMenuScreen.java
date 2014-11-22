@@ -20,24 +20,12 @@ public class UserMenuScreen extends JFrame {
 
 	/**
 	 * Launch the application.
-	 */
-	// public static void main(String[] args) {
-	// EventQueue.invokeLater(new Runnable() {
-	// public void run() {
-	// try {
-	// UserMenuScreen frame = new UserMenuScreen();
-	// frame.setVisible(true);
-	// } catch (Exception e) {
-	// e.printStackTrace();
-	// }
-	// }
-	// });
-	// }
+
 
 	/**
 	 * Create the frame.
 	 */
-	public UserMenuScreen(final ClientePreguntados cliente) {
+	public UserMenuScreen() {
 		setTitle("Preguntados");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 300, 500);

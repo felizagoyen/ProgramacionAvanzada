@@ -38,7 +38,7 @@ public class CreateGameScreen extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public CreateGameScreen(final ClientePreguntados cliente) {
+	public CreateGameScreen() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -67,7 +67,7 @@ public class CreateGameScreen extends JFrame {
 		JButton btnElegirPreguntas = new JButton("Elegir preguntas");
 		btnElegirPreguntas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ChooseQuestionsScreen choosequestionsscreen = new ChooseQuestionsScreen(cliente);
+				ChooseQuestionsScreen choosequestionsscreen = new ChooseQuestionsScreen();
 				choosequestionsscreen.setVisible(true);
 				setVisible(false);
 			}

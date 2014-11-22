@@ -8,16 +8,16 @@ public class QuestionsResponse implements Serializable, Package {
 	
 
 	private static final long serialVersionUID = 6845559714710805684L;
-	private ArrayList<StringQuestion> questions;
+	private ArrayList<Question> questions;
 	private static final Integer PACKAGEID = 11;
 	
 	public QuestionsResponse (){
-		this.questions = new ArrayList<StringQuestion> ();
+		this.questions = new ArrayList<Question> ();
 		
-		questions.add(new StringQuestion("Qué equipo pechea siempre al final del torneo?", 1));
-		questions.add(new StringQuestion("Quién descubrió el continente de zona sur?", 2));
-		questions.add(new StringQuestion("Quien no va a dejar nunca la falopa", 3));
-		questions.add(new StringQuestion("La anterior pregunta tiene como respuesta al diego?", 4));
+		questions.add(new Question("Qué equipo pechea siempre al final del torneo?"));
+		questions.add(new Question("Quién descubrió el continente de zona sur?"));
+		questions.add(new Question("Quien no va a dejar nunca la falopa"));
+		questions.add(new Question("La anterior pregunta tiene como respuesta al diego?"));
 		
 		
 	}
@@ -29,7 +29,7 @@ public class QuestionsResponse implements Serializable, Package {
 		return PACKAGEID;
 	}
 	
-	public ArrayList<StringQuestion> getQuestions() {
+	public ArrayList<Question> getQuestions() {
 		return questions;
 	}
 	

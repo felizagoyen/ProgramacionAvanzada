@@ -15,10 +15,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 
+import Packages.Question;
 import Packages.QuestionsRequest;
 import Packages.QuestionsResponse;
-import Packages.StringQuestion;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -29,6 +28,8 @@ public class ChooseQuestionWindow extends JDialog {
 	 */
 	private static final long serialVersionUID = 2375532637553844038L;
 	private final JPanel contentPanel = new JPanel();
+	final  DefaultListModel<String> model = new DefaultListModel<String>();
+	final  JList<String> questionList = new JList<String>();
 	
 
 	/**
@@ -47,7 +48,7 @@ public class ChooseQuestionWindow extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public ChooseQuestionWindow(final JComboBox combo, final ClientePreguntados cliente) {
+	public ChooseQuestionWindow(final JComboBox<String> combo) {
 		setBounds(100, 100, 571, 411);
 		setTitle("Preguntados");
 		getContentPane().setLayout(null);
@@ -61,7 +62,6 @@ public class ChooseQuestionWindow extends JDialog {
 			buttonPane.setBounds(0, 340, 545, 33);
 			getContentPane().add(buttonPane);
 			buttonPane.setLayout(null);
-			final JList<String> questionList = new JList<String>();
 			questionList.setBackground(Color.ORANGE);
 			questionList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 			questionList.setModel(new AbstractListModel() {
@@ -79,44 +79,38 @@ public class ChooseQuestionWindow extends JDialog {
 			JScrollPane barraDesplazamiento = new JScrollPane(questionList);
 			barraDesplazamiento.setBounds(37, 56, 465, 261);
 			contentPanel.add(barraDesplazamiento);
-			final DefaultListModel<String> modelo = new DefaultListModel<String>();
 			
 			final JComboBox<String> categoriaComboBox = new JComboBox<String>();
 			categoriaComboBox.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					modelo.removeAllElements();
+					model.removeAllElements();
 					switch(categoriaComboBox.getSelectedItem().toString()){  //Segun que categoria sea, pedir a servidor todas 
 																			 //las preguntas que esten en base de datos.
 					case "Deportes":
-						modelo.addElement("¿Cuantas copas libertadores tiene Boca Juniors?");
-						modelo.addElement("¿En que año descendió River Plate a la Segunda Division del futbol argentino?");
-						modelo.addElement("¿Quien erró el unico penal en la serie de penales en la semifinal de la Copa Libertadores 2004 entre Boca y River?");
-						cliente.enviarPaquete(new QuestionsRequest(categoriaComboBox.getSelectedItem().toString()));
-						QuestionsResponse qResponse = (QuestionsResponse) cliente.recibirPaquete();
-						for(StringQuestion cadauno : qResponse.getQuestions()){
-							modelo.addElement(cadauno.getQuestion());							
-						}
-						questionList.setModel(modelo);				
+						model.addElement("¿Cuantas copas libertadores tiene Boca Juniors?");
+						model.addElement("¿En que año descendió River Plate a la Segunda Division del futbol argentino?");
+						model.addElement("¿Quien erró el unico penal en la serie de penales en la semifinal de la Copa Libertadores 2004 entre Boca y River?");
+						Connection.sendPackage(new QuestionsRequest(categoriaComboBox.getSelectedItem().toString()));			
 						break;
 					case "Entretenimiento":
-						modelo.addElement("¿En que año se estrenó 'Volver al Futuro?'");
-						questionList.setModel(modelo);				
+						model.addElement("¿En que año se estrenó 'Volver al Futuro?'");
+						questionList.setModel(model);				
 						break;
 					case "Ciencia":
-						modelo.addElement("¿Cuál es el quinto planeta más cercano al Sol?");
-						questionList.setModel(modelo);				
+						model.addElement("¿Cuál es el quinto planeta más cercano al Sol?");
+						questionList.setModel(model);				
 						break;
 					case "Historia":
-						modelo.addElement("¿En que año asumió Raul Alfonsín como presidente?");
-						questionList.setModel(modelo);				
+						model.addElement("¿En que año asumió Raul Alfonsín como presidente?");
+						questionList.setModel(model);				
 						break;
 					case "Arte":
-						modelo.addElement("¿En que año se terminó de construir la Capilla Sixtina?");
-						questionList.setModel(modelo);				
+						model.addElement("¿En que año se terminó de construir la Capilla Sixtina?");
+						questionList.setModel(model);				
 						break;
 					case "Geografía":
-						modelo.addElement("¿De dónde son originarios los Moai?");
-						questionList.setModel(modelo);				
+						model.addElement("¿De dónde son originarios los Moai?");
+						questionList.setModel(model);				
 						break;
 						
 					}
@@ -125,7 +119,7 @@ public class ChooseQuestionWindow extends JDialog {
 					
 				}
 			});
-			categoriaComboBox.setModel(new DefaultComboBoxModel(new String[] {"Categor\u00EDa", "Deportes", "Ciencia", "Entretenimiento", "Geograf\u00EDa", "Historia", "Arte"}));
+			categoriaComboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"Categor\u00EDa", "Deportes", "Ciencia", "Entretenimiento", "Geograf\u00EDa", "Historia", "Arte"}));
 			categoriaComboBox.setBounds(159, 25, 195, 20);
 			contentPanel.add(categoriaComboBox);
 			{
@@ -153,5 +147,12 @@ public class ChooseQuestionWindow extends JDialog {
 			}
 		}
 		
+	}
+	
+	public void showQuestions (QuestionsResponse qResponse){
+		for(Question cadauno : qResponse.getQuestions()){
+			model.addElement(cadauno.getQuestion());							
+		}
+		questionList.setModel(model);
 	}
 }

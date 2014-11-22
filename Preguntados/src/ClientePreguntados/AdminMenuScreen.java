@@ -41,7 +41,7 @@ public class AdminMenuScreen extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public AdminMenuScreen(final ClientePreguntados cliente) {
+	public AdminMenuScreen() {
 		setTitle("Preguntados");
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setBounds(100, 100, 300, 500);
@@ -61,7 +61,7 @@ public class AdminMenuScreen extends JFrame {
 		jCrearPartidaButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		jCrearPartidaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				CreateGameScreen creategamescreen = new CreateGameScreen(cliente);
+				CreateGameScreen creategamescreen = new CreateGameScreen();
 				creategamescreen.setVisible(true);
 				setVisible(false);
 			}
@@ -91,8 +91,8 @@ public class AdminMenuScreen extends JFrame {
 		jSalirButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				EndClientConectionRequest er = new EndClientConectionRequest();
-				cliente.enviarPaquete(er);
-				cliente.endConection();
+				Connection.sendPackage(er);
+				Connection.endConnection();
 				System.exit(NORMAL);
 			}
 		});
@@ -103,7 +103,7 @@ public class AdminMenuScreen extends JFrame {
 		JButton btnNewButton_2 = new JButton("Agregar pregunta ");
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				AddQuestionScreen aq = new AddQuestionScreen(cliente);
+				AddQuestionScreen aq = new AddQuestionScreen();
 				aq.setVisible(true);
 				dispose();
 			}
@@ -112,5 +112,7 @@ public class AdminMenuScreen extends JFrame {
 		btnNewButton_2.setBounds(65, 240, 162, 23);
 		contentPane.add(btnNewButton_2);
 	}
+	
+
 
 }

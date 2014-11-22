@@ -1,38 +1,37 @@
 package ClientePreguntados;
 
 import javax.swing.JFrame;
+
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import java.awt.Color;
-
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
 import javax.swing.JTextArea;
 import javax.swing.JPasswordField;
 
 import Packages.EndClientConectionRequest;
 import Packages.LoginRequest;
 import Packages.LoginResponse;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+
+
 
 public class LoginScreen extends JFrame {
 
 	public final class ActionLogin implements ActionListener {
-		private final JTextArea jUsuarioInexistenteTextArea;
-		private final ClientePreguntados cliente;
+		private  final JTextArea jUsuarioInexistenteTextArea;
 		private final JTextArea jCamposVaciosTextArea;
 
-		public ActionLogin(JTextArea jUsuarioInexistenteTextArea,
-				ClientePreguntados cliente, JTextArea jCamposVaciosTextArea) {
+		public ActionLogin(JTextArea jUsuarioInexistenteTextArea, JTextArea jCamposVaciosTextArea) {
 			this.jUsuarioInexistenteTextArea = jUsuarioInexistenteTextArea;
-			this.cliente = cliente;
 			this.jCamposVaciosTextArea = jCamposVaciosTextArea;
 		}
 
@@ -44,24 +43,7 @@ public class LoginScreen extends JFrame {
 			}
 			else {
 				LoginRequest loginrequest = new LoginRequest(jUserTextField.getText(), jPasswordField.getPassword().toString());
-				// ClientePreguntados cliente = new ClientePreguntados();
-				cliente.enviarPaquete(loginrequest);
-				LoginResponse loginresponse = (LoginResponse) cliente.recibirPaquete();
-				setVisible(false);
-				if (loginresponse.getUserType() == 0) {
-					AdminMenuScreen adminscreen = new AdminMenuScreen(cliente);
-					adminscreen.setVisible(true);
-				} else {
-					if(loginresponse.getUserType() == 1){
-						UserMenuScreen userscreen = new UserMenuScreen(cliente);
-						userscreen.setVisible(true);
-					}else
-					{
-						jCamposVaciosTextArea.setVisible(false);
-						jUsuarioInexistenteTextArea.setVisible(true);
-					}
-				}
-
+				Connection.sendPackage(loginrequest);
 			}
 		}
 	}
@@ -70,6 +52,8 @@ public class LoginScreen extends JFrame {
 	private JPanel contentPane;
 	private JTextField jUserTextField;
 	private JPasswordField jPasswordField;
+	public static JTextArea jUsuarioInexistenteTextArea;
+	public static JTextArea jCamposVaciosTextArea;
 
 	/**
 	 * Launch the application.
@@ -113,7 +97,7 @@ public class LoginScreen extends JFrame {
 		contentPane.add(jUserTextField);
 		jUserTextField.setColumns(10);
 
-		final JTextArea jCamposVaciosTextArea = new JTextArea();
+		/*final JTextArea*/ jCamposVaciosTextArea = new JTextArea();
 		jCamposVaciosTextArea.setEditable(false);
 		jCamposVaciosTextArea.setBackground(new Color(255, 153, 0));
 		jCamposVaciosTextArea.setLineWrap(true);
@@ -122,7 +106,7 @@ public class LoginScreen extends JFrame {
 		jCamposVaciosTextArea.setVisible(false);
 		contentPane.add(jCamposVaciosTextArea);
 		
-		final JTextArea jUsuarioInexistenteTextArea = new JTextArea();
+		/*final JTextArea*/ jUsuarioInexistenteTextArea = new JTextArea();
 		jUsuarioInexistenteTextArea.setBackground(new Color(255, 153, 0));
 		jUsuarioInexistenteTextArea.setLineWrap(true);
 		jUsuarioInexistenteTextArea.setEditable(false);
@@ -133,8 +117,9 @@ public class LoginScreen extends JFrame {
 
 		JButton jLoginButton = new JButton("Entrar");
 		
+		
 
-		jLoginButton.addActionListener(new ActionLogin(jUsuarioInexistenteTextArea, cliente, jCamposVaciosTextArea));
+		jLoginButton.addActionListener(new ActionLogin(jUsuarioInexistenteTextArea, jCamposVaciosTextArea));
 		jLoginButton.setBounds(84, 209, 89, 23);
 		contentPane.add(jLoginButton);
 
@@ -143,7 +128,7 @@ public class LoginScreen extends JFrame {
 		jPasswordField.addKeyListener(new KeyAdapter() {
 			public void keyReleased(KeyEvent arg0) {
 				if(arg0.getKeyCode() == KeyEvent.VK_ENTER)
-					new ActionLogin (jUsuarioInexistenteTextArea, cliente, jCamposVaciosTextArea).actionPerformed(null);
+					new ActionLogin (jUsuarioInexistenteTextArea, jCamposVaciosTextArea).actionPerformed(null);
 			}
 		});
 		jPasswordField.setBounds(136, 157, 86, 20);
@@ -153,8 +138,8 @@ public class LoginScreen extends JFrame {
 		jSalirButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				EndClientConectionRequest er = new EndClientConectionRequest();
-				cliente.enviarPaquete(er);
-				cliente.endConection();
+				Connection.sendPackage(er);
+				Connection.endConnection();
 				System.exit(NORMAL);
 			}
 		});
@@ -162,5 +147,25 @@ public class LoginScreen extends JFrame {
 		contentPane.add(jSalirButton);
 		
 
+	}
+	
+	
+	public void actionLogin(LoginResponse loginresponse){
+		setVisible(false);
+		if (loginresponse.getUserType() == 0) {
+			AdminMenuScreen adminscreen = new AdminMenuScreen();
+			adminscreen.setVisible(true);
+			setVisible(false);
+		} else {
+			if(loginresponse.getUserType() == 1){
+				UserMenuScreen userscreen = new UserMenuScreen();
+				userscreen.setVisible(true);
+			}else
+			{
+				jCamposVaciosTextArea.setVisible(false);
+				jUsuarioInexistenteTextArea.setVisible(true);
+			}
+		}
+		
 	}
 }
