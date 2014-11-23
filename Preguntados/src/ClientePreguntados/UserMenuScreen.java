@@ -4,10 +4,17 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextArea;
+
 import java.awt.Font;
+
 import javax.swing.JButton;
+
+import Packages.EndClientConectionRequest;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.awt.Color;
 
 public class UserMenuScreen extends JFrame {
@@ -27,7 +34,8 @@ public class UserMenuScreen extends JFrame {
 	 */
 	public UserMenuScreen() {
 		setTitle("Preguntados");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		addWindowListener(new ClosingListener());
 		setBounds(100, 100, 300, 500);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(255, 153, 0));

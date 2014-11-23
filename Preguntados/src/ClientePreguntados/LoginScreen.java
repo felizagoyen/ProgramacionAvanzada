@@ -77,6 +77,7 @@ public class LoginScreen extends JFrame {
 	public LoginScreen(final ClientePreguntados cliente) {
 		setBackground(Color.BLUE);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		addWindowListener(new ClosingListener());
 		setBounds(100, 100, 300, 500);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(255, 153, 0));
