@@ -42,6 +42,10 @@ public class Question implements Serializable, Package {
 	public ArrayList<String> getWrongAnswers() {
 		return wrongAnswers;
 	}
+	
+	public Integer getID(){
+		return id;
+	}
 
 	public Integer getPackageID() {
 		return PACKAGEID;
