@@ -3,6 +3,7 @@ package Server;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 
 import Packages.*;
 import Packages.Package;
@@ -13,6 +14,7 @@ public class ServerThread extends Thread {
 	private static final int CREATEGAMEREQUESTID = 2;
 	private static final int PLAYERJOINREQUESTID = 3;
 	private static final int STARTGAMEREQUESTID = 4;
+	private static final int CATEGORYREQUESTID = 5;
 	private static final int POINTSTABLEREQUESTID = 8;
 	private static final int ADDQUESTIONREQUESTID = 9;
 	private static final int ENDCONECTIONREQUESTID = 10;
@@ -42,7 +44,7 @@ public class ServerThread extends Thread {
 				case QUESTIONSREQUESTID:  // Lo agregamos para probar si como cliente recibiamos correcamente las preguntas 
 										  //que nos mandaría la base da datos para hacer la elección al crear la partida.
 					QuestionsRequest questionsRequest = (QuestionsRequest) packageIn;
-					packageOut = new QuestionsResponse ();
+					packageOut = new QuestionsResponse(getQuestionByCategory(questionsRequest.getCategory()));
 					break;
 				case CREATEGAMEREQUESTID: // Creacion de partida
 					GameRequest gameRequest = (GameRequest) packageIn;
@@ -56,6 +58,9 @@ public class ServerThread extends Thread {
 					break;
 				case STARTGAMEREQUESTID: // Comenzar partida
 					Game.getGame().start();
+					break;
+				case CATEGORYREQUESTID:
+					//Category category = new
 					break;
 				case POINTSTABLEREQUESTID:
 					// Busco la tabla de puntajes de la base de datos
@@ -95,6 +100,11 @@ public class ServerThread extends Thread {
 	private void addQuestionToDB(Question question) {
 		DataBaseUtil db = new DataBaseUtil();
 		db.setQuestionDB(question);
+	}
+	
+	private ArrayList<Question> getQuestionByCategory(String category) {
+		DataBaseUtil db = new DataBaseUtil();
+		return db.getQuestionByCategoryDB(category);
 	}
 
 }

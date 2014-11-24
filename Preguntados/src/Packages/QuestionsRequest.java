@@ -7,15 +7,18 @@ public class QuestionsRequest implements Serializable, Package {
 	
 	private static final long serialVersionUID = -5236502747742644840L;
 	private static final Integer PACKAGEID = 11;
-	private String categoria;
+	private String category;
 	
-	public QuestionsRequest(String categoria ) {
-		this.categoria = categoria;
+	public QuestionsRequest(String category) {
+		this.category = category;
 	}
 
-	@Override
 	public Integer getPackageID() {
 		return PACKAGEID;
 	}
 
+	public String getCategory() {
+		return category;
+	}
+	
 }

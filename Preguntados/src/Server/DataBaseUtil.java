@@ -134,5 +134,19 @@ public class DataBaseUtil {
 		Question question = new Question(null, "Cuanto?", "categoria", "correcta", wrongAnswers);
 		db.setQuestionDB(question);
 	}
+
+	public ArrayList<Question> getQuestionByCategoryDB(String category) {
+		ResultSet rs = queryDB("SELECT `id`, `pregunta` FROM `preguntas` WHERE `categoria`='" + category + "'");
+		ArrayList<Question> questions = new ArrayList<Question>();
+		try {
+			if(rs != null)
+				while(rs.next())
+					questions.add(new Question(rs.getInt("id"), rs.getString("pregunta")));
+		} catch (Exception e) {
+			e.printStackTrace();
+			questions = null;
+		}
+		return questions;
+	}
 	
 }

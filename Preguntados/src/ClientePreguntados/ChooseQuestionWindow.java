@@ -121,29 +121,29 @@ public class ChooseQuestionWindow extends JDialog {
 					switch(categoriaComboBox.getSelectedItem().toString()){  //Segun que categoria sea, pedir a servidor todas 
 																			 //las preguntas que esten en base de datos.
 					case "Deportes":
-//						model.addElement("¿Cuantas copas libertadores tiene Boca Juniors?");
-//						model.addElement("¿En que año descendió River Plate a la Segunda Division del futbol argentino?");
-//						model.addElement("¿Quien erró el unico penal en la serie de penales en la semifinal de la Copa Libertadores 2004 entre Boca y River?");
+//						model.addElement("ï¿½Cuantas copas libertadores tiene Boca Juniors?");
+//						model.addElement("ï¿½En que aï¿½o descendiï¿½ River Plate a la Segunda Division del futbol argentino?");
+//						model.addElement("ï¿½Quien errï¿½ el unico penal en la serie de penales en la semifinal de la Copa Libertadores 2004 entre Boca y River?");
 						Connection.sendPackage(new QuestionsRequest(categoriaComboBox.getSelectedItem().toString()));			
 						break;
 					case "Entretenimiento":
-//						model.addElement("¿En que año se estrenó 'Volver al Futuro?'");
+//						model.addElement("ï¿½En que aï¿½o se estrenï¿½ 'Volver al Futuro?'");
 						questionList.setModel(model);				
 						break;
 					case "Ciencia":
-//						model.addElement("¿Cuál es el quinto planeta más cercano al Sol?");
+//						model.addElement("ï¿½Cuï¿½l es el quinto planeta mï¿½s cercano al Sol?");
 						questionList.setModel(model);				
 						break;
 					case "Historia":
-//						model.addElement("¿En que año asumió Raul Alfonsín como presidente?");
+//						model.addElement("ï¿½En que aï¿½o asumiï¿½ Raul Alfonsï¿½n como presidente?");
 						questionList.setModel(model);				
 						break;
 					case "Arte":
-//						model.addElement("¿En que año se terminó de construir la Capilla Sixtina?");
+//						model.addElement("ï¿½En que aï¿½o se terminï¿½ de construir la Capilla Sixtina?");
 						questionList.setModel(model);				
 						break;
-					case "Geografía":
-//						model.addElement("¿De dónde son originarios los Moai?");
+					case "Geografï¿½a":
+//						model.addElement("ï¿½De dï¿½nde son originarios los Moai?");
 						questionList.setModel(model);				
 						break;
 						
