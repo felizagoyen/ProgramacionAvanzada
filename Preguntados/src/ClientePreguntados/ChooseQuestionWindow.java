@@ -18,8 +18,10 @@ import javax.swing.DefaultComboBoxModel;
 import Packages.Question;
 import Packages.QuestionsRequest;
 import Packages.QuestionsResponse;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 
 public class ChooseQuestionWindow extends JDialog {
 
@@ -28,8 +30,40 @@ public class ChooseQuestionWindow extends JDialog {
 	 */
 	private static final long serialVersionUID = 2375532637553844038L;
 	private final JPanel contentPanel = new JPanel();
-	final  DefaultListModel<String> model = new DefaultListModel<String>();
-	final  JList<String> questionList = new JList<String>();
+	final  DefaultListModel<Question> model = new DefaultListModel<Question>();
+	final  JList<Question> questionList = new JList<Question>();
+	private CustomListModel customModel = new CustomListModel();
+	
+
+
+ class CustomListModel extends AbstractListModel{
+ 
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6483026176611994291L;
+	private ArrayList<Question> lista = new ArrayList<Question>();
+ 
+    @Override
+    public int getSize() {
+        return lista.size();
+    }
+ 
+    @Override
+    public String getElementAt(int index) {
+        Question q = lista.get(index);
+        return q.getQuestion();
+    }
+    
+    public void addQuestion(Question q){
+        lista.add(q);
+        this.fireIntervalAdded(this, getSize(), getSize()+1);
+    }
+    
+    public Question getQuestion(int index){
+        return lista.get(index);
+    }
+}
 	
 
 	/**
@@ -87,29 +121,29 @@ public class ChooseQuestionWindow extends JDialog {
 					switch(categoriaComboBox.getSelectedItem().toString()){  //Segun que categoria sea, pedir a servidor todas 
 																			 //las preguntas que esten en base de datos.
 					case "Deportes":
-						model.addElement("¿Cuantas copas libertadores tiene Boca Juniors?");
-						model.addElement("¿En que año descendió River Plate a la Segunda Division del futbol argentino?");
-						model.addElement("¿Quien erró el unico penal en la serie de penales en la semifinal de la Copa Libertadores 2004 entre Boca y River?");
+//						model.addElement("¿Cuantas copas libertadores tiene Boca Juniors?");
+//						model.addElement("¿En que año descendió River Plate a la Segunda Division del futbol argentino?");
+//						model.addElement("¿Quien erró el unico penal en la serie de penales en la semifinal de la Copa Libertadores 2004 entre Boca y River?");
 						Connection.sendPackage(new QuestionsRequest(categoriaComboBox.getSelectedItem().toString()));			
 						break;
 					case "Entretenimiento":
-						model.addElement("¿En que año se estrenó 'Volver al Futuro?'");
+//						model.addElement("¿En que año se estrenó 'Volver al Futuro?'");
 						questionList.setModel(model);				
 						break;
 					case "Ciencia":
-						model.addElement("¿Cuál es el quinto planeta más cercano al Sol?");
+//						model.addElement("¿Cuál es el quinto planeta más cercano al Sol?");
 						questionList.setModel(model);				
 						break;
 					case "Historia":
-						model.addElement("¿En que año asumió Raul Alfonsín como presidente?");
+//						model.addElement("¿En que año asumió Raul Alfonsín como presidente?");
 						questionList.setModel(model);				
 						break;
 					case "Arte":
-						model.addElement("¿En que año se terminó de construir la Capilla Sixtina?");
+//						model.addElement("¿En que año se terminó de construir la Capilla Sixtina?");
 						questionList.setModel(model);				
 						break;
 					case "Geografía":
-						model.addElement("¿De dónde son originarios los Moai?");
+//						model.addElement("¿De dónde son originarios los Moai?");
 						questionList.setModel(model);				
 						break;
 						
@@ -126,7 +160,7 @@ public class ChooseQuestionWindow extends JDialog {
 				JButton okButton = new JButton("OK");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						combo.addItem(questionList.getSelectedValue());
+						combo.addItem(questionList.getSelectedValue().getQuestion());
 						combo.setSelectedItem(questionList.getSelectedValue());
 						setVisible(false);
 						
@@ -141,6 +175,12 @@ public class ChooseQuestionWindow extends JDialog {
 			}
 			{
 				JButton cancelButton = new JButton("Cancelar");
+				cancelButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						combo.setSelectedItem("Al azar");
+						setVisible(false);
+					}
+				});
 				cancelButton.setBounds(423, 5, 112, 23);
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
@@ -149,10 +189,12 @@ public class ChooseQuestionWindow extends JDialog {
 		
 	}
 	
+
+
 	public void showQuestions (QuestionsResponse qResponse){
 		for(Question cadauno : qResponse.getQuestions()){
-			model.addElement(cadauno.getQuestion());							
+			customModel.addQuestion(cadauno);							
 		}
-		questionList.setModel(model);
+		questionList.setModel(customModel);
 	}
 }
