@@ -96,7 +96,7 @@ public class ChooseQuestionsScreen extends JFrame {
 		lblPregunta_8.setBounds(24, 264, 120, 14);
 		contentPane.add(lblPregunta_8);
 		
-		final JComboBox<String> combo1 = new JComboBox<String>();
+		final JComboBox<Question> combo1 = new JComboBox<Question>();
 		combo1.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				setEnabled(true);
@@ -115,12 +115,12 @@ public class ChooseQuestionsScreen extends JFrame {
 				}
 			}
 		});
-		combo1.addItem("Al azar");
-		combo1.addItem("Seleccionar pregunta...");
+		combo1.addItem(new Question("Al azar"));
+		combo1.addItem(new Question("Seleccionar pregunta..."));
 		combo1.setBounds(141, 36, 338, 20);
 		contentPane.add(combo1);
 		
-		final JComboBox<String> combo2 = new JComboBox<String>();
+		final JComboBox<Question> combo2 = new JComboBox<Question>();
 		combo2.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				setEnabled(true);
@@ -137,12 +137,12 @@ public class ChooseQuestionsScreen extends JFrame {
 				}
 			}
 		});
-		combo2.addItem("Al azar");
-		combo2.addItem("Seleccionar pregunta...");
+		combo2.addItem(new Question("Al azar"));
+		combo2.addItem(new Question("Seleccionar pregunta..."));
 		combo2.setBounds(141, 64, 338, 20);
 		contentPane.add(combo2);
 		
-		final JComboBox<String> combo3 = new JComboBox<String>();
+		final JComboBox<Question> combo3 = new JComboBox<Question>();
 		combo3.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				setEnabled(true);
@@ -159,12 +159,12 @@ public class ChooseQuestionsScreen extends JFrame {
 				}
 			}
 		});
-		combo3.addItem("Al azar");
-		combo3.addItem("Seleccionar pregunta...");
+		combo3.addItem(new Question("Al azar"));
+		combo3.addItem(new Question("Seleccionar pregunta..."));
 		combo3.setBounds(141, 86, 338, 20);
 		contentPane.add(combo3);
 		
-		final JComboBox<String> combo4 = new JComboBox<String>();
+		final JComboBox<Question> combo4 = new JComboBox<Question>();
 		combo4.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				setEnabled(true);
@@ -181,12 +181,12 @@ public class ChooseQuestionsScreen extends JFrame {
 				}
 			}
 		});
-		combo4.addItem("Al azar");
-		combo4.addItem("Seleccionar pregunta...");
+		combo4.addItem(new Question("Al azar"));
+		combo4.addItem(new Question("Seleccionar pregunta..."));
 		combo4.setBounds(141, 111, 338, 20);
 		contentPane.add(combo4);
 		
-		final JComboBox<String> combo5 = new JComboBox<String>();
+		final JComboBox<Question> combo5 = new JComboBox<Question>();
 		combo5.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				setEnabled(true);
@@ -203,12 +203,12 @@ public class ChooseQuestionsScreen extends JFrame {
 				}
 			}
 		});
-		combo5.addItem("Al azar");
-		combo5.addItem("Seleccionar pregunta...");
+		combo5.addItem(new Question("Al azar"));
+		combo5.addItem(new Question("Seleccionar pregunta..."));
 		combo5.setBounds(141, 136, 338, 20);
 		contentPane.add(combo5);
 		
-		final JComboBox<String> combo6 = new JComboBox<String>();
+		final JComboBox<Question> combo6 = new JComboBox<Question>();
 		combo6.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				setEnabled(true);
@@ -225,12 +225,12 @@ public class ChooseQuestionsScreen extends JFrame {
 				}
 			}
 		});
-		combo6.addItem("Al azar");
-		combo6.addItem("Seleccionar pregunta...");
+		combo6.addItem(new Question("Al azar"));
+		combo6.addItem(new Question("Seleccionar pregunta..."));
 		combo6.setBounds(141, 161, 338, 20);
 		contentPane.add(combo6);
 		
-		final JComboBox<String> combo7 = new JComboBox<String>();
+		final JComboBox<Question> combo7 = new JComboBox<Question>();
 		combo7.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				setEnabled(true);
@@ -247,12 +247,12 @@ public class ChooseQuestionsScreen extends JFrame {
 				}
 			}
 		});
-		combo7.addItem("Al azar");
-		combo7.addItem("Seleccionar pregunta...");
+		combo7.addItem(new Question("Al azar"));
+		combo7.addItem(new Question("Seleccionar pregunta..."));
 		combo7.setBounds(141, 186, 338, 20);
 		contentPane.add(combo7);
 		
-		final JComboBox<String> combo8 = new JComboBox<String>();
+		final JComboBox<Question> combo8 = new JComboBox<Question>();
 		combo8.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				setEnabled(true);
@@ -269,12 +269,12 @@ public class ChooseQuestionsScreen extends JFrame {
 				}
 			}
 		});
-		combo8.addItem("Al azar");
-		combo8.addItem("Seleccionar pregunta...");
+		combo8.addItem(new Question("Al azar"));
+		combo8.addItem(new Question("Seleccionar pregunta..."));
 		combo8.setBounds(141, 211, 338, 20);
 		contentPane.add(combo8);
 		
-		final JComboBox<String> combo9 = new JComboBox<String>();
+		final JComboBox<Question> combo9 = new JComboBox<Question>();
 		combo9.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				setEnabled(true);
@@ -291,12 +291,12 @@ public class ChooseQuestionsScreen extends JFrame {
 				}
 			}
 		});
-		combo9.addItem("Al azar");
-		combo9.addItem("Seleccionar pregunta...");
+		combo9.addItem(new Question("Al azar"));
+		combo9.addItem(new Question("Seleccionar pregunta..."));
 		combo9.setBounds(141, 236, 338, 20);
 		contentPane.add(combo9);
 		
-		final JComboBox<String> combo10 = new JComboBox<String>();
+		final JComboBox<Question> combo10 = new JComboBox<Question>();
 		combo10.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				setEnabled(true);
@@ -313,15 +313,25 @@ public class ChooseQuestionsScreen extends JFrame {
 				}
 			}
 		});
-		combo10.addItem("Al azar");
-		combo10.addItem("Seleccionar pregunta...");
+		combo10.addItem(new Question(0, "Al azar"));
+		combo10.addItem(new Question("Seleccionar pregunta..."));
 		combo10.setBounds(141, 261, 338, 20);
 		contentPane.add(combo10);
 		
 		JButton btnAceptar = new JButton("Aceptar");
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				ArrayList<Integer> questionsID = new ArrayList<Integer> ();
+				questionsID.add(((Question)combo1.getSelectedItem()).getID());
+				questionsID.add(((Question)combo2.getSelectedItem()).getID());
+				questionsID.add(((Question)combo3.getSelectedItem()).getID());
+				questionsID.add(((Question)combo4.getSelectedItem()).getID());
+				questionsID.add(((Question)combo5.getSelectedItem()).getID());
+				System.out.println(questionsID.get(0));
+				System.out.println(questionsID.get(1));
+				System.out.println(questionsID.get(2));
+				System.out.println(questionsID.get(3));
+				System.out.println(questionsID.get(4));
 			}
 		});
 		btnAceptar.setBounds(390, 302, 89, 23);

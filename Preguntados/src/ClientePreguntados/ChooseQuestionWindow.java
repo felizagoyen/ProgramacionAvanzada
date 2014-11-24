@@ -36,7 +36,7 @@ public class ChooseQuestionWindow extends JDialog {
 	
 
 
- class CustomListModel extends AbstractListModel{
+ class CustomListModel extends AbstractListModel<Question>{
  
     /**
 	 * 
@@ -50,9 +50,9 @@ public class ChooseQuestionWindow extends JDialog {
     }
  
     @Override
-    public String getElementAt(int index) {
+    public Question getElementAt(int index) {
         Question q = lista.get(index);
-        return q.getQuestion();
+        return q;
     }
     
     public void addQuestion(Question q){
@@ -82,7 +82,7 @@ public class ChooseQuestionWindow extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public ChooseQuestionWindow(final JComboBox<String> combo) {
+	public ChooseQuestionWindow(final JComboBox<Question> combo) {
 		setBounds(100, 100, 571, 411);
 		setTitle("Preguntados");
 		getContentPane().setLayout(null);
@@ -160,10 +160,9 @@ public class ChooseQuestionWindow extends JDialog {
 				JButton okButton = new JButton("OK");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						combo.addItem(questionList.getSelectedValue().getQuestion());
+						combo.addItem(questionList.getSelectedValue());
 						combo.setSelectedItem(questionList.getSelectedValue());
 						setVisible(false);
-						
 					}
 
 
@@ -177,7 +176,7 @@ public class ChooseQuestionWindow extends JDialog {
 				JButton cancelButton = new JButton("Cancelar");
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						combo.setSelectedItem("Al azar");
+						combo.setSelectedIndex(0);
 						setVisible(false);
 					}
 				});

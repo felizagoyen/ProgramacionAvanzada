@@ -21,6 +21,10 @@ public class Question implements Serializable, Package {
 		this.correctAnswer = correctAnswer;
 		this.wrongAnswers = wrongAnswers;
 	}
+	
+	public Question(String question){
+		this.question = question;
+	}
 
 	public Question(Integer id, String question) {
 		this.id = id;
@@ -49,5 +53,9 @@ public class Question implements Serializable, Package {
 
 	public Integer getPackageID() {
 		return PACKAGEID;
+	}
+	
+	public String toString(){
+		return question;
 	}
 }
