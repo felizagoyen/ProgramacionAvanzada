@@ -25,19 +25,14 @@ public class ServerThread extends Thread {
 
 	public void run() {
 		Boolean endConection = false;
-		ObjectOutputStream outputStream = null;
-		ObjectInputStream inputStream = null;
 
 		try {
-			ClientSocket clientSocketInstance = ClientSocket.getInstance();
-			Socket socket = clientSocketInstance.getClientSocket(clientID);
-			outputStream = new ObjectOutputStream(socket.getOutputStream());
-			inputStream = new ObjectInputStream(socket.getInputStream());
+			ClientConnection clientConnectionInstance = ClientConnection.getInstance();
 			
 			while (!endConection) {
 				Package packageOut = null;
-				Package packageIn = (Package) inputStream.readObject();
-				clientSocketInstance.blockSocket(clientID);
+				Package packageIn = clientConnectionInstance.readPackage(clientID);
+				clientConnectionInstance.blockSocket(clientID);
 				
 				switch (packageIn.getPackageID()) {
 				case LOGINREQUESTID: // Pedido de logeo del cliente
@@ -77,11 +72,12 @@ public class ServerThread extends Thread {
 					endConection = true;
 				}
 
-				if(packageOut != null) outputStream.writeObject(packageOut);
-				clientSocketInstance.releaseSocket(clientID);
+				if(packageOut != null) clientConnectionInstance.sendPackage(clientID, packageOut);
+				clientConnectionInstance.releaseSocket(clientID);
 			}
-			if (outputStream != null) outputStream.close();
-			if (inputStream != null) inputStream.close();
+			clientConnectionInstance.closeOutputStream(clientID);
+			clientConnectionInstance.closeInputStream(clientID);
+			clientConnectionInstance.freeSocket(clientID);
 			System.out.println("Conexion Finalizada");
 		} catch (Exception e) {
 			e.printStackTrace();

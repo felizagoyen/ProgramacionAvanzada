@@ -41,11 +41,13 @@ public class ClientePrueba {
 			outputObject.writeObject(new GenericPackage(3));
 			outputObject.writeObject(new GenericPackage(4));
 			
-			//for(int x = 0; x < 10; x++) {
-				//Question question = (Question) inputObject.readObject();
-				//System.out.println(question.getQuestion() + " - " + question.getCorrectAnswer() + " - " + question.getCategory());
-			//}
-			Thread.sleep(10000);
+			for(int x = 0; x < 10; x++) {
+				Question question = (Question) inputObject.readObject();
+				System.out.println(question.getQuestion() + " - " + question.getCorrectAnswer() + " - " + question.getCategory());
+			}
+			outputObject.writeObject(new GenericPackage(10));
+			inputObject.readObject();
+			System.out.println("Termine bien!");
 		}catch(Exception e){
 			e.printStackTrace();
 		}

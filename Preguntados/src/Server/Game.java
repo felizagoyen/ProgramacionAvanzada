@@ -9,7 +9,6 @@ import Packages.Question;
 public class Game extends Thread {
 //	private static final int TIME = 30000;
 	private static final int MAXROUND = 10;
-	private static final Integer QUESTIONREQUESTID = 6;
 	private static Game game = new Game();
 	private String gameName;
 	private Integer maxPlayers;
@@ -50,7 +49,7 @@ public class Game extends Thread {
 	
 	public void run() {
 		DataBaseUtil db = new DataBaseUtil();
-		ClientSocket clientSocketInstance = ClientSocket.getInstance();
+		ClientConnection clientConnectionInstance = ClientConnection.getInstance();
 
 		for(int roundNumber = 0; roundNumber < MAXROUND; roundNumber++) {
 			Integer questionId = questionsID.get(roundNumber);
@@ -68,16 +67,18 @@ public class Game extends Thread {
 			
 			for(Integer eachPlayerID: players) {
 				try {
-					clientSocketInstance.blockSocket(eachPlayerID);
-					ObjectOutputStream outputStream = new ObjectOutputStream(clientSocketInstance.getClientSocket(eachPlayerID).getOutputStream());
+					clientConnectionInstance.blockSocket(eachPlayerID);
 					System.out.println(question.getQuestion() + " - " + question.getCorrectAnswer() + " - " + question.getCategory());
-					outputStream.writeObject(question);
-					Thread.sleep(4000);
-					clientSocketInstance.releaseSocket(eachPlayerID);
+					clientConnectionInstance.sendPackage(eachPlayerID, question);
+					Thread.sleep(500);
+					clientConnectionInstance.releaseSocket(eachPlayerID);
 				} catch(Exception e) {
 					e.printStackTrace();
 				}
 			}
 		}
+		//players = null;
+		//gameName = null;
+		//maxPlayers = null;
 	}
 }
