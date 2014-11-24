@@ -80,7 +80,7 @@ INSERT preguntas VALUES(32, '¿De qué país es el panda el animal nacional?', '
 
 INSERT preguntas VALUES(33, '¿Cuántos soldados argentinos murieron en la Guerra de las Malvinas?', '649', '678', '653', '637', 'Historia');
 INSERT preguntas VALUES(34, '¿Quién pronunció la frase: "Bebamos de la copa de la destrucción"?', 'Gengis Kan', 'Atila', 'Barbarroja', 'Saladino', 'Historia');
-INSERT preguntas VALUES(35, '¿Qué se celebra el 8 de Marzo?', '', '', '', '', 'Historia');
+INSERT preguntas VALUES(35, '¿Qué se celebra el 8 de Marzo?', 'El día de la Mujer', 'El día de la novia', 'El día de la madre', 'El día del niño', 'Historia');
 INSERT preguntas VALUES(36, '¿Cómo murió Jacques de Molay, último gran maestre templario?', 'En la hoguera', 'En la horca', 'En la guillotina', 'Ante un verdugo', 'Historia');
 INSERT preguntas VALUES(37, '¿En qué país nació el rey Juan Carlos I?', 'Italia', 'España', 'Inglaterra', 'Francia', 'Historia');
 INSERT preguntas VALUES(38, '¿En qué siglo termina la Edad Media?', 'XV', 'XIV', 'IX', 'X', 'Historia');
