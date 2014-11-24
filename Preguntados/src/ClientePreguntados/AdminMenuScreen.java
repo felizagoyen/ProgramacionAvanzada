@@ -44,6 +44,7 @@ public class AdminMenuScreen extends JFrame {
 	public AdminMenuScreen() {
 		setTitle("Preguntados");
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		addWindowListener(new ClosingListener());
 		setBounds(100, 100, 300, 500);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

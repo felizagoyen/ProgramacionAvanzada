@@ -1,5 +1,7 @@
 package ClientePreguntados;
 
+import Packages.EndClientConectionRequest;
+
 public class ClientePreguntados {
 
 
@@ -18,4 +20,11 @@ public class ClientePreguntados {
 		new ClientePreguntados();
 	}
 
+	
+	public static void closeClient (){
+		EndClientConectionRequest er = new EndClientConectionRequest();
+		Connection.sendPackage(er);
+		System.exit(0);
+	}
+	
 }

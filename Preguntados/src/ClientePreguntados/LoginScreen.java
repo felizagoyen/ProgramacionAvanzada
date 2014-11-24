@@ -138,9 +138,10 @@ public class LoginScreen extends JFrame {
 		JButton jSalirButton = new JButton("Salir");
 		jSalirButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				EndClientConectionRequest er = new EndClientConectionRequest();
-				Connection.sendPackage(er);
-				System.exit(NORMAL);
+				ClientePreguntados.closeClient();
+//				EndClientConectionRequest er = new EndClientConectionRequest();
+//				Connection.sendPackage(er);
+//				System.exit(NORMAL);
 			}
 		});
 		jSalirButton.setBounds(84, 255, 89, 23);
