@@ -332,8 +332,10 @@ public class ChooseQuestionsScreen extends JFrame {
 				questionsID.add(((Question)combo8.getSelectedItem()).getID());
 				questionsID.add(((Question)combo9.getSelectedItem()).getID());
 				questionsID.add(((Question)combo10.getSelectedItem()).getID());
-				
-	
+				CreateGameScreen creategamescreen = new CreateGameScreen();
+				creategamescreen.receiveQuestionsID(questionsID);
+				creategamescreen.setVisible(true);
+				setVisible(false);
 			}
 		});
 		btnAceptar.setBounds(390, 302, 89, 23);

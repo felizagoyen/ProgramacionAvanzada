@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import Packages.AddQuestionResponse;
 import Packages.LoginResponse;
 import Packages.Package;
+import Packages.Question;
 import Packages.QuestionsResponse;
 
 public class ClientThread extends Thread {
@@ -18,7 +19,8 @@ public class ClientThread extends Thread {
 	private static final int LOGINRESPONSEID = 1;
 	private static final int CREATEGAMEREQUESTID = 2;
 	private static final int PLAYERJOINREQUESTID = 3;
-	private static final int STARTGAMEREQUESTID = 4;
+	private static final int STARTGAMERESPONSEID = 4;
+	private static final int GAMERUNNINGID = 6;
 	private static final int POINTSTABLEREQUESTID = 8;
 	private static final int ADDQUESTIONREESPONSEID = 9;
 	private static final int ENDCONNECTIONRESPONSEID = 10;
@@ -58,11 +60,19 @@ public class ClientThread extends Thread {
 				case PLAYERJOINREQUESTID: // Jugador uniendose a partida
 					
 					break;
-				case STARTGAMEREQUESTID: // Comenzar partida
+				case STARTGAMERESPONSEID: // Comenzar partida
 					
 					break;
 				case POINTSTABLEREQUESTID:
 			
+					break;
+					
+				case GAMERUNNINGID:
+					
+					Question question = (Question) packageIn;
+					((RoundGameScreen)JFrameScreen).setQuestion(question);
+					((RoundGameScreen)JFrameScreen).setVisible(true);
+					
 					break;
 				case ADDQUESTIONREESPONSEID: // Agregar pregunta
 					AddQuestionResponse addResponse = (AddQuestionResponse) packageIn;

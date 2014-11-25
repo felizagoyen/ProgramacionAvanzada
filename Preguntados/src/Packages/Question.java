@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Question implements Serializable, Package {
 
 	private static final long serialVersionUID = 946827401315759467L;
-	private static final Integer PACKAGEID = 9;
+	private static final Integer PACKAGEID = 6;
 	private Integer id;
 	private String question;
 	private String category;

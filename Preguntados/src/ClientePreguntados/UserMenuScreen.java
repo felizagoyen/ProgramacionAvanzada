@@ -10,6 +10,7 @@ import java.awt.Font;
 import javax.swing.JButton;
 
 import Packages.EndClientConectionRequest;
+import Packages.PlayerJoinRequest;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -55,6 +56,17 @@ public class UserMenuScreen extends JFrame {
 		jUnirsePartidaButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		jUnirsePartidaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				boolean isJoined = true;
+				
+				PlayerJoinRequest joinrequest = new PlayerJoinRequest();
+				Connection.sendPackage(joinrequest);
+				
+				if(isJoined){
+					JoinPlayerGameWindow joinplayergamewindow = new JoinPlayerGameWindow();
+					joinplayergamewindow.setVisible(true);
+					RoundGameScreen rgs = new RoundGameScreen();
+					ClientThread.recieveScreen(rgs);
+				}
 			
 			}
 		});

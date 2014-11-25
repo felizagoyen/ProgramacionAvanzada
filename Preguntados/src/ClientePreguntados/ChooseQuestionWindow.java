@@ -60,6 +60,10 @@ public class ChooseQuestionWindow extends JDialog {
         this.fireIntervalAdded(this, getSize(), getSize()+1);
     }
     
+    public void removeAllQuestions(){
+    		lista.clear();
+    }
+    
     public Question getQuestion(int index){
         return lista.get(index);
     }
@@ -117,37 +121,39 @@ public class ChooseQuestionWindow extends JDialog {
 			final JComboBox<String> categoriaComboBox = new JComboBox<String>();
 			categoriaComboBox.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					model.removeAllElements();
-					switch(categoriaComboBox.getSelectedItem().toString()){  //Segun que categoria sea, pedir a servidor todas 
+//					model.removeAllElements();
+					customModel.removeAllQuestions();
+					Connection.sendPackage(new QuestionsRequest(categoriaComboBox.getSelectedItem().toString()));
+//					switch(categoriaComboBox.getSelectedItem().toString()){  //Segun que categoria sea, pedir a servidor todas 
 																			 //las preguntas que esten en base de datos.
-					case "Deportes":
+//					case "Deportes":
 //						model.addElement("�Cuantas copas libertadores tiene Boca Juniors?");
 //						model.addElement("�En que a�o descendi� River Plate a la Segunda Division del futbol argentino?");
 //						model.addElement("�Quien err� el unico penal en la serie de penales en la semifinal de la Copa Libertadores 2004 entre Boca y River?");
-						Connection.sendPackage(new QuestionsRequest(categoriaComboBox.getSelectedItem().toString()));			
-						break;
-					case "Entretenimiento":
+//						Connection.sendPackage(new QuestionsRequest(categoriaComboBox.getSelectedItem().toString()));			
+//						break;
+//					case "Entretenimiento":
 //						model.addElement("�En que a�o se estren� 'Volver al Futuro?'");
-						questionList.setModel(model);				
-						break;
-					case "Ciencia":
+//						questionList.setModel(model);				
+//						break;
+//					case "Ciencia":
 //						model.addElement("�Cu�l es el quinto planeta m�s cercano al Sol?");
-						questionList.setModel(model);				
-						break;
-					case "Historia":
+//						questionList.setModel(model);				
+//						break;
+//					case "Historia":
 //						model.addElement("�En que a�o asumi� Raul Alfons�n como presidente?");
-						questionList.setModel(model);				
-						break;
-					case "Arte":
+//						questionList.setModel(model);				
+//						break;
+//					case "Arte":
 //						model.addElement("�En que a�o se termin� de construir la Capilla Sixtina?");
-						questionList.setModel(model);				
-						break;
-					case "Geograf�a":
+//						questionList.setModel(model);				
+//						break;
+//					case "Geograf�a":
 //						model.addElement("�De d�nde son originarios los Moai?");
-						questionList.setModel(model);				
-						break;
-						
-					}
+//						questionList.setModel(model);				
+//						break;
+//						
+//					}
 					
 					
 					

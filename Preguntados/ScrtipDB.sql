@@ -14,7 +14,7 @@ INSERT cuentas VALUES ('fer', 'fer', 0);
 INSERT cuentas VALUES ('seba', 'seba', 0);
 INSERT cuentas VALUES ('pepe', '1234', 1);
 
-/*
+
 CREATE TABLE categoria
 (id int PRIMARY KEY,
 nombre varchar(30));
@@ -25,16 +25,16 @@ INSERT categoria VALUES(3, 'Arte y Literatura');
 INSERT categoria VALUES(4, 'Ciencia y Tecnología');
 INSERT categoria VALUES(5, 'Geografía');
 INSERT categoria VALUES(6, 'Historia');
-*/
+
 
 CREATE TABLE preguntas
 (ID int PRIMARY KEY,
-pregunta varchar(100) NOT NULL,
-respuestaCorrecta varchar(100) NOT NULL,
-respuesta1 varchar(100) NOT NULL,
-respuesta2 varchar(100) NOT NULL,
-respuesta3 varchar(100) NOT NULL,
-categoria varchar(50)
+pregunta varchar(1000) NOT NULL,
+respuestaCorrecta varchar(1000) NOT NULL,
+respuesta1 varchar(1000) NOT NULL,
+respuesta2 varchar(1000) NOT NULL,
+respuesta3 varchar(1000) NOT NULL,
+categoria varchar(500)
 /*
 CONSTRAINT categoria FOREIGN KEY (id)
 REFERENCES categoria(id)
