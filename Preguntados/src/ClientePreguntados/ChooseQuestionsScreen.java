@@ -313,7 +313,7 @@ public class ChooseQuestionsScreen extends JFrame {
 				}
 			}
 		});
-		combo10.addItem(new Question(0, "Al azar"));
+		combo10.addItem(new Question("Al azar"));
 		combo10.addItem(new Question("Seleccionar pregunta..."));
 		combo10.setBounds(141, 261, 338, 20);
 		contentPane.add(combo10);
@@ -327,11 +327,13 @@ public class ChooseQuestionsScreen extends JFrame {
 				questionsID.add(((Question)combo3.getSelectedItem()).getID());
 				questionsID.add(((Question)combo4.getSelectedItem()).getID());
 				questionsID.add(((Question)combo5.getSelectedItem()).getID());
-				System.out.println(questionsID.get(0));
-				System.out.println(questionsID.get(1));
-				System.out.println(questionsID.get(2));
-				System.out.println(questionsID.get(3));
-				System.out.println(questionsID.get(4));
+				questionsID.add(((Question)combo6.getSelectedItem()).getID());
+				questionsID.add(((Question)combo7.getSelectedItem()).getID());
+				questionsID.add(((Question)combo8.getSelectedItem()).getID());
+				questionsID.add(((Question)combo9.getSelectedItem()).getID());
+				questionsID.add(((Question)combo10.getSelectedItem()).getID());
+				
+	
 			}
 		});
 		btnAceptar.setBounds(390, 302, 89, 23);
