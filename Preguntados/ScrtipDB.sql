@@ -29,21 +29,13 @@ INSERT categoria VALUES(6, 'Historia');
 
 CREATE TABLE preguntas
 (ID int PRIMARY KEY,
-<<<<<<< HEAD
-pregunta varchar(1000) NOT NULL,
-respuestaCorrecta varchar(1000) NOT NULL,
-respuesta1 varchar(1000) NOT NULL,
-respuesta2 varchar(1000) NOT NULL,
-respuesta3 varchar(1000) NOT NULL,
-categoria varchar(500)
-=======
-pregunta varchar(200) NOT NULL,
+pregunta varchar(300) NOT NULL,
 respuestaCorrecta varchar(100) NOT NULL,
 respuesta1 varchar(100) NOT NULL,
 respuesta2 varchar(100) NOT NULL,
 respuesta3 varchar(100) NOT NULL,
 categoria varchar(50)
->>>>>>> origin/master
+
 /*
 CONSTRAINT categoria FOREIGN KEY (id)
 REFERENCES categoria(id)
