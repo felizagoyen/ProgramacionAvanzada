@@ -25,7 +25,7 @@ public class ServerThread extends Thread {
 
 	public void run() {
 		Boolean endConection = false;
-		Game game = null;
+		Game game = Game.getGameInstance();
 		try {
 			ClientConnection clientConnectionInstance = ClientConnection.getInstance();
 			
@@ -45,7 +45,7 @@ public class ServerThread extends Thread {
 					break;
 				case CREATEGAMEREQUESTID: // Creacion de partida
 					GameRequest gameRequest = (GameRequest) packageIn;
-					game = Game.getGameInstance();
+//					game = Game.getGameInstance();
 					game.setGameName(gameRequest.getGameName());
 					game.setMaxPlayers(gameRequest.getMaxPlayers());
 					game.setQuestionsID(gameRequest.getQuestionsID());
