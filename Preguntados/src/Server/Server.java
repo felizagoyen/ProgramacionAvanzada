@@ -16,7 +16,6 @@ public class Server {
 			System.out.println("Conexiones maximas: " + MAXCONNECTIONS);
 			System.out.println("Esperando conexiones...");
 			new AcceptClient(serverSocket).start(); //Hilo que se encarga de aceptar conecciones
-			
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

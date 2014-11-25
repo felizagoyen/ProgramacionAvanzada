@@ -1,10 +1,8 @@
 package Server;
 
-import java.io.ObjectOutputStream;
-import java.net.Socket;
 import java.util.ArrayList;
 
-import Packages.Question;
+import Packages.*;
 
 public class Game extends Thread {
 //	private static final int TIME = 30000;
@@ -14,12 +12,14 @@ public class Game extends Thread {
 	private Integer maxPlayers;
 	private ArrayList<Integer> questionsID = new ArrayList<Integer>();
 	private ArrayList<Integer> players = new ArrayList<Integer>();
+	private ArrayList<String> answers = new ArrayList<String>();
+	private Boolean waitingAnswer = false;
 	
 	private Game() {
 		
 	}
 	
-	public static Game getGame() {
+	public static Game getGameInstance() {
 		return game;
 	}
 	
@@ -47,6 +47,14 @@ public class Game extends Thread {
 		return maxPlayers;
 	}
 	
+	public Boolean getWaitingAnswer() {
+		return waitingAnswer;
+	}
+	
+	public void setAnswer(int playerId, String answer) {
+		answers.add(players.indexOf(playerId), answer);
+	}
+	
 	public void run() {
 		DataBaseUtil db = new DataBaseUtil();
 		ClientConnection clientConnectionInstance = ClientConnection.getInstance();
@@ -64,18 +72,42 @@ public class Game extends Thread {
 				questionsID.set(roundNumber, questionId);
 			} 
 			question = db.getQuestionByID(questionId);
+			EndTimeRequest timeToAnswer = new EndTimeRequest(System.currentTimeMillis() + 30000);
+			waitingAnswer = true;
 			
 			for(Integer eachPlayerID: players) {
 				try {
 					clientConnectionInstance.blockSocket(eachPlayerID);
-					System.out.println(question.getQuestion() + " - " + question.getCorrectAnswer() + " - " + question.getCategory());
+					clientConnectionInstance.sendPackage(eachPlayerID, timeToAnswer);
 					clientConnectionInstance.sendPackage(eachPlayerID, question);
-					Thread.sleep(500);
 					clientConnectionInstance.releaseSocket(eachPlayerID);
 				} catch(Exception e) {
 					e.printStackTrace();
 				}
 			}
+
+			while(System.currentTimeMillis() < timeToAnswer.getEndTime());
+			waitingAnswer = false;
+			EndTimeRequest timeToWaitNewQuestion = new EndTimeRequest(System.currentTimeMillis() + 5000);
+			
+			for(Integer eachPlayerID: players) {
+				AnswerQuestion answerQuestion;
+				try {
+					if(question.getCorrectAnswer().equals(answers.get(eachPlayerID)))
+						answerQuestion = new AnswerQuestion(true);
+					else
+						answerQuestion = new AnswerQuestion(false);
+					clientConnectionInstance.blockSocket(eachPlayerID);
+					clientConnectionInstance.sendPackage(eachPlayerID, answerQuestion);
+					clientConnectionInstance.sendPackage(eachPlayerID, timeToWaitNewQuestion);
+					clientConnectionInstance.releaseSocket(eachPlayerID);
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+
+			while(System.currentTimeMillis() < timeToWaitNewQuestion.getEndTime());
+
 		}
 		//players = null;
 		//gameName = null;

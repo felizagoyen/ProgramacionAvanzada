@@ -1,8 +1,5 @@
 package Server;
 
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
 import java.util.ArrayList;
 
 import Packages.*;
@@ -19,6 +16,7 @@ public class ServerThread extends Thread {
 	private static final int ADDQUESTIONREQUESTID = 9;
 	private static final int ENDCONECTIONREQUESTID = 10;
 	private static final int QUESTIONSREQUESTID = 11;
+	private static final int ANSWERQUESTIONREQUESTID = 13;
 	private Integer clientID;
 
 	public ServerThread(Integer clientID) {
@@ -27,7 +25,7 @@ public class ServerThread extends Thread {
 
 	public void run() {
 		Boolean endConection = false;
-
+		Game game = null;
 		try {
 			ClientConnection clientConnectionInstance = ClientConnection.getInstance();
 			
@@ -41,23 +39,22 @@ public class ServerThread extends Thread {
 					LoginRequest loginRequest = (LoginRequest) packageIn;
 					packageOut = new LoginResponse(validateClient(loginRequest));
 					break;
-				case QUESTIONSREQUESTID:  // Lo agregamos para probar si como cliente recibiamos correcamente las preguntas 
-										  //que nos mandaría la base da datos para hacer la elección al crear la partida.
+				case QUESTIONSREQUESTID: // Devuelve las preguntas por categoria  
 					QuestionsRequest questionsRequest = (QuestionsRequest) packageIn;
 					packageOut = new QuestionsResponse(getQuestionByCategory(questionsRequest.getCategory()));
 					break;
 				case CREATEGAMEREQUESTID: // Creacion de partida
 					GameRequest gameRequest = (GameRequest) packageIn;
-					Game game = Game.getGame();
+					game = Game.getGameInstance();
 					game.setGameName(gameRequest.getGameName());
 					game.setMaxPlayers(gameRequest.getMaxPlayers());
 					game.setQuestionsID(gameRequest.getQuestionsID());
 					break;
 				case PLAYERJOINREQUESTID: // Jugador uniendose a partida
-					Game.getGame().addPlayer(clientID);
+					game.addPlayer(clientID);
 					break;
 				case STARTGAMEREQUESTID: // Comenzar partida
-					Game.getGame().start();
+					game.start();
 					break;
 				case CATEGORYREQUESTID:
 					//Category category = new
@@ -71,6 +68,12 @@ public class ServerThread extends Thread {
 					Question question = (Question) packageIn;
 					addQuestionToDB(question);
 					packageOut = new AddQuestionResponse(true);
+					break;
+				case ANSWERQUESTIONREQUESTID: // Respuesta del jugador ante una pregunta 
+					if(game.getWaitingAnswer() == true) {
+						AnswerQuestion answerQuestion = (AnswerQuestion) packageIn;
+						game.setAnswer(clientID, answerQuestion.getAnswer());
+					}
 					break;
 				case ENDCONECTIONREQUESTID: // Fin conexion
 					packageOut = new EndClientConnectionResponse();

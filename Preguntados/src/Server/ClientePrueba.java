@@ -9,19 +9,10 @@ import Packages.*;
 
 public class ClientePrueba {
 
-	private static final int LOGINREQUESTID = 1;
-	private static final int CREATEGAMEREQUESTID = 2;
-	private static final int PLAYERJOINREQUESTID = 3;
-	private static final int STARTGAMEREQUESTID = 4;
-	private static final int POINTSTABLEREQUESTID = 8;
-	private static final int ADDQUESTIONREQUESTID = 9;
-	private static final int ENDCONECTIONREQUESTID = 10;
-	private static final int QUESTIONSREQUESTID = 11;
-
 	public static void main(String[] args) {
-			
+		Socket socket;
 		try{
-			Socket socket = new Socket("localhost", 10000);
+			socket = new Socket("localhost", 10000);
 			ObjectOutputStream outputObject = new ObjectOutputStream(socket.getOutputStream());
 			ObjectInputStream inputObject = new ObjectInputStream(socket.getInputStream());
 			
@@ -42,8 +33,20 @@ public class ClientePrueba {
 			outputObject.writeObject(new GenericPackage(4));
 			
 			for(int x = 0; x < 10; x++) {
+				// Espera el tiempo para el contador
+				EndTimeRequest timeToAnswer = (EndTimeRequest) inputObject.readObject();
+				System.out.println(timeToAnswer.getEndTime());
+				// Espera la pregunta a responder
 				Question question = (Question) inputObject.readObject();
-				System.out.println(question.getQuestion() + " - " + question.getCorrectAnswer() + " - " + question.getCategory());
+				System.out.println(question.getQuestion());
+				// Responde la correcta
+				outputObject.writeObject(new AnswerQuestion(question.getCorrectAnswer()));
+				// Espera ver si es valida la respuesta
+				AnswerQuestion answerQuestion = (AnswerQuestion) inputObject.readObject();
+				System.out.println(answerQuestion.isCorrect());
+				// Espera el tiempo para esperar a la proxima pregunta (puede usarse para ver la tabla parcial)
+				EndTimeRequest timeToWait = (EndTimeRequest) inputObject.readObject();
+				System.out.println(timeToWait.getEndTime());
 			}
 			outputObject.writeObject(new GenericPackage(10));
 			inputObject.readObject();
