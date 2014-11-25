@@ -29,7 +29,7 @@ INSERT categoria VALUES(6, 'Historia');
 
 CREATE TABLE preguntas
 (ID int PRIMARY KEY,
-pregunta varchar(100) NOT NULL,
+pregunta varchar(200) NOT NULL,
 respuestaCorrecta varchar(100) NOT NULL,
 respuesta1 varchar(100) NOT NULL,
 respuesta2 varchar(100) NOT NULL,
@@ -68,8 +68,8 @@ INSERT preguntas VALUES(21, '¿Cómo se llama el protagonista de la saga Indiana
 INSERT preguntas VALUES(22, '¿Qué personaje del videojuego Mortal Kombat tiene poderes de hielo?', 'Sub-Zero', 'Scorpion', 'Smoke', 'Reptile', 'Entretenimiento');
 INSERT preguntas VALUES(23, '¿Cómo se llama el pájaro símbolo de los Juegos del Hambre?', 'Sinsajo', 'Silbón', 'Sinsonte', 'Sisón', 'Entretenimiento');
 INSERT preguntas VALUES(24, '¿En que banda canta Anthony Kiedis?', 'Red Hot Chili Peppers', 'Metallica', 'Korn', 'limp bizkit', 'Entretenimiento');
-INSERT preguntas VALUES(25, '¿A qué se dedica el personaje Ted Mosby de "How I Met your mother"', 'Arquitecto', 'Abogado', 'Contador', 'Periodista', 'Entretenimiento');
-INSERT preguntas VALUES(26, '¿Cuántos capítulos tiene la serie de televisión "Friends?"', '236', '256', '246', '266', 'Entretenimiento');
+INSERT preguntas VALUES(25, '¿A qué se dedica el personaje Ted Mosby de "How I Met your mother"?', 'Arquitecto', 'Abogado', 'Contador', 'Periodista', 'Entretenimiento');
+INSERT preguntas VALUES(26, '¿Cuántos capítulos tiene la serie de televisión "Friends"?', '236', '256', '246', '266', 'Entretenimiento');
 
 INSERT preguntas VALUES(27, '¿Con cuántos países limita Argentina?', '5', '4', '6', '7', 'Geografía');
 INSERT preguntas VALUES(28, '¿En qué país está la Laguna Verde?', 'Bolivia', 'Perú', 'Ecuador', 'Chile', 'Geografía');
