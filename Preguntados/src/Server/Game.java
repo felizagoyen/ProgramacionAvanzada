@@ -16,7 +16,7 @@ public class Game extends Thread {
 	private Boolean waitingAnswer = false;
 	
 	private Game() {
-		
+
 	}
 	
 	public static Game getGameInstance() {
@@ -52,13 +52,15 @@ public class Game extends Thread {
 	}
 	
 	public void setAnswer(int playerId, String answer) {
-		answers.add(players.indexOf(playerId), answer);
+		answers.set(players.indexOf(playerId), answer);
 	}
 	
 	public void run() {
 		DataBaseUtil db = new DataBaseUtil();
 		ClientConnection clientConnectionInstance = ClientConnection.getInstance();
-
+		for(int i = 0; i < players.size(); i++)
+			answers.add(null);
+		
 		for(int roundNumber = 0; roundNumber < MAXROUND; roundNumber++) {
 			Integer questionId = questionsID.get(roundNumber);
 			Question question = null;
@@ -78,6 +80,7 @@ public class Game extends Thread {
 			for(Integer eachPlayerID: players) {
 				try {
 					clientConnectionInstance.blockSocket(eachPlayerID);
+					setAnswer(eachPlayerID, null);
 					clientConnectionInstance.sendPackage(eachPlayerID, timeToAnswer);
 					clientConnectionInstance.sendPackage(eachPlayerID, question);
 					clientConnectionInstance.releaseSocket(eachPlayerID);
@@ -93,7 +96,7 @@ public class Game extends Thread {
 			for(Integer eachPlayerID: players) {
 				AnswerQuestion answerQuestion;
 				try {
-					if(question.getCorrectAnswer().equals(answers.get(eachPlayerID)))
+					if(question.getCorrectAnswer().equals(answers.get(players.indexOf(eachPlayerID))))
 						answerQuestion = new AnswerQuestion(true);
 					else
 						answerQuestion = new AnswerQuestion(false);
