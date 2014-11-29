@@ -22,6 +22,10 @@ import Packages.QuestionsResponse;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.ListSelectionEvent;
 
 public class ChooseQuestionWindow extends JDialog {
 
@@ -33,7 +37,7 @@ public class ChooseQuestionWindow extends JDialog {
 	final  DefaultListModel<Question> model = new DefaultListModel<Question>();
 	final  JList<Question> questionList = new JList<Question>();
 	private CustomListModel customModel = new CustomListModel();
-	
+	private JButton okButton;
 
 
  class CustomListModel extends AbstractListModel<Question>{
@@ -100,6 +104,12 @@ public class ChooseQuestionWindow extends JDialog {
 			buttonPane.setBounds(0, 340, 545, 33);
 			getContentPane().add(buttonPane);
 			buttonPane.setLayout(null);
+			questionList.addListSelectionListener(new ListSelectionListener() {
+				public void valueChanged(ListSelectionEvent arg0) {
+					okButton.setEnabled(true);
+				}
+			});
+
 			questionList.setBackground(Color.ORANGE);
 			questionList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 			questionList.setModel(new AbstractListModel() {
@@ -121,49 +131,18 @@ public class ChooseQuestionWindow extends JDialog {
 			final JComboBox<String> categoriaComboBox = new JComboBox<String>();
 			categoriaComboBox.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-//					model.removeAllElements();
+					if(!categoriaComboBox.getSelectedItem().equals("Categoría") && categoriaComboBox.getItemAt(0).equals("Categoría"))
+						categoriaComboBox.removeItem("Categoría");
 					customModel.removeAllQuestions();
 					Connection.sendPackage(new QuestionsRequest(categoriaComboBox.getSelectedItem().toString()));
-//					switch(categoriaComboBox.getSelectedItem().toString()){  //Segun que categoria sea, pedir a servidor todas 
-																			 //las preguntas que esten en base de datos.
-//					case "Deportes":
-//						model.addElement("ï¿½Cuantas copas libertadores tiene Boca Juniors?");
-//						model.addElement("ï¿½En que aï¿½o descendiï¿½ River Plate a la Segunda Division del futbol argentino?");
-//						model.addElement("ï¿½Quien errï¿½ el unico penal en la serie de penales en la semifinal de la Copa Libertadores 2004 entre Boca y River?");
-//						Connection.sendPackage(new QuestionsRequest(categoriaComboBox.getSelectedItem().toString()));			
-//						break;
-//					case "Entretenimiento":
-//						model.addElement("ï¿½En que aï¿½o se estrenï¿½ 'Volver al Futuro?'");
-//						questionList.setModel(model);				
-//						break;
-//					case "Ciencia":
-//						model.addElement("ï¿½Cuï¿½l es el quinto planeta mï¿½s cercano al Sol?");
-//						questionList.setModel(model);				
-//						break;
-//					case "Historia":
-//						model.addElement("ï¿½En que aï¿½o asumiï¿½ Raul Alfonsï¿½n como presidente?");
-//						questionList.setModel(model);				
-//						break;
-//					case "Arte":
-//						model.addElement("ï¿½En que aï¿½o se terminï¿½ de construir la Capilla Sixtina?");
-//						questionList.setModel(model);				
-//						break;
-//					case "Geografï¿½a":
-//						model.addElement("ï¿½De dï¿½nde son originarios los Moai?");
-//						questionList.setModel(model);				
-//						break;
-//						
-//					}
-					
-					
-					
 				}
 			});
-			categoriaComboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"Categor\u00EDa", "Deportes", "Ciencia", "Entretenimiento", "Geograf\u00EDa", "Historia", "Arte"}));
+			categoriaComboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"Categor\u00EDa", "Deportes", "Ciencia y Tecnología", "Entretenimiento", "Geograf\u00EDa", "Historia", "Arte y Literatura"}));
 			categoriaComboBox.setBounds(159, 25, 195, 20);
 			contentPanel.add(categoriaComboBox);
 			{
-				JButton okButton = new JButton("OK");
+				okButton = new JButton("OK");
+				okButton.setEnabled(false);
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						combo.addItem(questionList.getSelectedValue());
