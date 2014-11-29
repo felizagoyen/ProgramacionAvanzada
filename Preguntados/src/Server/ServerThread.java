@@ -13,7 +13,7 @@ public class ServerThread extends Thread {
 	private static final int STARTGAMEREQUESTID = 4;
 	private static final int CATEGORYREQUESTID = 5;
 	private static final int POINTSTABLEREQUESTID = 8;
-	private static final int ADDQUESTIONREQUESTID = 9;
+	private static final int ADDQUESTIONREQUESTID = 6;
 	private static final int ENDCONECTIONREQUESTID = 10;
 	private static final int QUESTIONSREQUESTID = 11;
 	private static final int ANSWERQUESTIONREQUESTID = 13;
