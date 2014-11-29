@@ -55,6 +55,23 @@ public class Game extends Thread {
 	public void setAnswer(int playerId, String answer) {
 		answers.set(players.indexOf(playerId), answer);
 	}
+
+	public void removePlayers(int playerId) {
+		if(players.contains(playerId))
+			players.remove(players.indexOf(playerId));
+	}
+	
+	public Boolean gameIsFull() {
+		if(players.size() == maxPlayers)
+			return true;
+		return false;
+	}
+	
+	public Boolean canStartGame() {
+		if(players.size() >= 2)
+			return true;
+		return false;
+	}
 	
 	public void run() {
 		DataBaseUtil db = new DataBaseUtil();
@@ -62,7 +79,7 @@ public class Game extends Thread {
 		for(int i = 0; i < players.size(); i++)
 			answers.add(null);
 		
-		for(int roundNumber = 0; roundNumber < MAXROUND; roundNumber++) {
+		for(int roundNumber = 0; roundNumber < MAXROUND && !players.isEmpty(); roundNumber++) {
 			Integer questionId = questionsID.get(roundNumber);
 			Question question = null;
 
@@ -95,7 +112,7 @@ public class Game extends Thread {
 			Boolean finishTime = false;
 			Boolean allAnswered = false;
 			
-			while(finishTime == false && allAnswered == false){
+			while(finishTime == false && allAnswered == false && !players.isEmpty()){
 				finishTime = System.currentTimeMillis() > timeToAnswer.getEndTime();
 				if(!answers.contains(null))
 					allAnswered = true;
@@ -104,8 +121,9 @@ public class Game extends Thread {
 			waitingAnswer = false;
 			EndTimeRequest timeToWaitNewQuestion = new EndTimeRequest(System.currentTimeMillis() + TIMETONEXTQUESTION);
 			
-			Logger.info("Verificando respuestas...");
-			
+			if(!players.isEmpty())
+				Logger.info("Verificando respuestas...");
+				
 			for(Integer eachPlayerID: players) {
 				AnswerQuestion answerQuestion;
 				try {
@@ -122,9 +140,21 @@ public class Game extends Thread {
 				}
 			}
 			
-			Logger.info("Respuestas verificadas correctamente");
-			while(System.currentTimeMillis() < timeToWaitNewQuestion.getEndTime());
+			if(!players.isEmpty()) {
+				Logger.info("Respuestas verificadas correctamente");
+				while(System.currentTimeMillis() < timeToWaitNewQuestion.getEndTime());
+			}
 
 		}
+		
+		if(players.isEmpty())
+			Logger.info("La partida finalizo porque se desconectaron todos los jugadores");
+		
+		players = new ArrayList<Integer>();
+		gameName = null;
+		maxPlayers = null;
+		questionsID = new ArrayList<Integer>();
+		answers = new ArrayList<String>();
+		waitingAnswer = false;
 	}
 }

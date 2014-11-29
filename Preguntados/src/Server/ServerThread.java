@@ -59,13 +59,29 @@ public class ServerThread extends Thread {
 					Logger.info("Partida creada correctamente.");
 					break;
 				case PLAYERJOINREQUESTID: // Jugador uniendose a partida
+					int joinStatus;
 					Logger.info(clientName + " solicita ingresar a la partida.");
-					game.addPlayer(clientId);
+					//if(game != null && game.gameIsFull() == false) {
+						game.addPlayer(clientId);
+				//		joinStatus = 1;
+				//	} else if(game != null && game.gameIsFull() == true) {
+				//		joinStatus = 0;
+				//	} else {
+				//		joinStatus = -1;
+				//	}
+				//	packageOut = new PlayerJoinResponse(joinStatus);
 					Logger.info(clientName + " se ha unido a la partida.");
 					break;
 				case STARTGAMEREQUESTID: // Comenzar partida
+					Boolean startGame; 
 					Logger.info("Iniciando partida...");
-					game.start();
+					//if(game.canStartGame() == true) {
+						game.start();
+					//	startGame = true;
+					//} else {
+					//	startGame = false;
+					//}
+					//packageOut = new StartGameResponse(startGame);
 					Logger.info("La partida se ha iniciado correctamente.");
 					break;
 				case CATEGORYREQUESTID:
@@ -94,6 +110,7 @@ public class ServerThread extends Thread {
 					break;
 				case ENDCONECTIONREQUESTID: // Fin conexion
 					Logger.info("Finalizando conexion con el cliente " + clientId);
+					game.removePlayers(clientId);
 					packageOut = new EndClientConnectionResponse();
 					endConection = true;
 				}
