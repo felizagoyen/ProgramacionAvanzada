@@ -89,7 +89,15 @@ public class Game extends Thread {
 				}
 			}
 
-			while(System.currentTimeMillis() < timeToAnswer.getEndTime());
+			Boolean finishTime = false;
+			Boolean allAnswered = false;
+			
+			while(finishTime == false && allAnswered == false){
+				finishTime = System.currentTimeMillis() > timeToAnswer.getEndTime();
+				if(!answers.contains(null))
+					allAnswered = true;
+			}
+			
 			waitingAnswer = false;
 			EndTimeRequest timeToWaitNewQuestion = new EndTimeRequest(System.currentTimeMillis() + 5000);
 			

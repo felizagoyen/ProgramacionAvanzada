@@ -11,6 +11,7 @@ public class Connection {
 	private ObjectInputStream inputObject;
 	private Socket socket;
 	private static Connection connection;
+
 	
 	private Connection (){
 		try{
@@ -59,7 +60,7 @@ public class Connection {
 		}
 		
 	}
-
+ 
 
 
 }

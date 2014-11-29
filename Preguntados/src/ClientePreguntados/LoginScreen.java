@@ -86,15 +86,15 @@ public class LoginScreen extends JFrame {
 		contentPane.setLayout(null);
 
 		JLabel lblUsername = new JLabel("Usuario");
-		lblUsername.setBounds(31, 108, 46, 14);
+		lblUsername.setBounds(31, 129, 46, 14);
 		contentPane.add(lblUsername);
 
 		JLabel lblPassword = new JLabel("Contrase\u00F1a");
-		lblPassword.setBounds(31, 160, 74, 14);
+		lblPassword.setBounds(31, 185, 74, 14);
 		contentPane.add(lblPassword);
 
 		jUserTextField = new JTextField();
-		jUserTextField.setBounds(136, 105, 86, 23);
+		jUserTextField.setBounds(136, 125, 86, 23);
 		contentPane.add(jUserTextField);
 		jUserTextField.setColumns(10);
 
@@ -103,7 +103,7 @@ public class LoginScreen extends JFrame {
 		jCamposVaciosTextArea.setBackground(new Color(255, 153, 0));
 		jCamposVaciosTextArea.setLineWrap(true);
 		jCamposVaciosTextArea.setText("Alguno de los dos campos est\u00E1 vac\u00EDo, por favor completelos.");
-		jCamposVaciosTextArea.setBounds(31, 329, 208, 67);
+		jCamposVaciosTextArea.setBounds(32, 367, 208, 67);
 		jCamposVaciosTextArea.setVisible(false);
 		contentPane.add(jCamposVaciosTextArea);
 		
@@ -113,7 +113,7 @@ public class LoginScreen extends JFrame {
 		jUsuarioInexistenteTextArea.setEditable(false);
 		jUsuarioInexistenteTextArea.setVisible(false);
 		jUsuarioInexistenteTextArea.setText("Los datos ingresados no se encuentran en la base de datos.");
-		jUsuarioInexistenteTextArea.setBounds(31, 329, 240, 74);
+		jUsuarioInexistenteTextArea.setBounds(31, 367, 240, 74);
 		contentPane.add(jUsuarioInexistenteTextArea);
 
 		JButton jLoginButton = new JButton("Entrar");
@@ -121,7 +121,7 @@ public class LoginScreen extends JFrame {
 		
 
 		jLoginButton.addActionListener(new ActionLogin(jUsuarioInexistenteTextArea, jCamposVaciosTextArea));
-		jLoginButton.setBounds(84, 209, 89, 23);
+		jLoginButton.setBounds(84, 262, 89, 23);
 		contentPane.add(jLoginButton);
 
 		jPasswordField = new JPasswordField();
@@ -132,7 +132,7 @@ public class LoginScreen extends JFrame {
 					new ActionLogin (jUsuarioInexistenteTextArea, jCamposVaciosTextArea).actionPerformed(null);
 			}
 		});
-		jPasswordField.setBounds(136, 157, 86, 20);
+		jPasswordField.setBounds(136, 182, 86, 20);
 		contentPane.add(jPasswordField);
 
 		JButton jSalirButton = new JButton("Salir");
@@ -144,7 +144,7 @@ public class LoginScreen extends JFrame {
 //				System.exit(NORMAL);
 			}
 		});
-		jSalirButton.setBounds(84, 255, 89, 23);
+		jSalirButton.setBounds(84, 310, 89, 23);
 		contentPane.add(jSalirButton);
 		
 

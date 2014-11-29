@@ -53,7 +53,6 @@ public class RoundGameScreen extends JFrame {
 			respuesta2Button.setEnabled(false);
 			respuesta3Button.setEnabled(false);
 			respuesta4Button.setEnabled(false);
-			System.out.println("Tiempo terminado");
 		
 		}
 		
