@@ -17,6 +17,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.Color;
+import javax.swing.event.AncestorListener;
+import javax.swing.event.AncestorEvent;
 
 public class UserMenuScreen extends JFrame {
 
@@ -64,6 +66,7 @@ public class UserMenuScreen extends JFrame {
 				if(isJoined){
 					JoinPlayerGameWindow joinplayergamewindow = new JoinPlayerGameWindow();
 					joinplayergamewindow.setVisible(true);
+					
 					RoundGameScreen rgs = new RoundGameScreen();
 					ClientThread.recieveScreen(rgs);
 					ClientThread.recieveScreen(joinplayergamewindow);

@@ -156,17 +156,20 @@ public class LoginScreen extends JFrame {
 			AdminMenuScreen adminscreen = new AdminMenuScreen();
 			adminscreen.setVisible(true);
 			setVisible(false);
+			
 		} else {
 			if(loginresponse.getUserType() == 1){
 				UserMenuScreen userscreen = new UserMenuScreen();
 				userscreen.setVisible(true);
 				setVisible(false);
+				
 			}else
 			{
 				jCamposVaciosTextArea.setVisible(false);
 				jUsuarioInexistenteTextArea.setVisible(true);
 			}
 		}
+		
 		
 	}
 }

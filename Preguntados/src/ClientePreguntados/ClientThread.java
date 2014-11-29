@@ -25,6 +25,7 @@ public class ClientThread extends Thread {
 	private static final int ADDQUESTIONREESPONSEID = 9;
 	private static final int ENDCONNECTIONRESPONSEID = 10;
 	private static final int QUESTIONSRESPONSEID = 11;
+	private static final int ENDTIMEID = 12;
 	private static final int ANSWERQUESTIONRESPONSEID = 13;
 	private Boolean endConnection = false;
 	
@@ -45,8 +46,14 @@ public class ClientThread extends Thread {
 
 				switch (packageIn.getPackageID()) {
 				case LOGINRESPONSEID: // Respuesta de logeo del servidor.
+//					AdminMenuScreen adminscreen;
 					LoginResponse loginresponse = (LoginResponse) packageIn;
-					loginscreen.actionLogin(loginresponse);	
+					loginscreen.actionLogin(loginresponse);
+//					UserMenuScreen userscreen;
+//					if(loginresponse.getUserType() == 0)
+//						adminscreen = (AdminMenuScreen) loginscreen.actionLogin(loginresponse);	
+//					else
+//						userscreen = (UserMenuScreen) loginscreen.actionLogin(loginresponse);	
 					break;
 				case QUESTIONSRESPONSEID:  
 					
@@ -76,6 +83,7 @@ public class ClientThread extends Thread {
 					((RoundGameScreen)JFrameScreen).enableButtons();
 					((RoundGameScreen)JFrameScreen).setQuestion(question);
 					((RoundGameScreen)JFrameScreen).setVisible(true);
+					((RoundGameScreen)JFrameScreen).startTimer();
 					
 					break;
 				case ADDQUESTIONREESPONSEID: // Agregar pregunta
@@ -83,6 +91,10 @@ public class ClientThread extends Thread {
 					if(addResponse.getValid() == true)
 							((AddQuestionScreen)JFrameScreen).clearScreen();
 					break;
+					
+				case ENDTIMEID:
+					break;
+					
 					
 				case ANSWERQUESTIONRESPONSEID:
 					AnswerQuestion answer = (AnswerQuestion) packageIn;
