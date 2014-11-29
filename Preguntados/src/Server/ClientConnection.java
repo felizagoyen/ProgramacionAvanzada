@@ -2,22 +2,22 @@ package Server;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.concurrent.Semaphore;
 import Packages.Package;
 
 public class ClientConnection {
+	
 	private static final ClientConnection instance = new ClientConnection();
-	private static final int MAXCONNECTIONS = 10;
-	private ArrayList<Socket> clientSockets = new ArrayList<Socket>();;
+	private static final int MAXCONNECTIONS = 50;
+	private ArrayList<Client> clients = new ArrayList<Client>();
 	private ArrayList<ObjectOutputStream> outputStream = new ArrayList<ObjectOutputStream>();;
 	private ArrayList<ObjectInputStream> inputStream = new ArrayList<ObjectInputStream>();;
 	private ArrayList<Semaphore> semaphores = new ArrayList<Semaphore>();
 	
 	private ClientConnection() {
 		for(int x = 0; x < MAXCONNECTIONS; x++) {
-			clientSockets.add(null);
+			clients.add(null);
 			outputStream.add(null);
 			inputStream.add(null);
 			semaphores.add(new Semaphore(1));
@@ -28,10 +28,6 @@ public class ClientConnection {
 		return instance;
 	}
 	
-	public Socket getClientSocket(int index) {
-		return clientSockets.get(index);
-	}
-
 	public void sendPackage(int index, Package pack) throws Exception {
 		outputStream.get(index).writeObject(pack);
 	}
@@ -40,11 +36,15 @@ public class ClientConnection {
 		return ((Package) inputStream.get(index).readObject());
 	}
 	
-	public void setClientConnection(int index, Socket socket) {
+	public Client getClient(int index) {
+		return clients.get(index);
+	}
+	
+	public void setClientConnection(Client client) {
 		try {
-		clientSockets.set(index, socket);
-		outputStream.set(index, new ObjectOutputStream(socket.getOutputStream()));
-		inputStream.set(index, new ObjectInputStream(socket.getInputStream()));
+			clients.set(client.getId(), client);
+			outputStream.set(client.getId(), new ObjectOutputStream(client.getSocket().getOutputStream()));
+			inputStream.set(client.getId(), new ObjectInputStream(client.getSocket().getInputStream()));
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -64,9 +64,10 @@ public class ClientConnection {
 		}
 	}
 	
-	public int getFreeIndexSocket() {
-		for(int x = 0; x < MAXCONNECTIONS; x++)
-			if(clientSockets.get(x) == null) return x; 
+	public int getFreeIndexClient() {
+		for(int x = 0; x < MAXCONNECTIONS; x++) { 
+			if(clients.get(x) == null) return x; 
+		}
 		return -1;
 	}
 	
@@ -86,9 +87,8 @@ public class ClientConnection {
 		}
 	}
 
-	public void freeSocket(int index) {
-		clientSockets.set(index, null);
+	public void freeClient(int index) {
+		clients.set(index, null);
 	}
-	
-	
+		
 }

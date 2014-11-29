@@ -13,14 +13,14 @@ public class AcceptClient extends Thread {
 	public void run() {
 		Socket clientSocket;
 		ClientConnection clientSocketInstance = ClientConnection.getInstance();
-		int clientID;
+		int clientId;
 		while(true) {
 			try {
-				if((clientID = clientSocketInstance.getFreeIndexSocket()) != -1) {
+				if((clientId = clientSocketInstance.getFreeIndexClient()) != -1) {
 					clientSocket = serverSocket.accept();
-					clientSocketInstance.setClientConnection(clientID, clientSocket);
-					System.out.println("Conexion Aceptada");
-					new ServerThread(clientID).start(); //Crea una conexion nueva de escucha para cada cliente
+					clientSocketInstance.setClientConnection(new Client(clientId, null, clientSocket));
+					Logger.info("Conexion Aceptada. ClientId: " + clientId);
+					new ServerThread(clientId).start(); //Crea una conexion nueva de escucha para cada cliente
 				}
 			} catch (Exception e) {
 				e.printStackTrace();

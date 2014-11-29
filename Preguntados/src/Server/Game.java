@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import Packages.*;
 
 public class Game extends Thread {
-//	private static final int TIME = 30000;
+	private static final int TIMETOANSWER = 30000;
+	private static final int TIMETONEXTQUESTION = 3000;
 	private static final int MAXROUND = 10;
 	private static Game game = new Game();
 	private String gameName;
@@ -74,8 +75,10 @@ public class Game extends Thread {
 				questionsID.set(roundNumber, questionId);
 			} 
 			question = db.getQuestionByID(questionId);
-			EndTimeRequest timeToAnswer = new EndTimeRequest(System.currentTimeMillis() + 30000);
+			EndTimeRequest timeToAnswer = new EndTimeRequest(System.currentTimeMillis() + TIMETOANSWER);
 			waitingAnswer = true;
+			
+			Logger.info("Enviando pregunta de la ronda " + (roundNumber + 1));
 			
 			for(Integer eachPlayerID: players) {
 				try {
@@ -99,7 +102,9 @@ public class Game extends Thread {
 			}
 			
 			waitingAnswer = false;
-			EndTimeRequest timeToWaitNewQuestion = new EndTimeRequest(System.currentTimeMillis() + 5000);
+			EndTimeRequest timeToWaitNewQuestion = new EndTimeRequest(System.currentTimeMillis() + TIMETONEXTQUESTION);
+			
+			Logger.info("Verificando respuestas...");
 			
 			for(Integer eachPlayerID: players) {
 				AnswerQuestion answerQuestion;
@@ -116,12 +121,10 @@ public class Game extends Thread {
 					e.printStackTrace();
 				}
 			}
-
+			
+			Logger.info("Respuestas verificadas correctamente");
 			while(System.currentTimeMillis() < timeToWaitNewQuestion.getEndTime());
 
 		}
-		//players = null;
-		//gameName = null;
-		//maxPlayers = null;
 	}
 }
