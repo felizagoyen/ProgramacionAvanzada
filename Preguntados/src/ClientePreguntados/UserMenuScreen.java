@@ -66,6 +66,7 @@ public class UserMenuScreen extends JFrame {
 					joinplayergamewindow.setVisible(true);
 					RoundGameScreen rgs = new RoundGameScreen();
 					ClientThread.recieveScreen(rgs);
+					ClientThread.recieveScreen(joinplayergamewindow);
 				}
 			
 			}

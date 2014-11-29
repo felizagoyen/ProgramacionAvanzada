@@ -4,6 +4,7 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 
 import Packages.AddQuestionResponse;
+import Packages.AnswerQuestion;
 import Packages.LoginResponse;
 import Packages.Package;
 import Packages.Question;
@@ -14,7 +15,6 @@ public class ClientThread extends Thread {
 	private LoginScreen loginscreen;
 	private static JDialog JDialogScreen;
 	private static JFrame JFrameScreen;
-	private Package packageOut;
 	private static Package packageIn;
 	private static final int LOGINRESPONSEID = 1;
 	private static final int CREATEGAMEREQUESTID = 2;
@@ -25,6 +25,7 @@ public class ClientThread extends Thread {
 	private static final int ADDQUESTIONREESPONSEID = 9;
 	private static final int ENDCONNECTIONRESPONSEID = 10;
 	private static final int QUESTIONSRESPONSEID = 11;
+	private static final int ANSWERQUESTIONRESPONSEID = 13;
 	private Boolean endConnection = false;
 	
 	public ClientThread(LoginScreen loginscreen){
@@ -70,6 +71,9 @@ public class ClientThread extends Thread {
 				case GAMERUNNINGID:
 					
 					Question question = (Question) packageIn;
+					((JoinPlayerGameWindow)JDialogScreen).setVisible(false);
+					((RoundGameScreen)JFrameScreen).setVisible(false);
+					((RoundGameScreen)JFrameScreen).enableButtons();
 					((RoundGameScreen)JFrameScreen).setQuestion(question);
 					((RoundGameScreen)JFrameScreen).setVisible(true);
 					
@@ -79,6 +83,18 @@ public class ClientThread extends Thread {
 					if(addResponse.getValid() == true)
 							((AddQuestionScreen)JFrameScreen).clearScreen();
 					break;
+					
+				case ANSWERQUESTIONRESPONSEID:
+					AnswerQuestion answer = (AnswerQuestion) packageIn;
+					((RoundGameScreen)JFrameScreen).setLabelAnswer(answer.isCorrect());
+//					if(answer.isCorrect())
+//						
+//					else
+//						System.out.println("Respuesta incorrecta.");
+					
+					
+					break;
+				
 				case ENDCONNECTIONRESPONSEID: // Fin conexion
 					endConnection = true;
 					Connection.endConnection();

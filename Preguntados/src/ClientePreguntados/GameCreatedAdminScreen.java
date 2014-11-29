@@ -50,6 +50,7 @@ public class GameCreatedAdminScreen extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				StartGameRequest start = new StartGameRequest();
 				Connection.sendPackage(start);
+				setVisible(false);
 			}
 		});
 		btnIniciarPartida.setFont(new Font("Tahoma", Font.PLAIN, 43));
