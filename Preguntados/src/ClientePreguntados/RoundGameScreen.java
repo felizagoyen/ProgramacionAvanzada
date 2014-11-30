@@ -9,8 +9,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JTextArea;
 import javax.swing.JButton;
 
-import Packages.AnswerQuestion;
-import Packages.Question;
+import Commons.AnswerQuestion;
+import Commons.Question;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;

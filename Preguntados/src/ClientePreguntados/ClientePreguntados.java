@@ -1,6 +1,6 @@
 package ClientePreguntados;
 
-import Packages.EndClientConectionRequest;
+import Commons.EndClientConectionRequest;
 
 public class ClientePreguntados {
 

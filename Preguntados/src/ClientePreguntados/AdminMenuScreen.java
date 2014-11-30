@@ -12,7 +12,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-import Packages.EndClientConectionRequest;
+import Commons.EndClientConectionRequest;
 
 public class AdminMenuScreen extends JFrame {
 

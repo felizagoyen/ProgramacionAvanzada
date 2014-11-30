@@ -2,8 +2,8 @@ package Server;
 
 import java.util.ArrayList;
 
-import Packages.*;
-import Packages.Package;
+import Commons.*;
+import Commons.Package;
 
 public class ServerThread extends Thread {
 
@@ -71,7 +71,6 @@ public class ServerThread extends Thread {
 						game.createGame(gameRequest.getGameName(), gameRequest.getMaxPlayers(), gameRequest.getQuestionsID());
 						Logger.info("Partida creada correctamente.");
 						game.addPlayer(clientId, clientName); //Al crear la partida el administrador se une.
-						Logger.info(clientName + " se ha unido a la partida.");
 					} else {
 						Logger.warn("La partida ya estaba creada");
 					}

@@ -7,8 +7,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
-import Packages.GameRequest;
-import Packages.PlayerJoinRequest;
+
+import Commons.GameRequest;
+import Commons.PlayerJoinRequest;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;

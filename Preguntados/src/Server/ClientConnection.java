@@ -4,7 +4,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.concurrent.Semaphore;
-import Packages.Package;
+
+import Commons.Package;
 
 public class ClientConnection {
 	

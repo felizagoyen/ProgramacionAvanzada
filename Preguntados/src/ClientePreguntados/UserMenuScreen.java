@@ -9,8 +9,8 @@ import java.awt.Font;
 
 import javax.swing.JButton;
 
-import Packages.EndClientConectionRequest;
-import Packages.PlayerJoinRequest;
+import Commons.EndClientConectionRequest;
+import Commons.PlayerJoinRequest;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;

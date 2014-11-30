@@ -4,14 +4,14 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 
-import Packages.AddQuestionResponse;
-import Packages.AnswerQuestion;
-import Packages.LoginResponse;
-import Packages.Package;
-import Packages.PlayerJoinResponse;
-import Packages.Question;
-import Packages.QuestionsResponse;
-import Packages.StartGameResponse;
+import Commons.AddQuestionResponse;
+import Commons.AnswerQuestion;
+import Commons.LoginResponse;
+import Commons.Package;
+import Commons.PlayerJoinResponse;
+import Commons.Question;
+import Commons.QuestionsResponse;
+import Commons.StartGameResponse;
 
 public class ClientThread extends Thread {
 	

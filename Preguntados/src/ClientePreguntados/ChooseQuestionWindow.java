@@ -15,9 +15,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 
-import Packages.Question;
-import Packages.QuestionsRequest;
-import Packages.QuestionsResponse;
+import Commons.Question;
+import Commons.QuestionsRequest;
+import Commons.QuestionsResponse;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -131,13 +131,13 @@ public class ChooseQuestionWindow extends JDialog {
 			final JComboBox<String> categoriaComboBox = new JComboBox<String>();
 			categoriaComboBox.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					if(!categoriaComboBox.getSelectedItem().equals("Categoría") && categoriaComboBox.getItemAt(0).equals("Categoría"))
-						categoriaComboBox.removeItem("Categoría");
+					if(!categoriaComboBox.getSelectedItem().equals("Categorï¿½a") && categoriaComboBox.getItemAt(0).equals("Categorï¿½a"))
+						categoriaComboBox.removeItem("Categorï¿½a");
 					customModel.removeAllQuestions();
 					Connection.sendPackage(new QuestionsRequest(categoriaComboBox.getSelectedItem().toString()));
 				}
 			});
-			categoriaComboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"Categor\u00EDa", "Deportes", "Ciencia y Tecnología", "Entretenimiento", "Geograf\u00EDa", "Historia", "Arte y Literatura"}));
+			categoriaComboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"Categor\u00EDa", "Deportes", "Ciencia y Tecnologï¿½a", "Entretenimiento", "Geograf\u00EDa", "Historia", "Arte y Literatura"}));
 			categoriaComboBox.setBounds(159, 25, 195, 20);
 			contentPanel.add(categoriaComboBox);
 			{

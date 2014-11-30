@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 
-import Packages.StartGameRequest;
+import Commons.StartGameRequest;
 
 import java.awt.Font;
 import java.awt.event.ActionListener;

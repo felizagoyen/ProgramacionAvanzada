@@ -3,7 +3,7 @@ package Server;
 import java.sql.*;
 import java.util.ArrayList;
 
-import Packages.Question;
+import Commons.Question;
 
 public class DataBaseUtil {
 	private ConnectionDB conection = null;

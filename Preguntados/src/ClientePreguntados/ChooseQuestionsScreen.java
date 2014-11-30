@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 import javax.swing.JButton;
 
-import Packages.Question;
+import Commons.Question;
 
 public class ChooseQuestionsScreen extends JFrame {
 

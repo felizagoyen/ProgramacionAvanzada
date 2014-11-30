@@ -14,7 +14,7 @@ import javax.swing.JTextArea;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 
-import Packages.Question;
+import Commons.Question;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;

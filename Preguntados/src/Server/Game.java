@@ -3,7 +3,7 @@ package Server;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import Packages.*;
+import Commons.*;
 
 public class Game extends Thread {
 	
@@ -182,11 +182,13 @@ public class Game extends Thread {
 			Logger.info("La partida finalizo correctamente luego de las " + MAXROUND + " rondas.");
 			Collections.sort(players);
 			Integer maxScore = players.get(0).getScore();
-			ArrayList<Player> winners = new ArrayList<Player>(); 
 			
 			for(Player eachPlayer: players) 
 				if(eachPlayer.getScore().equals(maxScore)) {
-					winners.add(eachPlayer);
+					clientConnectionInstance.blockSocket(eachPlayer.getId());
+	//				clientConnectionInstance.sendPackage(eachPlayer.getId(), answerQuestion);
+		//			clientConnectionInstance.sendPackage(eachPlayer.getId(), timeToWaitNewQuestion);
+					clientConnectionInstance.releaseSocket(eachPlayer.getId());
 					Logger.info("Ganador -> Nombre: " + eachPlayer.getName() + " - Puntuacion: " + eachPlayer.getScore());
 				}
 		}

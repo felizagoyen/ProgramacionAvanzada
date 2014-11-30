@@ -15,9 +15,9 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
 import javax.swing.JPasswordField;
 
-import Packages.EndClientConectionRequest;
-import Packages.LoginRequest;
-import Packages.LoginResponse;
+import Commons.EndClientConectionRequest;
+import Commons.LoginRequest;
+import Commons.LoginResponse;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
