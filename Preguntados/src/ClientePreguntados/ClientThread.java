@@ -12,6 +12,7 @@ import Commons.PlayerJoinResponse;
 import Commons.Question;
 import Commons.QuestionsResponse;
 import Commons.StartGameResponse;
+import Commons.WinnerStatus;
 
 public class ClientThread extends Thread {
 	
@@ -30,7 +31,7 @@ public class ClientThread extends Thread {
 	private static final int QUESTIONSRESPONSEID = 11;
 	private static final int ENDTIMEID = 12;
 	private static final int ANSWERQUESTIONRESPONSEID = 13;
-	private static final int ADMINJOINRESPONSEID = 14;
+	private static final int WINNERSTATUSID = 14;
 	private Boolean endConnection = false;
 	
 	public ClientThread(LoginScreen loginscreen){
@@ -50,14 +51,10 @@ public class ClientThread extends Thread {
 
 				switch (packageIn.getPackageID()) {
 				case LOGINRESPONSEID: // Respuesta de logeo del servidor.
-//					AdminMenuScreen adminscreen;
+
 					LoginResponse loginresponse = (LoginResponse) packageIn;
 					loginscreen.actionLogin(loginresponse);
-//					UserMenuScreen userscreen;
-//					if(loginresponse.getUserType() == 0)
-//						adminscreen = (AdminMenuScreen) loginscreen.actionLogin(loginresponse);	
-//					else
-//						userscreen = (UserMenuScreen) loginscreen.actionLogin(loginresponse);	
+
 					break;
 				case QUESTIONSRESPONSEID:  
 					
@@ -102,6 +99,18 @@ public class ClientThread extends Thread {
 					((RoundGameScreen)JFrameScreen).startTimer();
 					
 					break;
+					
+				case WINNERSTATUSID:
+					WinnerStatus winnerstatus = (WinnerStatus) packageIn;
+					if(winnerstatus.getStatus() == 1){
+						//Ganaste!
+					}if(winnerstatus.getStatus() == 0){
+						//Saliste empatado en el primer puesto con otro user!
+					}
+					else
+						//perdiste!
+					
+					break;
 				case ADDQUESTIONREESPONSEID: // Agregar pregunta
 					AddQuestionResponse addResponse = (AddQuestionResponse) packageIn;
 					if(addResponse.getValid() == true)
@@ -115,10 +124,6 @@ public class ClientThread extends Thread {
 				case ANSWERQUESTIONRESPONSEID:
 					AnswerQuestion answer = (AnswerQuestion) packageIn;
 					((RoundGameScreen)JFrameScreen).setLabelAnswer(answer.isCorrect());
-//					if(answer.isCorrect())
-//						
-//					else
-//						System.out.println("Respuesta incorrecta.");
 					
 					
 					break;
@@ -128,7 +133,6 @@ public class ClientThread extends Thread {
 					Connection.endConnection();
 				}
 
-//					if(!endConnection && packageOut != null) Connection.sendPackage(packageOut);
 			}
 			System.out.println("Conexion Finalizada");
 		} catch (Exception 
