@@ -5,8 +5,7 @@ import java.util.ArrayList;
 
 public class ResultsGamePackage implements Serializable, Package {
 	
-	private static final long serialVersionUID = 7026662954512938663L;
-
+	private static final long serialVersionUID = -337753889965257449L;
 	private static final Integer PACKAGEID = 14;
 	private ArrayList<Player> winners;
 	private ArrayList<Player> scoreTable;
