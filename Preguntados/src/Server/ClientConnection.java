@@ -35,21 +35,7 @@ public class ClientConnection {
 	public Package readPackage(int index) throws Exception {
 		return ((Package) inputStream.get(index).readObject());
 	}
-	
-	public Client getClient(int index) {
-		return clients.get(index);
-	}
-	
-	public void setClientConnection(Client client) {
-		try {
-			clients.set(client.getId(), client);
-			outputStream.set(client.getId(), new ObjectOutputStream(client.getSocket().getOutputStream()));
-			inputStream.set(client.getId(), new ObjectInputStream(client.getSocket().getInputStream()));
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
+
 	public void closeOutputStream(int index) throws Exception {
 		if(outputStream.get(index) != null) {
 			outputStream.get(index).close();
@@ -63,14 +49,7 @@ public class ClientConnection {
 			inputStream.set(index, null);
 		}
 	}
-	
-	public int getFreeIndexClient() {
-		for(int x = 0; x < MAXCONNECTIONS; x++) { 
-			if(clients.get(x) == null) return x; 
-		}
-		return -1;
-	}
-	
+
 	public void blockSocket(int index) {
 		try {
 			semaphores.get(index).acquire();
@@ -86,9 +65,36 @@ public class ClientConnection {
 			e.printStackTrace();
 		}
 	}
-
+	
+	public void setClientConnection(Client client) {
+		try {
+			clients.set(client.getId(), client);
+			outputStream.set(client.getId(), new ObjectOutputStream(client.getSocket().getOutputStream()));
+			inputStream.set(client.getId(), new ObjectInputStream(client.getSocket().getInputStream()));
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public Client getClient(int index) {
+		return clients.get(index);
+	}
+	
+	public int getFreeIndexClient() {
+		for(int x = 0; x < MAXCONNECTIONS; x++) 
+			if(clients.get(x) == null) return x; 
+		return -1;
+	}
+	
 	public void freeClient(int index) {
 		clients.set(index, null);
 	}
-		
+	
+	public Boolean clientIsLogged(String clientName) {
+		for(Client eachClient: clients)
+			if(eachClient != null && eachClient.getName().equals(clientName))
+				return true;
+		return false;
+	}
+	
 }

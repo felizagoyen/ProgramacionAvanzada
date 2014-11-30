@@ -8,10 +8,10 @@ public class Client {
 	private String name;
 	private Socket socket;
 	
-	public Client(Integer id, String name, Socket socket) {
+	public Client(Integer id, Socket socket) {
 		this.id = id;
-		this.name = name;
 		this.socket = socket;
+		this.name = "";
 	}
 	
 	public Integer getId() {
