@@ -1,17 +1,19 @@
 package ClientePreguntados;
 
 import javax.swing.JFrame;
+
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
-
 import Packages.GameRequest;
+import Packages.PlayerJoinRequest;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+
 import javax.swing.JFormattedTextField;
 
 public class CreateGameScreen extends JFrame {
@@ -89,6 +91,10 @@ public class CreateGameScreen extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				GameRequest gamerequest = new GameRequest(nombrePartidaTextField.getText(),  Integer.parseInt(cantMaxTextField.getText()), questionsID);
 				Connection.sendPackage(gamerequest);
+				JoinPlayerGameWindow joinadmingamewindow = new JoinPlayerGameWindow();
+				RoundGameScreen roundgamescreen = new RoundGameScreen();
+				ClientThread.recieveScreen(joinadmingamewindow);
+				ClientThread.recieveScreen(roundgamescreen);
 				GameCreatedAdminScreen gamecreated = new GameCreatedAdminScreen();
 				setVisible(false);
 				gamecreated.setVisible(true);
