@@ -124,6 +124,7 @@ public class ClientThread extends Thread {
 				case ANSWERQUESTIONRESPONSEID:
 					AnswerQuestion answer = (AnswerQuestion) packageIn;
 					((RoundGameScreen)JFrameScreen).setLabelAnswer(answer.isCorrect());
+					((RoundGameScreen)JFrameScreen).paintButtons(answer.isCorrect());
 					
 					
 					break;

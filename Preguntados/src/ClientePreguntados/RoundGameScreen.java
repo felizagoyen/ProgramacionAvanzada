@@ -31,6 +31,8 @@ public class RoundGameScreen extends JFrame {
 	private JButton respuesta2Button;
 	private JButton respuesta3Button;
 	private JButton respuesta4Button;
+	private JButton clickedButton;
+	private JButton correctAnswerButton;
 	private boolean questionAnswered;
 	private JLabel lblRespuesta;
 	private JLabel timerLabel;
@@ -81,6 +83,7 @@ public class RoundGameScreen extends JFrame {
 		respuesta1Button = new JButton("Respuesta 1");
 		respuesta1Button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				clickedButton = respuesta1Button;
 				AnswerQuestion answer = new AnswerQuestion(respuesta1Button.getText());
 				questionAnswered = true;
 				respuesta1Button.setEnabled(false);
@@ -96,6 +99,7 @@ public class RoundGameScreen extends JFrame {
 		respuesta2Button = new JButton("Respuesta 2");
 		respuesta2Button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				clickedButton = respuesta2Button;
 				AnswerQuestion answer = new AnswerQuestion(respuesta2Button.getText());
 				questionAnswered = true;
 				respuesta1Button.setEnabled(false);
@@ -111,6 +115,7 @@ public class RoundGameScreen extends JFrame {
 		respuesta3Button = new JButton("Respuesta 3");
 		respuesta3Button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				clickedButton = respuesta3Button;
 				AnswerQuestion answer = new AnswerQuestion(respuesta3Button.getText());
 				questionAnswered = true;
 				respuesta1Button.setEnabled(false);
@@ -126,6 +131,7 @@ public class RoundGameScreen extends JFrame {
 		respuesta4Button = new JButton("Respuesta 4");
 		respuesta4Button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				clickedButton = respuesta4Button;
 				AnswerQuestion answer = new AnswerQuestion(respuesta4Button.getText());
 				questionAnswered = true;
 				respuesta1Button.setEnabled(false);
@@ -166,20 +172,35 @@ public class RoundGameScreen extends JFrame {
 	
 	public void setQuestion (Question question){
 		txtrPregunta.setText(question.getQuestion());
-		ArrayList<String> questions = new ArrayList<String>();
-		questions.add(question.getCorrectAnswer());
-		questions.add(question.getWrongAnswers().get(0));
-		questions.add(question.getWrongAnswers().get(1));
-		questions.add(question.getWrongAnswers().get(2));
-		Collections.shuffle(questions);
-		respuesta1Button.setText(questions.get(0));
-		respuesta2Button.setText(questions.get(1));
-		respuesta3Button.setText(questions.get(2));
-		respuesta4Button.setText(questions.get(3));
+		ArrayList<String> asnwers = new ArrayList<String>();
+		asnwers.add(question.getCorrectAnswer());
+		asnwers.add(question.getWrongAnswers().get(0));
+		asnwers.add(question.getWrongAnswers().get(1));
+		asnwers.add(question.getWrongAnswers().get(2));
+		Collections.shuffle(asnwers);
+		respuesta1Button.setText(asnwers.get(0));
+		respuesta2Button.setText(asnwers.get(1));
+		respuesta3Button.setText(asnwers.get(2));
+		respuesta4Button.setText(asnwers.get(3));
+		if(respuesta1Button.getText().equals(question.getCorrectAnswer()))
+			correctAnswerButton = respuesta1Button;
+		else
+			if(respuesta2Button.getText().equals(question.getCorrectAnswer()))
+				correctAnswerButton = respuesta2Button;
+			else
+				if(respuesta3Button.getText().equals(question.getCorrectAnswer()))
+					correctAnswerButton = respuesta3Button;
+				else
+					correctAnswerButton = respuesta4Button;
+		
 	}
 
 	public void enableButtonsAndRefreshComponents() {
 		questionAnswered = false;
+		respuesta1Button.setBackground(null);
+		respuesta2Button.setBackground(null);
+		respuesta3Button.setBackground(null);
+		respuesta4Button.setBackground(null);
 		respuesta1Button.setEnabled(true);
 		respuesta2Button.setEnabled(true);
 		respuesta3Button.setEnabled(true);
@@ -198,6 +219,15 @@ public class RoundGameScreen extends JFrame {
 		
 		lblRespuesta.setVisible(true);
 			
+	}
+	
+	public void paintButtons(boolean isCorrect){
+		if(isCorrect)
+			clickedButton.setBackground(java.awt.Color.green);
+		else{
+			clickedButton.setBackground(java.awt.Color.red);
+			correctAnswerButton.setBackground(java.awt.Color.green);
+		}
 	}
 	
 	public void startTimer (){
