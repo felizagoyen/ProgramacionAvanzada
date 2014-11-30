@@ -2,14 +2,15 @@ package Commons;
 
 import java.io.Serializable;
 
-public class LoginRequest implements Serializable, Package {
+public class UserLoginPackage implements Serializable, Package {
 
 	private static final long serialVersionUID = 664747009248310784L;
 	private static final Integer PACKAGEID = 1;
 	private String user;
 	private String password;
+	private Integer userType;
 	
-	public LoginRequest(String user, String password) {
+	public UserLoginPackage(String user, String password) {
 		this.user = user;
 		this.password = password;
 	}
@@ -24,6 +25,14 @@ public class LoginRequest implements Serializable, Package {
 	
 	public String getPassword() {
 		return password;
+	}
+	
+	public Integer getUserType() {
+		return userType;
+	}
+	
+	public void setUserType(Integer userType) {
+		this.userType = userType;
 	}
 	
 }

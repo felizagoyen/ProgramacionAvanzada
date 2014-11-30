@@ -2,13 +2,13 @@ package Commons;
 
 import java.io.Serializable;
 
-public class EndTimeRequest implements Serializable, Package {
+public class EndTimePackage implements Serializable, Package {
 		
 	private static final long serialVersionUID = 4747635692769497358L;
 	private static final Integer PACKAGEID = 12;
 	private long endTime;
 	
-	public EndTimeRequest(long endTime) {
+	public EndTimePackage(long endTime) {
 		this.endTime = endTime;
 	}
 

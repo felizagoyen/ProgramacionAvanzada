@@ -2,22 +2,24 @@ package Commons;
 
 import java.io.Serializable;
 
-public class PlayerJoinResponse implements Serializable, Package {
+public class PlayerJoinPackage implements Serializable, Package {
 	
-	private static final long serialVersionUID = -3026835309278795842L;
+	private static final long serialVersionUID = 989024739531282591L;
 	private static final Integer PACKAGEID = 3;
-	private Integer joinStatus; 
+	private Integer joinStatus;
 	
-	public PlayerJoinResponse(int joinStatus) {
+	public PlayerJoinPackage(){
+	}
+
+	public PlayerJoinPackage(int joinStatus) {
 		this.joinStatus = joinStatus;
 	}
 	
 	public Integer getPackageID() {
 		return PACKAGEID;
 	}
-	
+
 	public Integer getJoinStatus() {
 		return joinStatus;
 	}
-
 }

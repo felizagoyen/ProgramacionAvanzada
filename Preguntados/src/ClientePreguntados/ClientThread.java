@@ -4,15 +4,16 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 
-import Commons.AddQuestionResponse;
-import Commons.AnswerQuestion;
-import Commons.LoginResponse;
+import Commons.AddQuestionConfirmationPackage;
+import Commons.AnswerQuestionPackage;
+import Commons.StartGamePackage;
+import Commons.UserLoginPackage;
 import Commons.Package;
-import Commons.PlayerJoinResponse;
+import Commons.PlayerJoinPackage;
 import Commons.Question;
-import Commons.QuestionsResponse;
-import Commons.StartGameResponse;
-import Commons.WinnerStatus;
+import Commons.QuestionsByCategoryPackage;
+import Commons.StartGamePackage;
+import Commons.ResultsGamePackage;
 
 public class ClientThread extends Thread {
 	
@@ -52,13 +53,13 @@ public class ClientThread extends Thread {
 				switch (packageIn.getPackageID()) {
 				case LOGINRESPONSEID: // Respuesta de logeo del servidor.
 
-					LoginResponse loginresponse = (LoginResponse) packageIn;
+					UserLoginPackage loginresponse = (UserLoginPackage) packageIn;
 					loginscreen.actionLogin(loginresponse);
 
 					break;
 				case QUESTIONSRESPONSEID:  
 					
-					QuestionsResponse questionsresponse = (QuestionsResponse) packageIn;
+					QuestionsByCategoryPackage questionsresponse = (QuestionsByCategoryPackage) packageIn;
 					((ChooseQuestionWindow) JDialogScreen).showQuestions(questionsresponse);
 					
 	
@@ -67,14 +68,14 @@ public class ClientThread extends Thread {
 			
 					break;
 				case PLAYERJOINRESPONSEID: // Se pudo unir a la partida?
-					PlayerJoinResponse playerjoinresponse = (PlayerJoinResponse) packageIn;
+					PlayerJoinPackage playerjoinresponse = (PlayerJoinPackage) packageIn;
 					((JoinPlayerGameWindow)JDialogScreen).setLabelAndButton(playerjoinresponse.getJoinStatus());
 					((JoinPlayerGameWindow)JDialogScreen).setVisible(true);
 					
 					break;
 				case STARTGAMERESPONSEID: // Se pudo comenzar la partida?
-					StartGameResponse startgameresponse = (StartGameResponse) packageIn;
-					if(!startgameresponse.getStartGame()){
+					StartGamePackage startgameresponse = (StartGamePackage) packageIn;
+					if(!startgameresponse.canStartGame()){
 						CantStartGameWindow cantStart = new CantStartGameWindow();
 						cantStart.setVisible(true);
 					}
@@ -101,7 +102,7 @@ public class ClientThread extends Thread {
 					break;
 					
 				case WINNERSTATUSID:
-					WinnerStatus winnerstatus = (WinnerStatus) packageIn;
+					ResultsGamePackage winnerstatus = (ResultsGamePackage) packageIn;
 					if(winnerstatus.getStatus() == 1){
 						//Ganaste!
 					}if(winnerstatus.getStatus() == 0){
@@ -112,7 +113,7 @@ public class ClientThread extends Thread {
 					
 					break;
 				case ADDQUESTIONREESPONSEID: // Agregar pregunta
-					AddQuestionResponse addResponse = (AddQuestionResponse) packageIn;
+					AddQuestionConfirmationPackage addResponse = (AddQuestionConfirmationPackage) packageIn;
 					if(addResponse.getValid() == true)
 							((AddQuestionScreen)JFrameScreen).clearScreen();
 					break;
@@ -122,7 +123,7 @@ public class ClientThread extends Thread {
 					
 					
 				case ANSWERQUESTIONRESPONSEID:
-					AnswerQuestion answer = (AnswerQuestion) packageIn;
+					AnswerQuestionPackage answer = (AnswerQuestionPackage) packageIn;
 					((RoundGameScreen)JFrameScreen).setLabelAnswer(answer.isCorrect());
 					
 					

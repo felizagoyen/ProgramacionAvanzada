@@ -12,7 +12,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-import Commons.EndClientConectionRequest;
+import Commons.EndClientConnectionPackage;
 
 public class AdminMenuScreen extends JFrame {
 
@@ -91,7 +91,7 @@ public class AdminMenuScreen extends JFrame {
 		JButton jSalirButton = new JButton("Salir");
 		jSalirButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				EndClientConectionRequest er = new EndClientConectionRequest();
+				EndClientConnectionPackage er = new EndClientConnectionPackage();
 				Connection.sendPackage(er);
 				System.exit(NORMAL);
 			}

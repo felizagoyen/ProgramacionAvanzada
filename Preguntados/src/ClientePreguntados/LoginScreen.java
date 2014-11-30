@@ -15,9 +15,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
 import javax.swing.JPasswordField;
 
-import Commons.EndClientConectionRequest;
-import Commons.LoginRequest;
-import Commons.LoginResponse;
+import Commons.EndClientConnectionPackage;
+import Commons.UserLoginPackage;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -42,7 +41,7 @@ public class LoginScreen extends JFrame {
 				jCamposVaciosTextArea.setVisible(true);					
 			}
 			else {
-				LoginRequest loginrequest = new LoginRequest(jUserTextField.getText(), new String (jPasswordField.getPassword()));
+				UserLoginPackage loginrequest = new UserLoginPackage(jUserTextField.getText(), new String (jPasswordField.getPassword()));
 				Connection.sendPackage(loginrequest);
 			}
 		}
@@ -151,7 +150,7 @@ public class LoginScreen extends JFrame {
 	}
 	
 	
-	public void actionLogin(LoginResponse loginresponse){
+	public void actionLogin(UserLoginPackage loginresponse){
 		if (loginresponse.getUserType() == 0) {
 			AdminMenuScreen adminscreen = new AdminMenuScreen();
 			adminscreen.setVisible(true);

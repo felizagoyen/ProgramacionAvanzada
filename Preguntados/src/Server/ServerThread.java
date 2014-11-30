@@ -37,12 +37,12 @@ public class ServerThread extends Thread {
 				
 				switch (packageIn.getPackageID()) {
 				case LOGINREQUESTID: // Pedido de logeo del cliente
-					LoginRequest loginRequest = (LoginRequest) packageIn;
+					UserLoginPackage userLogin = (UserLoginPackage) packageIn;
 					int loginStatus; // 0: Usuario Valido, -1: Usuario Invalido, -2: Usuario ya estaba loggeado
-					String clientLoginName = loginRequest.getUser();
+					String clientLoginName = userLogin.getUser();
 					Logger.info("Solicitud de loggeo recibida.");
 					
-					loginStatus = validateClient(loginRequest);
+					loginStatus = validateClient(userLogin);
 					if(loginStatus != -1) { 
 						if(!clientConnectionInstance.clientIsLogged(clientLoginName)) {
 							clientName = clientLoginName;
@@ -56,14 +56,20 @@ public class ServerThread extends Thread {
 						Logger.info("Los datos ingresados por el cliente " + clientId + " no se encuentra en la base de datos. Nombre de usuario: " + clientLoginName);
 					}
 					
-					packageOut = new LoginResponse(loginStatus);
+					userLogin.setUserType(loginStatus);
+					packageOut = userLogin; 
+
 					break;
 				case QUESTIONSREQUESTID: // Devuelve las preguntas por categoria  
-					QuestionsRequest questionsRequest = (QuestionsRequest) packageIn;
-					packageOut = new QuestionsResponse(getQuestionByCategory(questionsRequest.getCategory()));
+					QuestionsByCategoryPackage questionsByCategory = (QuestionsByCategoryPackage) packageIn;
+
+					ArrayList<Question> questions = getQuestionByCategory(questionsByCategory.getCategory());
+					questionsByCategory.setQuestions(questions);
+					packageOut = questionsByCategory;
+					
 					break;
 				case CREATEGAMEREQUESTID: // Creacion de partida
-					GameRequest gameRequest = (GameRequest) packageIn;
+					CreateGamePackage gameRequest = (CreateGamePackage) packageIn;
 					game = Game.getGameInstance();
 					Logger.info("Creando partida...");
 					
@@ -100,27 +106,27 @@ public class ServerThread extends Thread {
 						joinStatus = 1;
 					}
 					
-					packageOut = new PlayerJoinResponse(joinStatus);
+					packageOut = new PlayerJoinPackage(joinStatus);
 					break;
 					
 				case STARTGAMEREQUESTID: // Comenzar partida
-					Boolean startGame = false; 
+					Boolean canStartGame = false; 
 					game = Game.getGameInstance();
 					Logger.info("Iniciando partida...");
 					
 					if(game.isCreated() && game.canStartGame()) {
 						game.start();
-						startGame = true;
+						canStartGame = true;
 						Logger.info("La partida se ha iniciado correctamente.");
 					} else if(!game.isCreated()) {
-						startGame = false;
+						canStartGame = false;
 						Logger.warn("Se intenta comenzar una partida que no fue creada");
 					} else {
-						startGame = false;
+						canStartGame = false;
 						Logger.warn("No se puede iniciar la partida por falta de jugadores");
 					}
 					
-					packageOut = new StartGameResponse(startGame);
+					packageOut = new StartGamePackage(canStartGame);
 					break;
 				case CATEGORYREQUESTID:
 					//Category category = new
@@ -135,7 +141,7 @@ public class ServerThread extends Thread {
 					Logger.info("Insertando pregunta a la base de datos...");
 
 					addQuestionToDB(question);
-					packageOut = new AddQuestionResponse(true);
+					packageOut = new AddQuestionConfirmationPackage(true);
 					
 					Logger.info("Pregunta insertada correctamente.");
 					break;
@@ -144,7 +150,7 @@ public class ServerThread extends Thread {
 					Logger.info(clientName + " ha enviado su respuesta.");
 					
 					if(game.isCreated() && game.getWaitingAnswer()) {
-						AnswerQuestion answerQuestion = (AnswerQuestion) packageIn;
+						AnswerQuestionPackage answerQuestion = (AnswerQuestionPackage) packageIn;
 						game.setAnswer(clientId, answerQuestion.getAnswer());
 						Logger.info("Respuesta recibida correctamente del cliente " + clientName);
 					} else if(!game.isCreated()) {
@@ -161,7 +167,7 @@ public class ServerThread extends Thread {
 					if(game.isCreated())
 						game.removePlayer(clientId);
 					
-					packageOut = new EndClientConnectionResponse();
+					packageOut = new EndClientConnectionPackage();
 					endConection = true;
 				}
 
@@ -181,7 +187,7 @@ public class ServerThread extends Thread {
 		}
 	}
 
-	private Integer validateClient(LoginRequest client) {
+	private Integer validateClient(UserLoginPackage client) {
 		DataBaseUtil db = new DataBaseUtil();
 		User user = db.getUserDB(client.getUser());
 		if(user != null && user.getPass().equals(client.getPassword()))

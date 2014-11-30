@@ -3,7 +3,7 @@ package ClientePreguntados;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
-import Commons.EndClientConectionRequest;
+import Commons.EndClientConnectionPackage;
 
 public class ClosingListener implements WindowListener {
 
@@ -18,7 +18,7 @@ public class ClosingListener implements WindowListener {
 
 	
 	public void windowClosing(WindowEvent e) {
-        EndClientConectionRequest er = new EndClientConectionRequest();
+        EndClientConnectionPackage er = new EndClientConnectionPackage();
         Connection.sendPackage(er);
         System.exit(0);
 	}

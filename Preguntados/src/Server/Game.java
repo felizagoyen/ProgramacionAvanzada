@@ -116,7 +116,7 @@ public class Game extends Thread {
 				questionsId.set(roundNumber, questionId);
 			} 
 			question = db.getQuestionByID(questionId);
-			EndTimeRequest timeToAnswer = new EndTimeRequest(System.currentTimeMillis() + TIMETOANSWER);
+			EndTimePackage timeToAnswer = new EndTimePackage(System.currentTimeMillis() + TIMETOANSWER);
 			waitingAnswer = true;
 			
 			Logger.info("Enviando pregunta de la ronda " + (roundNumber + 1));
@@ -145,19 +145,19 @@ public class Game extends Thread {
 			}
 			
 			waitingAnswer = false;
-			EndTimeRequest timeToWaitNewQuestion = new EndTimeRequest(System.currentTimeMillis() + TIMETONEXTQUESTION);
+			EndTimePackage timeToWaitNewQuestion = new EndTimePackage(System.currentTimeMillis() + TIMETONEXTQUESTION);
 			
 			if(!players.isEmpty())
 				Logger.info("Verificando respuestas...");
 				
 			for(Player eachPlayer: players) {
-				AnswerQuestion answerQuestion;
+				AnswerQuestionPackage answerQuestion;
 				try {
 					if(question.getCorrectAnswer().equals(eachPlayer.getAnswer())) {
-						answerQuestion = new AnswerQuestion(true);
+						answerQuestion = new AnswerQuestionPackage(true);
 						eachPlayer.increaseScore();
 					} else {
-						answerQuestion = new AnswerQuestion(false);
+						answerQuestion = new AnswerQuestionPackage(false);
 					}
 					
 					clientConnectionInstance.blockSocket(eachPlayer.getId());
@@ -182,15 +182,23 @@ public class Game extends Thread {
 			Logger.info("La partida finalizo correctamente luego de las " + MAXROUND + " rondas.");
 			Collections.sort(players);
 			Integer maxScore = players.get(0).getScore();
+			ArrayList<Player> winners = new ArrayList<Player>();
 			
 			for(Player eachPlayer: players) 
 				if(eachPlayer.getScore().equals(maxScore)) {
-					clientConnectionInstance.blockSocket(eachPlayer.getId());
-	//				clientConnectionInstance.sendPackage(eachPlayer.getId(), answerQuestion);
-		//			clientConnectionInstance.sendPackage(eachPlayer.getId(), timeToWaitNewQuestion);
-					clientConnectionInstance.releaseSocket(eachPlayer.getId());
+					winners.add(eachPlayer);
 					Logger.info("Ganador -> Nombre: " + eachPlayer.getName() + " - Puntuacion: " + eachPlayer.getScore());
-				}
+				} 
+			
+			for(Player eachPlayer: players) {
+				Integer playerWin = -1;
+				if(winners.contains(eachPlayer))
+					playerWin = (winners.size() == 1) ? 1 : 0;
+				
+				clientConnectionInstance.blockSocket(eachPlayer.getId());
+				//clientConnectionInstance.sendPackage(eachPlayer.getId(), );
+				clientConnectionInstance.releaseSocket(eachPlayer.getId());
+			}
 		}
 
 		players = new ArrayList<Player>();

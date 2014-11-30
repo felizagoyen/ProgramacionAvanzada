@@ -2,18 +2,18 @@ package Commons;
 
 import java.io.Serializable;
 
-public class AnswerQuestion implements Serializable, Package {
+public class AnswerQuestionPackage implements Serializable, Package {
 		
 	private static final long serialVersionUID = 2102908903826759542L;
 	private static final Integer PACKAGEID = 13;
 	private String answer;
 	private Boolean isCorrect;
 	
-	public AnswerQuestion(Boolean isCorrect) {
+	public AnswerQuestionPackage(Boolean isCorrect) {
 		this.isCorrect = isCorrect;
 	}
 
-	public AnswerQuestion(String answer) {
+	public AnswerQuestionPackage(String answer) {
 		this.answer = answer;
 	}
 	

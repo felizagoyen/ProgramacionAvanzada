@@ -16,8 +16,7 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 
 import Commons.Question;
-import Commons.QuestionsRequest;
-import Commons.QuestionsResponse;
+import Commons.QuestionsByCategoryPackage;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -134,7 +133,7 @@ public class ChooseQuestionWindow extends JDialog {
 					if(!categoriaComboBox.getSelectedItem().equals("Categor�a") && categoriaComboBox.getItemAt(0).equals("Categor�a"))
 						categoriaComboBox.removeItem("Categor�a");
 					customModel.removeAllQuestions();
-					Connection.sendPackage(new QuestionsRequest(categoriaComboBox.getSelectedItem().toString()));
+					Connection.sendPackage(new QuestionsByCategoryPackage(categoriaComboBox.getSelectedItem().toString()));
 				}
 			});
 			categoriaComboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"Categor\u00EDa", "Deportes", "Ciencia y Tecnolog�a", "Entretenimiento", "Geograf\u00EDa", "Historia", "Arte y Literatura"}));
@@ -175,7 +174,7 @@ public class ChooseQuestionWindow extends JDialog {
 	
 
 
-	public void showQuestions (QuestionsResponse qResponse){
+	public void showQuestions (QuestionsByCategoryPackage qResponse){
 		for(Question cadauno : qResponse.getQuestions()){
 			customModel.addQuestion(cadauno);							
 		}

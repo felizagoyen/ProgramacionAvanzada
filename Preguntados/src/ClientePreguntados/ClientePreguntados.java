@@ -1,6 +1,6 @@
 package ClientePreguntados;
 
-import Commons.EndClientConectionRequest;
+import Commons.EndClientConnectionPackage;
 
 public class ClientePreguntados {
 
@@ -22,7 +22,7 @@ public class ClientePreguntados {
 
 	
 	public static void closeClient (){
-		EndClientConectionRequest er = new EndClientConectionRequest();
+		EndClientConnectionPackage er = new EndClientConnectionPackage();
 		Connection.sendPackage(er);
 		System.exit(0);
 	}

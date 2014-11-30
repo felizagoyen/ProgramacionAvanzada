@@ -9,7 +9,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JTextArea;
 import javax.swing.JButton;
 
-import Commons.AnswerQuestion;
+import Commons.AnswerQuestionPackage;
 import Commons.Question;
 
 import java.awt.event.ActionListener;
@@ -81,7 +81,7 @@ public class RoundGameScreen extends JFrame {
 		respuesta1Button = new JButton("Respuesta 1");
 		respuesta1Button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AnswerQuestion answer = new AnswerQuestion(respuesta1Button.getText());
+				AnswerQuestionPackage answer = new AnswerQuestionPackage(respuesta1Button.getText());
 				questionAnswered = true;
 				respuesta1Button.setEnabled(false);
 				respuesta2Button.setEnabled(false);
@@ -96,7 +96,7 @@ public class RoundGameScreen extends JFrame {
 		respuesta2Button = new JButton("Respuesta 2");
 		respuesta2Button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AnswerQuestion answer = new AnswerQuestion(respuesta2Button.getText());
+				AnswerQuestionPackage answer = new AnswerQuestionPackage(respuesta2Button.getText());
 				questionAnswered = true;
 				respuesta1Button.setEnabled(false);
 				respuesta2Button.setEnabled(false);
@@ -111,7 +111,7 @@ public class RoundGameScreen extends JFrame {
 		respuesta3Button = new JButton("Respuesta 3");
 		respuesta3Button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AnswerQuestion answer = new AnswerQuestion(respuesta3Button.getText());
+				AnswerQuestionPackage answer = new AnswerQuestionPackage(respuesta3Button.getText());
 				questionAnswered = true;
 				respuesta1Button.setEnabled(false);
 				respuesta2Button.setEnabled(false);
@@ -126,7 +126,7 @@ public class RoundGameScreen extends JFrame {
 		respuesta4Button = new JButton("Respuesta 4");
 		respuesta4Button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AnswerQuestion answer = new AnswerQuestion(respuesta4Button.getText());
+				AnswerQuestionPackage answer = new AnswerQuestionPackage(respuesta4Button.getText());
 				questionAnswered = true;
 				respuesta1Button.setEnabled(false);
 				respuesta2Button.setEnabled(false);

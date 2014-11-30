@@ -8,8 +8,8 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
-import Commons.GameRequest;
-import Commons.PlayerJoinRequest;
+import Commons.CreateGamePackage;
+import Commons.PlayerJoinPackage;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -90,7 +90,7 @@ public class CreateGameScreen extends JFrame {
 		JButton btnNewButton = new JButton("Crear");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				GameRequest gamerequest = new GameRequest(nombrePartidaTextField.getText(),  Integer.parseInt(cantMaxTextField.getText()), questionsID);
+				CreateGamePackage gamerequest = new CreateGamePackage(nombrePartidaTextField.getText(),  Integer.parseInt(cantMaxTextField.getText()), questionsID);
 				Connection.sendPackage(gamerequest);
 				JoinPlayerGameWindow joinadmingamewindow = new JoinPlayerGameWindow();
 				RoundGameScreen roundgamescreen = new RoundGameScreen();

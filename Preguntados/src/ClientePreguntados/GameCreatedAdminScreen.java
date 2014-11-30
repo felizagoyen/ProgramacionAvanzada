@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 
-import Commons.StartGameRequest;
+import Commons.StartGamePackage;
 
 import java.awt.Font;
 import java.awt.event.ActionListener;
@@ -48,7 +48,7 @@ public class GameCreatedAdminScreen extends JFrame {
 		JButton btnIniciarPartida = new JButton("INICIAR PARTIDA");
 		btnIniciarPartida.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				StartGameRequest start = new StartGameRequest();
+				StartGamePackage start = new StartGamePackage();
 				Connection.sendPackage(start);
 				dispose();
 			}

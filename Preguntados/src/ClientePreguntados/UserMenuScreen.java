@@ -9,8 +9,8 @@ import java.awt.Font;
 
 import javax.swing.JButton;
 
-import Commons.EndClientConectionRequest;
-import Commons.PlayerJoinRequest;
+import Commons.EndClientConnectionPackage;
+import Commons.PlayerJoinPackage;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -62,7 +62,7 @@ public class UserMenuScreen extends JFrame {
 				RoundGameScreen rgs = new RoundGameScreen();
 				ClientThread.recieveScreen(rgs);
 				ClientThread.recieveScreen(joinplayergamewindow);
-				PlayerJoinRequest joinrequest = new PlayerJoinRequest();
+				PlayerJoinPackage joinrequest = new PlayerJoinPackage();
 				Connection.sendPackage(joinrequest);
 				dispose();
 		

@@ -3,7 +3,7 @@ package Commons;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class GameRequest implements Serializable, Package {
+public class CreateGamePackage implements Serializable, Package {
 
 	private static final long serialVersionUID = 8640887894955828087L;
 	private static final Integer PACKAGEID = 2;
@@ -11,7 +11,7 @@ public class GameRequest implements Serializable, Package {
 	private Integer maxPlayers;
 	private ArrayList<Integer> questionsID = new ArrayList<Integer>();
 
-	public GameRequest(String gameName, Integer maxPlayers, ArrayList<Integer> questionsID) {
+	public CreateGamePackage(String gameName, Integer maxPlayers, ArrayList<Integer> questionsID) {
 		this.gameName = gameName;
 		this.maxPlayers = maxPlayers;
 		this.questionsID = questionsID;
