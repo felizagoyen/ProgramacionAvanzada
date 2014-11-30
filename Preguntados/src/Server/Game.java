@@ -39,6 +39,7 @@ public class Game extends Thread {
 	
 	public void addPlayer(Integer playerId, String playerName) {
 		players.add(new Player(playerId, playerName));
+		Logger.info(playerName + " se ha unido a la partida. (" + players.size() + "/" + maxPlayers + ")");
 	}
 	
 	public String getGameName() {
@@ -59,14 +60,16 @@ public class Game extends Thread {
 				eachPlayer.setAnswer(answer);
 	}
 
-	public void removePlayers(Integer playerId) {
+	public void removePlayer(Integer playerId) {
 		Player playerToRemove = null;
 		for(Player eachPlayer: players)
 			if(eachPlayer.getId().equals(playerId))
 				playerToRemove = eachPlayer;
 
-		if(playerToRemove != null) 
-			players.remove(playerToRemove);
+		if(playerToRemove != null) { 
+			Logger.info(playerToRemove.getName() + " ha dejado la partida. (" + (players.size() - 1) + "/" + maxPlayers + ")");
+			players.remove(playerToRemove); 
+		}
 	}
 	
 	public Boolean gameIsFull() {

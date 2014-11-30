@@ -97,7 +97,6 @@ public class ServerThread extends Thread {
 					} else {
 						game.addPlayer(clientId, clientName);
 						joinStatus = 1;
-						Logger.info(clientName + " se ha unido a la partida.");
 					}
 					
 					packageOut = new PlayerJoinResponse(joinStatus);
@@ -158,7 +157,7 @@ public class ServerThread extends Thread {
 					Logger.info("Finalizando conexion con el cliente " + clientId);
 
 					if(game.isCreated())
-						game.removePlayers(clientId);
+						game.removePlayer(clientId);
 					
 					packageOut = new EndClientConnectionResponse();
 					endConection = true;
