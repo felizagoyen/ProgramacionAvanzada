@@ -31,7 +31,7 @@ public class RoundGameScreen extends JFrame {
 	private JButton respuesta2Button;
 	private JButton respuesta3Button;
 	private JButton respuesta4Button;
-	private JButton clickedButton;
+	private JButton clickedButton = null;
 	private JButton correctAnswerButton;
 	private boolean questionAnswered;
 	private JLabel lblRespuesta;
@@ -205,6 +205,7 @@ public class RoundGameScreen extends JFrame {
 
 	public void enableButtonsAndRefreshComponents() {
 		questionAnswered = false;
+		clickedButton = null;
 		respuesta1Button.setBackground(null);
 		respuesta2Button.setBackground(null);
 		respuesta3Button.setBackground(null);
@@ -220,22 +221,29 @@ public class RoundGameScreen extends JFrame {
 	}
 	
 	public void setLabelAnswer (boolean isCorrect){
-		if(isCorrect)
-			lblRespuesta.setText("Respuesta Correcta!");
+		if(clickedButton == null)
+			lblRespuesta.setText("No has contestado a tiempo.");
 		else
-			lblRespuesta.setText("Respuesta Incorrecta!");
+			if(isCorrect)
+				lblRespuesta.setText("Respuesta Correcta!");
+			else
+				lblRespuesta.setText("Respuesta Incorrecta!");
 		
 		lblRespuesta.setVisible(true);
 			
 	}
 	
 	public void paintButtons(boolean isCorrect){
-		if(isCorrect)
-			clickedButton.setBackground(java.awt.Color.green);
-		else{
-			clickedButton.setBackground(java.awt.Color.red);
-			correctAnswerButton.setBackground(java.awt.Color.green);
+		if(clickedButton != null){
+			
+			if(isCorrect)
+				clickedButton.setBackground(java.awt.Color.green);
+			else{
+				clickedButton.setBackground(java.awt.Color.red);
+				correctAnswerButton.setBackground(java.awt.Color.green);
+			}
 		}
+		
 	}
 	
 	public void startTimer (){
