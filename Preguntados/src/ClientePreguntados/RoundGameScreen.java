@@ -234,15 +234,14 @@ public class RoundGameScreen extends JFrame {
 	}
 	
 	public void paintButtons(boolean isCorrect){
-		if(clickedButton != null){
 			
 			if(isCorrect)
 				clickedButton.setBackground(java.awt.Color.green);
 			else{
-				clickedButton.setBackground(java.awt.Color.red);
+				if(clickedButton != null)
+					clickedButton.setBackground(java.awt.Color.red);
 				correctAnswerButton.setBackground(java.awt.Color.green);
 			}
-		}
 		
 	}
 	
