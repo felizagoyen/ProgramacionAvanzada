@@ -32,7 +32,7 @@ public class ClientThread extends Thread {
 	private static final int QUESTIONSRESPONSEID = 11;
 	private static final int ENDTIMEID = 12;
 	private static final int ANSWERQUESTIONRESPONSEID = 13;
-	private static final int WINNERSTATUSID = 14;
+	private static final int RESULTSGAMEID = 14;
 	private Boolean endConnection = false;
 	
 	public ClientThread(LoginScreen loginscreen){
@@ -101,15 +101,11 @@ public class ClientThread extends Thread {
 					
 					break;
 					
-				case WINNERSTATUSID:
-					ResultsGamePackage winnerstatus = (ResultsGamePackage) packageIn;
-					if(winnerstatus.getPlayerWin() == 1){
-						//Ganaste!
-					}if(winnerstatus.getPlayerWin() == 0){
-						//Saliste empatado en el primer puesto con otro user!
-					}
-					else
-						//perdiste!
+				case RESULTSGAMEID:
+					ResultsGamePackage resultsGame = (ResultsGamePackage) packageIn;
+					GameResultsWindow gameresultswindow = new GameResultsWindow();
+					gameresultswindow.setLabelWinnerStatus(resultsGame.getPlayerWin(), resultsGame.getWinners().size());
+					gameresultswindow.setVisible(true);
 					
 					break;
 				case ADDQUESTIONREESPONSEID: // Agregar pregunta

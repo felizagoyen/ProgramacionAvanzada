@@ -154,7 +154,7 @@ public class RoundGameScreen extends JFrame {
 		
 		lblRespuesta = new JLabel("Respuesta correcta/incorrecta ");
 		lblRespuesta.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblRespuesta.setBounds(72, 394, 198, 26);
+		lblRespuesta.setBounds(43, 394, 266, 26);
 		contentPane.add(lblRespuesta);
 		
 		timerLabel = new JLabel("30");

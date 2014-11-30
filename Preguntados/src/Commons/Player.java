@@ -1,7 +1,12 @@
 package Commons;
 
-public class Player implements Comparable<Player> {
+import java.io.Serializable;
+
+public class Player implements Comparable<Player>, Serializable {
 	
+
+	private static final long serialVersionUID = 6186238563984833418L;
+
 	private Integer id;
 	private String name;
 	private Integer score;
