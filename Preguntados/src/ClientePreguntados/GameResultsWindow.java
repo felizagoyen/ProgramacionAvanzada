@@ -61,14 +61,16 @@ public class GameResultsWindow extends JDialog {
 		contentPanel.add(loserLabel);
 		
 		tiedWith1Label = new JTextArea();
+		tiedWith1Label.setEditable(false);
 		tiedWith1Label.setBackground(SystemColor.control);
 		tiedWith1Label.setLineWrap(true);
 		tiedWith1Label.setFont(new Font("Tahoma", Font.BOLD, 16));
 		tiedWith1Label.setText("Saliste empatado en el primer puesto con otro usuario!");
-		tiedWith1Label.setBounds(90, 56, 351, 97);
+		tiedWith1Label.setBounds(23, 49, 351, 97);
 		contentPanel.add(tiedWith1Label);
 		
 		tiedManyUsersLabel = new JTextArea();
+		tiedManyUsersLabel.setEditable(false);
 		tiedManyUsersLabel.setText("Saliste empatado en el primer puesto con otros usuarios!");
 		tiedManyUsersLabel.setLineWrap(true);
 		tiedManyUsersLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
