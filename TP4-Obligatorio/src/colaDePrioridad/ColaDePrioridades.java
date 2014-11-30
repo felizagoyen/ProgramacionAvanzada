@@ -62,6 +62,14 @@ public class ColaDePrioridades<Key extends Comparable<Key>> implements Iterable<
         sink(qp[i]);
     }
 
+    public void decreaseKey(int i, Key key) {
+        if (i < 0 || i >= numeroDeElementosMax) throw new IndexOutOfBoundsException();
+        if (!contains(i)) throw new NoSuchElementException("index is not in the priority queue");
+        if (keys[i].compareTo(key) <= 0) throw new IllegalArgumentException("Calling decreaseKey() with given argument would not strictly decrease the key");
+        keys[i] = key;
+        swim(qp[i]);
+    }
+    
     private boolean greater(int i, int j) {
         return keys[pq[i]].compareTo(keys[pq[j]]) > 0;
     }

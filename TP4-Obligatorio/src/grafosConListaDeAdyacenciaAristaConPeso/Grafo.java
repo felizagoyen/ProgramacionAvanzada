@@ -80,11 +80,71 @@ public class Grafo {
 		return lista;
 	}
 	
-	public void prim(){
-		Arista[] edgeTo; // shortest edge from tree vertex
-		double[] distTo; // distTo[w] = edgeTo[w].weight()
-		boolean[] marked; // true if v on tree
-		Queue<Double> cola = new PriorityQueue<Double>();
+	public Iterable<Arista> Kruskal() {
+		double pesoDelArbolRecubridor=0;  // weight of MST
+	    Queue<Arista> arbolRecubridorMinimo = new LinkedList<Arista>();
+        // more efficient to build heap by passing array of edges
+        PriorityQueue<Arista> cola = new PriorityQueue<Arista>();
+        for (Arista e : this.edges()) {
+            cola.add(e);
+        }
+
+        // run greedy algorithm
+        UF uf = new UF(numeroDeNodos);
+        while (!cola.isEmpty() && arbolRecubridorMinimo.size() < numeroDeNodos - 1) {
+            Arista e = cola.remove();
+            int v = e.getOrigen();
+            int w = e.elOtroExtremo(v);
+            if (!uf.connected(v, w)) { // v-w does not create a cycle
+                uf.union(v, w);  // merge v and w components
+                arbolRecubridorMinimo.add(e);  // add edge e to mst
+                pesoDelArbolRecubridor += e.getPeso();
+            }
+        }
+        return arbolRecubridorMinimo;
+    }
+	
+	public Iterable<Arista> prim(){
+		Queue<Arista> arbolRecubridorMinimo = new LinkedList<Arista>();
+		Arista[] edgeTo = new Arista[numeroDeNodos];        
+	    double[] minDistancia = new double[numeroDeNodos];      
+	    boolean [] fueVisitado = new boolean[numeroDeNodos];
+	    ColaDePrioridades<Double> cola = new ColaDePrioridades<Double>(numeroDeNodos);
+	    
+	    for(int i=0; i<numeroDeNodos; i++){
+	    	minDistancia[i]=Double.POSITIVE_INFINITY;
+	    }
+	    
+	    for (int i = 0; i < numeroDeNodos; i++){      
+            if (!fueVisitado[i]){
+            	minDistancia[i] = 0.0;
+                cola.insert(i, minDistancia[i]);
+                while (!cola.isEmpty()) {
+                    int v = cola.delMin();
+                    fueVisitado[v] = true;
+                    for (Arista cadaArista : adj(v)) {
+                        int w = cadaArista.elOtroExtremo(v);
+                        if (fueVisitado[w]) 
+                        	continue;
+                        if (cadaArista.getPeso() < minDistancia[w]) {
+                        	minDistancia[w] = cadaArista.getPeso();
+                            edgeTo[w] = cadaArista;
+                            if (cola.contains(w)) 
+                            	cola.decreaseKey(w, minDistancia[w]);
+                            else                
+                            	cola.insert(w, minDistancia[w]);
+                        }
+                    }
+                }
+            }
+	    }
+	    for (int v = 0; v < edgeTo.length; v++) {
+            Arista arista = edgeTo[v];
+            if (arista != null) {
+            	arbolRecubridorMinimo.add(arista);
+            }
+        }
+	    return arbolRecubridorMinimo;
 	}
 	
 	public ArrayList<Integer> dijkstra(Integer origen){
@@ -164,5 +224,16 @@ public class Grafo {
 		grafo.busquedaEnProfundidad(0);
 		System.out.println();
 		grafo.dijkstra(0);
+		System.out.println();
+		Iterable<Arista> arbolRecubridorMinimo1 = grafo.prim();
+		for(Arista cadaArista: arbolRecubridorMinimo1){
+			System.out.println(cadaArista);
+		}
+		
+		System.out.println();
+		Iterable<Arista> arbolRecubridorMinimo2 = grafo.Kruskal();
+		for(Arista cadaArista: arbolRecubridorMinimo2){
+			System.out.println(cadaArista);
+		}
 	}
 }

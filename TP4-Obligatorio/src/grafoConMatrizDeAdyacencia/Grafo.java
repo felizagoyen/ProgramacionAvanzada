@@ -1,9 +1,11 @@
 package grafoConMatrizDeAdyacencia;
 
 import grafosConListaDeAdyacenciaAristaConPeso.Arista;
+import grafosConListaDeAdyacenciaAristaConPeso.UF;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Stack;
 
@@ -53,7 +55,52 @@ public class Grafo {
 			System.out.println();
 		}
 	}
+	
 
+	public Iterable<Arista> prim(){
+		Queue<Arista> arbolRecubridorMinimo = new LinkedList<Arista>();
+		Arista[] edgeTo = new Arista[numeroDeNodos];        
+	    double[] minDistancia = new double[numeroDeNodos];      
+	    boolean [] fueVisitado = new boolean[numeroDeNodos];
+	    ColaDePrioridades<Double> cola = new ColaDePrioridades<Double>(numeroDeNodos);
+	    
+	    for(int i=0; i<numeroDeNodos; i++){
+	    	minDistancia[i]=Double.POSITIVE_INFINITY;
+	    }
+	    
+	    for (int i = 0; i < numeroDeNodos; i++){      
+            if (!fueVisitado[i]){
+            	minDistancia[i] = 0.0;
+                cola.insert(i, minDistancia[i]);
+                while (!cola.isEmpty()) {
+                    int v = cola.delMin();
+                    fueVisitado[v] = true;
+                    for(int j=0; j<numeroDeNodos; j++){
+        	    		if(matrizAdyacencia.getMatriz()[v][j]!=0){ //desconectado
+	                        if (fueVisitado[j]) 
+	                        	continue;
+	                        if (matrizAdyacencia.getMatriz()[v][j] < minDistancia[j]) {
+	                        	minDistancia[j] = matrizAdyacencia.getMatriz()[v][j];
+	                            edgeTo[j] = new Arista(v,j,matrizAdyacencia.getMatriz()[v][j]);
+	                            if (cola.contains(j)) 
+	                            	cola.decreaseKey(j, minDistancia[j]);
+	                            else                
+	                            	cola.insert(j, minDistancia[j]);
+	                        }
+                    	}
+                    }
+                }
+            }
+	    }
+	    for (int v = 0; v < edgeTo.length; v++) {
+            Arista arista = edgeTo[v];
+            if (arista != null) {
+            	arbolRecubridorMinimo.add(arista);
+            }
+        }
+	    return arbolRecubridorMinimo;
+	}
+	
 	public ArrayList<Integer> dijkstra(Integer origen){
 		ColaDePrioridades<Double> cola = new ColaDePrioridades<Double>(numeroDeNodos);
 		ArrayList<Integer> caminoMasCorto = new ArrayList<Integer>(); 
@@ -114,7 +161,6 @@ public class Grafo {
 		fueVisitado[nodo] = true; 
 		System.out.print((nodo+1) + " ");
 		cola.add(nodo); 
-		int v2;
 		while( !cola.isEmpty() ){
 			int verticeAdyacente =-1;
 			for(int j=0; j<numeroDeNodos; j++)
@@ -144,6 +190,11 @@ public class Grafo {
 		grafo.busquedaEnProfundidad(0);
 		System.out.println();
 		grafo.dijkstra(0);
+		System.out.println();
+		Iterable<Arista> bordesDelArbol = grafo.prim();
+		for(Arista cadaArista: bordesDelArbol){
+			System.out.println(cadaArista);
+		}
 	}
 	
 	

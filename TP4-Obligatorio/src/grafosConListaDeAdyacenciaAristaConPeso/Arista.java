@@ -47,7 +47,7 @@ public class Arista implements Comparable<Arista> {
 	
 	
 	public String toString() {
-		return String.format("%d-%d %.5f", origen, destino, peso);
+		return String.format("%d-%d %.5f", origen+1, destino+1, peso);
 	}
  
 }
