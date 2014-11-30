@@ -18,6 +18,7 @@ public class Game extends Thread {
 	private Boolean waitingAnswer = false;
 	private Boolean isCreated = false;
 	private Boolean isStarted = false;
+	
 	private Game() {
 
 	}
@@ -61,14 +62,22 @@ public class Game extends Thread {
 	}
 
 	public void removePlayer(Integer playerId) {
-		Player playerToRemove = null;
-		for(Player eachPlayer: players)
-			if(eachPlayer.getId().equals(playerId))
-				playerToRemove = eachPlayer;
-
-		if(playerToRemove != null) { 
-			Logger.info(playerToRemove.getName() + " ha dejado la partida. (" + (players.size() - 1) + "/" + maxPlayers + ")");
-			players.remove(playerToRemove); 
+		if(isStarted) {
+			for(Player eachPlayer: players)
+				if(eachPlayer.getId().equals(playerId)) {
+					eachPlayer.setDisconnect();
+					Logger.info(eachPlayer.getName() + " ha dejado la partida. (" + (players.size() - 1) + "/" + maxPlayers + ")");
+				}
+		} else { 
+			Player playerToRemove = null;
+			for(Player eachPlayer: players)
+				if(eachPlayer.getId().equals(playerId))
+					playerToRemove = eachPlayer;
+			
+			if(playerToRemove != null) { 
+				Logger.info(playerToRemove.getName() + " ha dejado la partida. (" + (players.size() - 1) + "/" + maxPlayers + ")");
+				players.remove(playerToRemove);
+			}
 		}
 	}
 	
@@ -97,13 +106,14 @@ public class Game extends Thread {
 	
 	
 	public void run() {
+		Boolean allPlayerDisconnected = false;
 		isStarted = true;
 		DataBaseUtil db = new DataBaseUtil();
 		ClientConnection clientConnectionInstance = ClientConnection.getInstance();
 		for(Player eachPlayer: players) 
 			eachPlayer.setAnswer(null);
 		
-		for(int roundNumber = 0; roundNumber < MAXROUND && !players.isEmpty(); roundNumber++) {
+		for(int roundNumber = 0; roundNumber < MAXROUND && !allPlayerDisconnected; roundNumber++) {
 			Integer questionId = questionsId.get(roundNumber);
 			Question question = null;
 
@@ -123,11 +133,13 @@ public class Game extends Thread {
 			
 			for(Player eachPlayer: players) {
 				try {
-					clientConnectionInstance.blockSocket(eachPlayer.getId());
 					setAnswer(eachPlayer.getId(), null);
-					clientConnectionInstance.sendPackage(eachPlayer.getId(), timeToAnswer);
-					clientConnectionInstance.sendPackage(eachPlayer.getId(), question);
-					clientConnectionInstance.releaseSocket(eachPlayer.getId());
+					if(eachPlayer.disconnectedWhilePlaying() == false) {
+						clientConnectionInstance.blockSocket(eachPlayer.getId());
+						clientConnectionInstance.sendPackage(eachPlayer.getId(), timeToAnswer);
+						clientConnectionInstance.sendPackage(eachPlayer.getId(), question);
+						clientConnectionInstance.releaseSocket(eachPlayer.getId());
+					}
 				} catch(Exception e) {
 					e.printStackTrace();
 				}
@@ -136,47 +148,53 @@ public class Game extends Thread {
 			Boolean finishTime = false;
 			Boolean allAnswered = false;
 			
-			while(finishTime == false && allAnswered == false && !players.isEmpty()){
+			while(!finishTime && !allAnswered && !allPlayerDisconnected){
 				finishTime = System.currentTimeMillis() > timeToAnswer.getEndTime();
 				allAnswered = true;
-				for(Player eachPlayer: players)
-					if(eachPlayer.getAnswer() == null)
+				allPlayerDisconnected = true;
+				
+				for(Player eachPlayer: players) {
+					if(eachPlayer.disconnectedWhilePlaying() == false && eachPlayer.getAnswer() == null)
 						allAnswered = false;
+					if(eachPlayer.disconnectedWhilePlaying() == false)
+						allPlayerDisconnected = false;
+				}
 			}
 			
 			waitingAnswer = false;
 			EndTimePackage timeToWaitNewQuestion = new EndTimePackage(System.currentTimeMillis() + TIMETONEXTQUESTION);
 			
-			if(!players.isEmpty())
+			if(!allPlayerDisconnected) {
 				Logger.info("Verificando respuestas...");
 				
-			for(Player eachPlayer: players) {
-				AnswerQuestionPackage answerQuestion;
-				try {
-					if(question.getCorrectAnswer().equals(eachPlayer.getAnswer())) {
-						answerQuestion = new AnswerQuestionPackage(true);
-						eachPlayer.increaseScore();
-					} else {
-						answerQuestion = new AnswerQuestionPackage(false);
+				for(Player eachPlayer: players) {
+					AnswerQuestionPackage answerQuestion;
+					try {
+						if(eachPlayer.disconnectedWhilePlaying() == false) {
+							if(question.getCorrectAnswer().equals(eachPlayer.getAnswer())) {
+								answerQuestion = new AnswerQuestionPackage(true);
+								eachPlayer.increaseScore();
+							} else {
+								answerQuestion = new AnswerQuestionPackage(false);
+							}
+							
+							clientConnectionInstance.blockSocket(eachPlayer.getId());
+							clientConnectionInstance.sendPackage(eachPlayer.getId(), answerQuestion);
+							clientConnectionInstance.sendPackage(eachPlayer.getId(), timeToWaitNewQuestion);
+							clientConnectionInstance.releaseSocket(eachPlayer.getId());
+						}
+					} catch(Exception e) {
+						e.printStackTrace();
 					}
-					
-					clientConnectionInstance.blockSocket(eachPlayer.getId());
-					clientConnectionInstance.sendPackage(eachPlayer.getId(), answerQuestion);
-					clientConnectionInstance.sendPackage(eachPlayer.getId(), timeToWaitNewQuestion);
-					clientConnectionInstance.releaseSocket(eachPlayer.getId());
-				} catch(Exception e) {
-					e.printStackTrace();
 				}
-			}
 			
-			if(!players.isEmpty()) {
 				Logger.info("Respuestas verificadas correctamente");
 				while(System.currentTimeMillis() < timeToWaitNewQuestion.getEndTime());
 			}
 
 		}
 		
-		if(players.isEmpty()) {
+		if(allPlayerDisconnected) {
 			Logger.info("La partida finalizo porque se desconectaron todos los jugadores");
 		} else {
 			Logger.info("La partida finalizo correctamente luego de las " + MAXROUND + " rondas.");
@@ -184,27 +202,30 @@ public class Game extends Thread {
 			Integer maxScore = players.get(0).getScore();
 			ArrayList<Player> winners = new ArrayList<Player>();
 			
-			for(Player eachPlayer: players) 
-				if(eachPlayer.getScore().equals(maxScore)) {
+			Logger.info("Tabla de Posiciones:");
+			for(Player eachPlayer: players) { 
+				if(eachPlayer.getScore().equals(maxScore))
 					winners.add(eachPlayer);
-					Logger.info("Ganador -> Nombre: " + eachPlayer.getName() + " - Puntuacion: " + eachPlayer.getScore());
+				Logger.info("Nombre: " + eachPlayer.getName() + " - Puntuacion: " + eachPlayer.getScore());
 				} 
 			
 			for(Player eachPlayer: players) {
-				ResultsGamePackage resultsGame;
-				Integer playerWin = -1;
-				
-				if(winners.contains(eachPlayer))
-					playerWin = (winners.size() == 1) ? 1 : 0;
-				
-				resultsGame = new ResultsGamePackage(playerWin, winners, players);
-				
-				try {
-					clientConnectionInstance.blockSocket(eachPlayer.getId());
-					clientConnectionInstance.sendPackage(eachPlayer.getId(), resultsGame);
-					clientConnectionInstance.releaseSocket(eachPlayer.getId());
-				} catch(Exception e) {
-					e.printStackTrace();
+				if(eachPlayer.disconnectedWhilePlaying() == false) {
+					ResultsGamePackage resultsGame;
+					Integer playerWin = -1;
+					
+					if(winners.contains(eachPlayer))
+						playerWin = (winners.size() == 1) ? 1 : 0;
+					
+					resultsGame = new ResultsGamePackage(playerWin, winners, players);
+					
+					try {
+						clientConnectionInstance.blockSocket(eachPlayer.getId());
+						clientConnectionInstance.sendPackage(eachPlayer.getId(), resultsGame);
+						clientConnectionInstance.releaseSocket(eachPlayer.getId());
+					} catch(Exception e) {
+						e.printStackTrace();
+					}
 				}
 			}
 		}
