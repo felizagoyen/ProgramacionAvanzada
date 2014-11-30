@@ -112,8 +112,10 @@ public class ServerThread extends Thread {
 						startGame = true;
 						Logger.info("La partida se ha iniciado correctamente.");
 					} else if(!game.isCreated()) {
+						startGame = false;
 						Logger.warn("Se intenta comenzar una partida que no fue creada");
 					} else {
+						startGame = false;
 						Logger.warn("No se puede iniciar la partida por falta de jugadores");
 					}
 					
@@ -167,9 +169,11 @@ public class ServerThread extends Thread {
 			}
 			if(clientName != null)
 				Logger.info("El usuario " + clientName + " se ha desconectado.");
+
 			clientConnectionInstance.closeOutputStream(clientId);
 			clientConnectionInstance.closeInputStream(clientId);
 			clientConnectionInstance.freeClient(clientId);
+			
 			Logger.info("Conexion finalizada correctamente con el cliente: " + clientId);
 		} catch (Exception e) {
 			e.printStackTrace();

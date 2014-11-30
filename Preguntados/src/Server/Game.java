@@ -60,9 +60,13 @@ public class Game extends Thread {
 	}
 
 	public void removePlayers(Integer playerId) {
+		Player playerToRemove = null;
 		for(Player eachPlayer: players)
 			if(eachPlayer.getId().equals(playerId))
-				players.remove(players.indexOf(eachPlayer));
+				playerToRemove = eachPlayer;
+
+		if(playerToRemove != null) 
+			players.remove(playerToRemove);
 	}
 	
 	public Boolean gameIsFull() {
