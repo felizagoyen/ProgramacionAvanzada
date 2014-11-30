@@ -4,13 +4,14 @@ import java.io.Serializable;
 
 public class Player implements Comparable<Player>, Serializable {
 	
-<<<<<<< HEAD
 
-	private static final long serialVersionUID = 6186238563984833418L;
 
-=======
+
+
+
 	private static final long serialVersionUID = -36672672438995887L;
->>>>>>> origin/master
+
+
 	private Integer id;
 	private String name;
 	private Integer score;
