@@ -58,20 +58,14 @@ public class UserMenuScreen extends JFrame {
 		jUnirsePartidaButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		jUnirsePartidaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				boolean isJoined = true;
-				
+				JoinPlayerGameWindow joinplayergamewindow = new JoinPlayerGameWindow();
+				RoundGameScreen rgs = new RoundGameScreen();
+				ClientThread.recieveScreen(rgs);
+				ClientThread.recieveScreen(joinplayergamewindow);
 				PlayerJoinRequest joinrequest = new PlayerJoinRequest();
 				Connection.sendPackage(joinrequest);
-				
-				if(isJoined){
-					JoinPlayerGameWindow joinplayergamewindow = new JoinPlayerGameWindow();
-					joinplayergamewindow.setVisible(true);
-					
-					RoundGameScreen rgs = new RoundGameScreen();
-					ClientThread.recieveScreen(rgs);
-					ClientThread.recieveScreen(joinplayergamewindow);
-				}
-			
+				dispose();
+		
 			}
 		});
 		jUnirsePartidaButton.setBounds(65, 133, 162, 23);

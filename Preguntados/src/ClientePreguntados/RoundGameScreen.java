@@ -31,6 +31,7 @@ public class RoundGameScreen extends JFrame {
 	private JButton respuesta2Button;
 	private JButton respuesta3Button;
 	private JButton respuesta4Button;
+	private boolean questionAnswered;
 	private JLabel lblRespuesta;
 	private JLabel timerLabel;
 	private JLabel lblRonda;
@@ -40,7 +41,7 @@ public class RoundGameScreen extends JFrame {
 	class TimerThread extends Thread{
 		public void run() {
 			Integer timeRemaining = 30;
-			while(timeRemaining != 0){
+			while(timeRemaining > 0 && !questionAnswered){
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
@@ -81,6 +82,7 @@ public class RoundGameScreen extends JFrame {
 		respuesta1Button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				AnswerQuestion answer = new AnswerQuestion(respuesta1Button.getText());
+				questionAnswered = true;
 				respuesta1Button.setEnabled(false);
 				respuesta2Button.setEnabled(false);
 				respuesta3Button.setEnabled(false);
@@ -95,6 +97,7 @@ public class RoundGameScreen extends JFrame {
 		respuesta2Button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				AnswerQuestion answer = new AnswerQuestion(respuesta2Button.getText());
+				questionAnswered = true;
 				respuesta1Button.setEnabled(false);
 				respuesta2Button.setEnabled(false);
 				respuesta3Button.setEnabled(false);
@@ -109,6 +112,7 @@ public class RoundGameScreen extends JFrame {
 		respuesta3Button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				AnswerQuestion answer = new AnswerQuestion(respuesta3Button.getText());
+				questionAnswered = true;
 				respuesta1Button.setEnabled(false);
 				respuesta2Button.setEnabled(false);
 				respuesta3Button.setEnabled(false);
@@ -123,6 +127,7 @@ public class RoundGameScreen extends JFrame {
 		respuesta4Button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				AnswerQuestion answer = new AnswerQuestion(respuesta4Button.getText());
+				questionAnswered = true;
 				respuesta1Button.setEnabled(false);
 				respuesta2Button.setEnabled(false);
 				respuesta3Button.setEnabled(false);
@@ -173,7 +178,8 @@ public class RoundGameScreen extends JFrame {
 		respuesta4Button.setText(questions.get(3));
 	}
 
-	public void enableButtons() {
+	public void enableButtonsAndRefreshComponents() {
+		questionAnswered = false;
 		respuesta1Button.setEnabled(true);
 		respuesta2Button.setEnabled(true);
 		respuesta3Button.setEnabled(true);
