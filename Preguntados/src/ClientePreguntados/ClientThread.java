@@ -2,13 +2,16 @@ package ClientePreguntados;
 
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 
 import Packages.AddQuestionResponse;
 import Packages.AnswerQuestion;
 import Packages.LoginResponse;
 import Packages.Package;
+import Packages.PlayerJoinResponse;
 import Packages.Question;
 import Packages.QuestionsResponse;
+import Packages.StartGameResponse;
 
 public class ClientThread extends Thread {
 	
@@ -18,7 +21,7 @@ public class ClientThread extends Thread {
 	private static Package packageIn;
 	private static final int LOGINRESPONSEID = 1;
 	private static final int CREATEGAMEREQUESTID = 2;
-	private static final int PLAYERJOINREQUESTID = 3;
+	private static final int PLAYERJOINRESPONSEID = 3;
 	private static final int STARTGAMERESPONSEID = 4;
 	private static final int GAMERUNNINGID = 6;
 	private static final int POINTSTABLEREQUESTID = 8;
@@ -27,6 +30,7 @@ public class ClientThread extends Thread {
 	private static final int QUESTIONSRESPONSEID = 11;
 	private static final int ENDTIMEID = 12;
 	private static final int ANSWERQUESTIONRESPONSEID = 13;
+	private static final int ADMINJOINRESPONSEID = 14;
 	private Boolean endConnection = false;
 	
 	public ClientThread(LoginScreen loginscreen){
@@ -65,10 +69,19 @@ public class ClientThread extends Thread {
 				case CREATEGAMEREQUESTID: // Creacion de partida
 			
 					break;
-				case PLAYERJOINREQUESTID: // Jugador uniendose a partida
+				case PLAYERJOINRESPONSEID: // Se pudo unir a la partida?
+					PlayerJoinResponse playerjoinresponse = (PlayerJoinResponse) packageIn;
+					((JoinPlayerGameWindow)JDialogScreen).setLabelAndButton(playerjoinresponse.getJoinStatus());
+					((JoinPlayerGameWindow)JDialogScreen).setVisible(true);
 					
 					break;
-				case STARTGAMERESPONSEID: // Comenzar partida
+				case STARTGAMERESPONSEID: // Se pudo comenzar la partida?
+					StartGameResponse startgameresponse = (StartGameResponse) packageIn;
+					if(!startgameresponse.getStartGame()){
+						CantStartGameWindow cantStart = new CantStartGameWindow();
+						cantStart.setVisible(true);
+					}
+					
 					
 					break;
 				case POINTSTABLEREQUESTID:
@@ -78,9 +91,12 @@ public class ClientThread extends Thread {
 				case GAMERUNNINGID:
 					
 					Question question = (Question) packageIn;
+					
+
+					
 					((JoinPlayerGameWindow)JDialogScreen).setVisible(false);
 					((RoundGameScreen)JFrameScreen).setVisible(false);
-					((RoundGameScreen)JFrameScreen).enableButtons();
+					((RoundGameScreen)JFrameScreen).enableButtonsAndRefreshComponents();
 					((RoundGameScreen)JFrameScreen).setQuestion(question);
 					((RoundGameScreen)JFrameScreen).setVisible(true);
 					((RoundGameScreen)JFrameScreen).startTimer();
