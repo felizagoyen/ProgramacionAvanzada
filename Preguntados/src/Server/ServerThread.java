@@ -70,6 +70,8 @@ public class ServerThread extends Thread {
 					if(!game.isCreated()) {
 						game.createGame(gameRequest.getGameName(), gameRequest.getMaxPlayers(), gameRequest.getQuestionsID());
 						Logger.info("Partida creada correctamente.");
+						game.addPlayer(clientId, clientName); //Al crear la partida el administrador se une.
+						Logger.info(clientName + " se ha unido a la partida.");
 					} else {
 						Logger.warn("La partida ya estaba creada");
 					}
@@ -102,6 +104,7 @@ public class ServerThread extends Thread {
 					
 					packageOut = new PlayerJoinResponse(joinStatus);
 					break;
+					
 				case STARTGAMEREQUESTID: // Comenzar partida
 					Boolean startGame = false; 
 					game = Game.getGameInstance();
