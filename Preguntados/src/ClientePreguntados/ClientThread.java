@@ -103,9 +103,9 @@ public class ClientThread extends Thread {
 					
 				case WINNERSTATUSID:
 					ResultsGamePackage winnerstatus = (ResultsGamePackage) packageIn;
-					if(winnerstatus.getStatus() == 1){
+					if(winnerstatus.getPlayerWin() == 1){
 						//Ganaste!
-					}if(winnerstatus.getStatus() == 0){
+					}if(winnerstatus.getPlayerWin() == 0){
 						//Saliste empatado en el primer puesto con otro user!
 					}
 					else

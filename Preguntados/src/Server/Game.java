@@ -191,13 +191,21 @@ public class Game extends Thread {
 				} 
 			
 			for(Player eachPlayer: players) {
+				ResultsGamePackage resultsGame;
 				Integer playerWin = -1;
+				
 				if(winners.contains(eachPlayer))
 					playerWin = (winners.size() == 1) ? 1 : 0;
 				
-				clientConnectionInstance.blockSocket(eachPlayer.getId());
-				//clientConnectionInstance.sendPackage(eachPlayer.getId(), );
-				clientConnectionInstance.releaseSocket(eachPlayer.getId());
+				resultsGame = new ResultsGamePackage(playerWin, winners, players);
+				
+				try {
+					clientConnectionInstance.blockSocket(eachPlayer.getId());
+					clientConnectionInstance.sendPackage(eachPlayer.getId(), resultsGame);
+					clientConnectionInstance.releaseSocket(eachPlayer.getId());
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
 			}
 		}
 
