@@ -49,6 +49,8 @@ public class JoinPlayerGameWindow extends JDialog {
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(null);
 		
+		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+		
 		lblWaitGame = new JLabel("Espere a que el administrador inicie la partida...");
 		lblWaitGame.setFont(new Font("Tahoma", Font.BOLD, 16));
 		lblWaitGame.setBounds(10, 125, 618, 20);
