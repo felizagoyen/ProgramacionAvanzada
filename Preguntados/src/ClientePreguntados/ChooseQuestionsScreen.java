@@ -6,6 +6,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
 
+import java.awt.Container;
 import java.awt.EventQueue;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -31,23 +32,11 @@ public class ChooseQuestionsScreen extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					ChooseQuestionsScreen frame = new ChooseQuestionsScreen();
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
 
 	/**
 	 * Create the frame.
 	 */
-	public ChooseQuestionsScreen() {
+	public ChooseQuestionsScreen(final CreateGameScreen creategamescreen) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		addWindowListener(new ClosingListener());
 		setBounds(100, 100, 548, 374);
@@ -332,9 +321,8 @@ public class ChooseQuestionsScreen extends JFrame {
 				questionsID.add(((Question)combo8.getSelectedItem()).getID());
 				questionsID.add(((Question)combo9.getSelectedItem()).getID());
 				questionsID.add(((Question)combo10.getSelectedItem()).getID());
-				CreateGameScreen creategamescreen = new CreateGameScreen();
 				creategamescreen.receiveQuestionsID(questionsID);
-				creategamescreen.setVisible(true);
+				creategamescreen.setEnabled(true);
 				setVisible(false);
 			}
 		});

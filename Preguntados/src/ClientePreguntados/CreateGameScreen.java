@@ -1,7 +1,6 @@
 package ClientePreguntados;
 
 import javax.swing.JFrame;
-
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
@@ -17,6 +16,15 @@ import java.util.ArrayList;
 
 import javax.swing.JFormattedTextField;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 public class CreateGameScreen extends JFrame {
 
 	/**
@@ -26,23 +34,15 @@ public class CreateGameScreen extends JFrame {
 	private JPanel contentPane;
 	private JTextField nombrePartidaTextField;
 	private JTextField cantMaxTextField;
+	private JLabel camposMalLlenadosLabel;
+	private JLabel errorNombrePartidaLabel;
+	private JLabel errorCantMaxLabel;
 	private ArrayList<Integer> questionsID = new ArrayList<Integer>();
+	private CreateGameScreen thisFrame;
 
 	/**
 	 * Launch the application.
-//	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					CreateGameScreen frame = new CreateGameScreen();
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
+
 
 	/**
 	 * Create the frame.
@@ -51,58 +51,164 @@ public class CreateGameScreen extends JFrame {
 		for(int i = 0; i < 10; i++)
 			questionsID.add(null);
 		
+		thisFrame = this;
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 604, 300);
 		contentPane = new JPanel();
+		contentPane.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				validateFields();
+			}
+		});
+
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JLabel lblNombreDeLa = new JLabel("Nombre de la partida");
-		lblNombreDeLa.setBounds(10, 62, 113, 25);
+		lblNombreDeLa.setBounds(10, 44, 168, 25);
 		contentPane.add(lblNombreDeLa);
 		
 		nombrePartidaTextField = new JTextField();
-		nombrePartidaTextField.setBounds(188, 64, 98, 20);
+		nombrePartidaTextField.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				validateFields();
+			}
+		});
+		nombrePartidaTextField.setBounds(189, 46, 111, 20);
 		contentPane.add(nombrePartidaTextField);
 		nombrePartidaTextField.setColumns(10);
 		
 		JLabel lblCantidadMaximaDe = new JLabel("Cantidad m\u00E1xima de jugadores");
-		lblCantidadMaximaDe.setBounds(10, 111, 163, 20);
+		lblCantidadMaximaDe.setBounds(10, 98, 225, 20);
 		contentPane.add(lblCantidadMaximaDe);
 		
 		cantMaxTextField = new JTextField();
-		cantMaxTextField.setBounds(188, 111, 98, 20);
+		cantMaxTextField.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				validateFields();
+			}
+		});
+		cantMaxTextField.setBounds(189, 98, 111, 20);
 		contentPane.add(cantMaxTextField);
 		cantMaxTextField.setColumns(10);
 		
 		JButton btnElegirPreguntas = new JButton("Elegir preguntas");
 		btnElegirPreguntas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ChooseQuestionsScreen choosequestionsscreen = new ChooseQuestionsScreen();
+				ChooseQuestionsScreen choosequestionsscreen = new ChooseQuestionsScreen(thisFrame);
 				choosequestionsscreen.setVisible(true);
-				setVisible(false);
+				setEnabled(false);
 			}
 		});
-		btnElegirPreguntas.setBounds(23, 164, 131, 20);
+		btnElegirPreguntas.setBounds(10, 148, 131, 20);
 		contentPane.add(btnElegirPreguntas);
 		
 		JButton btnNewButton = new JButton("Crear");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				CreateGamePackage gamerequest = new CreateGamePackage(nombrePartidaTextField.getText(),  Integer.parseInt(cantMaxTextField.getText()), questionsID);
-				Connection.sendPackage(gamerequest);
-				JoinPlayerGameWindow joinadmingamewindow = new JoinPlayerGameWindow();
-				RoundGameScreen roundgamescreen = new RoundGameScreen();
-				ClientThread.recieveScreen(joinadmingamewindow);
-				ClientThread.recieveScreen(roundgamescreen);
-				GameCreatedAdminScreen gamecreated = new GameCreatedAdminScreen();
-				setVisible(false);
-				gamecreated.setVisible(true);
+				
+				if(nombrePartidaTextField.getText().isEmpty() || !isValidNumber(cantMaxTextField.getText())){
+					camposMalLlenadosLabel.setVisible(true);
+				}
+				else{
+					CreateGamePackage gamerequest = new CreateGamePackage(nombrePartidaTextField.getText(),  Integer.parseInt(cantMaxTextField.getText()), questionsID);
+					Connection.sendPackage(gamerequest);
+					JoinPlayerGameWindow joinadmingamewindow = new JoinPlayerGameWindow();
+					RoundGameScreen roundgamescreen = new RoundGameScreen();
+					ClientThread.recieveScreen(joinadmingamewindow);
+					ClientThread.recieveScreen(roundgamescreen);
+					GameCreatedAdminScreen gamecreated = new GameCreatedAdminScreen();
+					setVisible(false);
+					gamecreated.setVisible(true);
+				}
+				
+				
+				
 			}
 		});
-		btnNewButton.setBounds(277, 211, 131, 21);
+		btnNewButton.setBounds(389, 230, 131, 21);
 		contentPane.add(btnNewButton);
+		
+		camposMalLlenadosLabel = new JLabel("Los campos no est\u00E1n llenados correctamente.");
+		camposMalLlenadosLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		camposMalLlenadosLabel.setBounds(36, 190, 514, 20);
+		camposMalLlenadosLabel.setVisible(false);
+		contentPane.add(camposMalLlenadosLabel);
+		
+		errorNombrePartidaLabel = new JLabel("ErrorNombrePartidaLabel");
+		errorNombrePartidaLabel.setFont(new Font("Tahoma", Font.BOLD, 11));
+		errorNombrePartidaLabel.setBounds(310, 49, 608, 14);
+		errorNombrePartidaLabel.setVisible(false);
+		contentPane.add(errorNombrePartidaLabel);
+		
+		errorCantMaxLabel = new JLabel("ErrorCantMaxLabel");
+		errorCantMaxLabel.setFont(new Font("Tahoma", Font.BOLD, 11));
+		errorCantMaxLabel.setBounds(310, 101, 278, 14);
+		errorCantMaxLabel.setVisible(false);
+		contentPane.add(errorCantMaxLabel);
+	}
+	
+	public static boolean isNumber (String string){
+		try{
+			Integer.parseInt(string);
+			return true;
+		}
+		catch(Exception e){
+			return false;
+		}
+	}
+	
+	public static boolean isValidNumber (String string){
+		try{
+			if(Integer.parseInt(string) >= 2)
+				return true;
+			return false;
+		}catch(Exception e){
+			return false;
+		}
+	}
+	
+	public void validateFields(){
+		
+		if(nombrePartidaTextField.getText().isEmpty()){
+			errorNombrePartidaLabel.setForeground(java.awt.Color.red);
+			errorNombrePartidaLabel.setText("El campo est\u00E1 vacio.");
+			errorNombrePartidaLabel.setVisible(true);
+		}
+		else{
+			errorNombrePartidaLabel.setVisible(false);
+		}
+		
+		
+		if(cantMaxTextField.getText().isEmpty()){
+			errorCantMaxLabel.setForeground(java.awt.Color.red);
+			errorCantMaxLabel.setText("El campo est\u00E1 vacio.");
+		}
+		else{
+			if(!isNumber(cantMaxTextField.getText())){
+				errorCantMaxLabel.setForeground(java.awt.Color.red);
+				errorCantMaxLabel.setText("Por favor, ingrese un número.");
+			}
+			else{
+				if(Integer.parseInt(cantMaxTextField.getText()) < 2){
+					errorCantMaxLabel.setForeground(java.awt.Color.red);
+					errorCantMaxLabel.setText("La cantidad minima de jugadores debe ser 2.");
+					
+				}
+				else{
+					errorCantMaxLabel.setForeground(new Color(67, 205, 128));
+					errorCantMaxLabel.setText("Valor valido.");
+				}
+			}
+		}
+		
+		errorCantMaxLabel.setVisible(true);
+		
 	}
 	
 	
