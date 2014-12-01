@@ -1,6 +1,8 @@
 package ClientePreguntados;
 
+import java.io.FileInputStream;
 import java.io.ObjectInputStream;
+import java.util.*;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
@@ -11,11 +13,14 @@ public class Connection {
 	private ObjectInputStream inputObject;
 	private Socket socket;
 	private static Connection connection;
+	private static String ip;
+	private static int port;
 
 	
 	private Connection (){
 		try{
-			socket = new Socket("localhost", 10000);
+			getProperties();
+			socket = new Socket(ip, port);
 			outputObject = new ObjectOutputStream(socket.getOutputStream());
 			inputObject = new ObjectInputStream(socket.getInputStream());
 		}catch(Exception e){
@@ -59,6 +64,17 @@ public class Connection {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	public static void getProperties (){
+		try{
+			Properties properties = new Properties();
+			properties.load(new FileInputStream("propiedades.properties"));
+			ip = properties.getProperty("ip");
+			port = Integer.parseInt(properties.getProperty("port"));
+		}catch (Exception e){
+			e.printStackTrace();
+		}
 	}
  
 
