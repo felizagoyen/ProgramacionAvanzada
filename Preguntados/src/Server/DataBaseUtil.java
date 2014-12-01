@@ -124,15 +124,17 @@ public class DataBaseUtil {
 		}
 	}
 	
-	public static void main(String[] args) {
-		DataBaseUtil db = new DataBaseUtil();
-		ArrayList<String> wrongAnswers = new ArrayList<String>();
-		wrongAnswers.add("incorreta1");
-		wrongAnswers.add("incorreta2");
-		wrongAnswers.add("incorreta3");
-		Question question = new Question(null, "Cuanto?", "categoria", "correcta", wrongAnswers);
-		db.setQuestionDB(question);
+	public int getMaxCategoryId() {
+		ResultSet rs = queryDB("SELECT MAX(`id`) FROM `categoria`");
+		try {
+			rs.next();
+			return rs.getInt(1);	
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		}
 	}
+	
 
 	public ArrayList<Question> getQuestionByCategoryDB(String category) {
 		ResultSet rs = queryDB("SELECT `id`, `pregunta` FROM `preguntas` WHERE `categoria`='" + category + "'");
@@ -148,4 +150,56 @@ public class DataBaseUtil {
 		return questions;
 	}
 	
+	public void newCategoryDB(String category){
+		try {
+			PreparedStatement ps = con.prepareStatement("INSERT INTO `preguntados`.`categoria` (`id`, `nombre`) VALUES (?, ?)");
+			ps.setInt(1, getMaxCategoryId()+1);
+			ps.setString(2, category);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	
+	}
+	
+	public Puntuation getPuntuationDB(String user){
+		ResultSet rs = queryDB("SELECT * FROM `puntuaciones` WHERE `user` = '"+ user +"'");
+		if(rs!=null){
+			try {
+				while(rs.next())
+					return new Puntuation(rs.getInt("puntuacion"), rs.getInt("partidasJugadas"), rs.getInt("partidasGanadas"), rs.getInt("partidasPerdidas"), rs.getInt("preguntasCorrectas"), rs.getInt("preguntasIncorrectas"));
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+
+	public void updatePuntuationDB(String user, Puntuation puntuation) {
+		try {
+			
+			PreparedStatement ps = con.prepareStatement("UPDATE `puntuaciones` SET `puntuacion` = ?, `partidasJugadas` = ?, `partidasGanadas` = ?, `partidasPerdidas` = ?, `preguntasCorrectas` = ?, `preguntasIncorrectas` = ? WHERE `user` = ?");
+			ps.setInt(1, puntuation.getPuntuacion());
+			ps.setInt(2, puntuation.getPartidasJugadas());
+			ps.setInt(3, puntuation.getPartidasGanadas());
+			ps.setInt(4, puntuation.getPartidasPerdidas());
+			ps.setInt(5, puntuation.getPreguntasCorrectas());
+			ps.setInt(6, puntuation.getPreguntasIncorrectas());
+			ps.setString(7, user);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void main(String[] args) {
+		DataBaseUtil db = new DataBaseUtil();
+		Puntuation p = db.getPuntuationDB("diego");
+		System.out.println(p.getPartidasGanadas() + " " + p.getPartidasJugadas());
+		p.upPartidasGanadas();
+		db.updatePuntuationDB("diego", p);
+		Puntuation p1 = db.getPuntuationDB("diego");
+		System.out.println(p1.getPartidasGanadas() + " " + p1.getPartidasJugadas());
+		db.newCategoryDB("category1");
+	}
 }

@@ -86,3 +86,19 @@ INSERT preguntas VALUES(36, '¿Cómo murió Jacques de Molay, último gran maest
 INSERT preguntas VALUES(37, '¿En qué país nació el rey Juan Carlos I?', 'Italia', 'España', 'Inglaterra', 'Francia', 'Historia');
 INSERT preguntas VALUES(38, '¿En qué siglo termina la Edad Media?', 'XV', 'XIV', 'IX', 'X', 'Historia');
 
+
+
+CREATE TABLE puntuaciones
+(user varchar(50) PRIMARY KEY,
+puntuacion int,
+partidasJugadas int,
+partidasGanadas int,
+partidasPerdidas int,
+preguntasCorrectas int,
+preguntasIncorrectas int);
+
+INSERT puntuaciones VALUES ('diego', 0, 0, 0, 0, 0, 0);
+INSERT puntuaciones VALUES ('eze', 0, 0, 0, 0, 0, 0);
+INSERT puntuaciones VALUES ('fer', 0, 0, 0, 0, 0, 0);
+INSERT puntuaciones VALUES ('seba', 0, 0, 0, 0, 0, 0);
+INSERT puntuaciones VALUES ('pepe', 0, 0, 0, 0, 0, 0);
