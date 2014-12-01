@@ -105,46 +105,46 @@ public class ColaDePrioridadesMia {
 		return monticulo.size();
 	}
 	
-//	public static void main(String[] args) {
-//		ColaDePrioridadesMia cola = new ColaDePrioridadesMia();
-//		Nodo<Integer> aux = new Nodo<Integer>();
-////		System.out.println(aux);
-////		aux.setMinDistance(10.0);
-////		aux.setDato(5);
-////		System.out.println(aux);
-////		System.out.println(aux.getDato() + " " + aux.getMinDistance());
-//		for(int i=1; i<7; i++){
-//			Double valor = (double) Math.round(Math.random()*100);
-//			Nodo<Integer>  nodo = new Nodo<Integer>(i, valor);
-//			//System.out.print(nodo + " - ");
-//			cola.add(nodo);
-//			if(i==3){
-//				aux.setMinDistance(nodo.getMinDistance());
-//				aux.setDato(aux.getDato());
-//			}
-//		}
-//		System.out.println();
-//		//System.out.println(cola);
-//		try {
-//			//while(!cola.isEmpty()){
-//				//cola.remove().toString();
-//				System.out.println(cola);
-//			//}
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		cola.change(3, 99.0);
+	public static void main(String[] args) {
+		ColaDePrioridadesMia cola = new ColaDePrioridadesMia();
+		Nodo<Integer> aux = new Nodo<Integer>();
 //		System.out.println(aux);
-//		System.out.println(cola);
-////		for(int i=0; i<cola.size(); i++){
-////			try {
-////				System.out.println(cola.remove());
-////			} catch (Exception e) {
-////				e.printStackTrace();
-////			}
-////			
-////		}
-//	}
+//		aux.setMinDistance(10.0);
+//		aux.setDato(5);
+//		System.out.println(aux);
+//		System.out.println(aux.getDato() + " " + aux.getMinDistance());
+		for(int i=1; i<7; i++){
+			Double valor = (double) Math.round(Math.random()*100);
+			Nodo<Integer>  nodo = new Nodo<Integer>(i, valor);
+			//System.out.print(nodo + " - ");
+			cola.add(nodo);
+			if(i==3){
+				aux.setMinDistance(nodo.getMinDistance());
+				aux.setDato(aux.getDato());
+			}
+		}
+		System.out.println();
+		//System.out.println(cola);
+		try {
+			//while(!cola.isEmpty()){
+				//cola.remove().toString();
+				System.out.println(cola);
+			//}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		cola.change(3, 99.0);
+		System.out.println(aux);
+		System.out.println(cola);
+//		for(int i=0; i<cola.size(); i++){
+//			try {
+//				System.out.println(cola.remove());
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//			
+//		}
+	}
 	
 }
