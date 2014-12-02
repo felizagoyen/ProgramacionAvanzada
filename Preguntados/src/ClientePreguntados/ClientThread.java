@@ -105,7 +105,9 @@ public class ClientThread extends Thread {
 					ResultsGamePackage resultsGame = (ResultsGamePackage) packageIn;
 					GameResultsWindow gameresultswindow = new GameResultsWindow();
 					gameresultswindow.setLabelWinnerStatus(resultsGame.getPlayerWin(), resultsGame.getWinners().size());
+					gameresultswindow.setScoreTable(resultsGame.getScoreTable());
 					gameresultswindow.setVisible(true);
+					
 					
 					break;
 				case ADDQUESTIONREESPONSEID: // Agregar pregunta

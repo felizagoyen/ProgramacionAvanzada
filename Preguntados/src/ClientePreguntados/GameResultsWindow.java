@@ -7,12 +7,20 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
 import javax.swing.JLabel;
+
 import java.awt.Font;
+
 import javax.swing.JTextArea;
+
+import Commons.Player;
+
 import java.awt.SystemColor;
+import java.util.ArrayList;
 
 public class GameResultsWindow extends JDialog {
 
@@ -21,6 +29,7 @@ public class GameResultsWindow extends JDialog {
 	private JTextArea tiedWith1Label;
 	private JLabel winnerLabel;
 	private JLabel loserLabel;
+	private ArrayList<Player> scoreTable;
 	
 
 	/**
@@ -49,6 +58,9 @@ public class GameResultsWindow extends JDialog {
 			contentPanel.add(okButton);
 			okButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					ScoreGameTableScreen scoreTableScreen = new ScoreGameTableScreen(scoreTable);
+					scoreTableScreen.setVisible(true);
+			
 				}
 			});
 			okButton.setActionCommand("OK");
@@ -95,5 +107,9 @@ public class GameResultsWindow extends JDialog {
 					tiedWith1Label.setVisible(true);
 				else
 					tiedManyUsersLabel.setVisible(true);
+	}
+
+	public void setScoreTable(ArrayList<Player> scoreTable) {
+		this.scoreTable = scoreTable;
 	}
 }
