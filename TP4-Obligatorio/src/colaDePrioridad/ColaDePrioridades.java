@@ -1,133 +1,144 @@
 package colaDePrioridad;
 
-import java.util.Iterator;
-import java.util.NoSuchElementException;
+import java.util.ArrayList;
 
-public class ColaDePrioridades<Key extends Comparable<Key>> implements Iterable<Integer> {
-	private int numeroDeElementosMax;        // maximum number of elements on PQ
-    private int numeroDeElementos;           // number of elements on PQ
-    private int[] pq;        // binary heap using 1-based indexing
-    private int[] qp;        // inverse of pq - qp[pq[i]] = pq[qp[i]] = i
-    private Key[] keys;      // keys[i] = priority of i
-
-    public ColaDePrioridades(int numeroDeElementosMax) {
-        if (numeroDeElementosMax < 0) throw new IllegalArgumentException();
-        this.numeroDeElementosMax = numeroDeElementosMax;
-        keys = (Key[]) new Comparable[numeroDeElementosMax + 1];    // make this of length NMAX??
-        pq   = new int[numeroDeElementosMax + 1];
-        qp   = new int[numeroDeElementosMax + 1];                   // make this of length NMAX??
-        for (int i = 0; i <= numeroDeElementosMax; i++) 
-        	qp[i] = -1;
-    }
-
-    public boolean isEmpty() {
-        return numeroDeElementos == 0;
-    }
-
-    public boolean contains(int i) {
-        if (i < 0 || i >= numeroDeElementosMax) throw new IndexOutOfBoundsException();
-        return qp[i] != -1;
-    }
-
-    public int size() {
-        return numeroDeElementos;
-    }
-
-    public void insert(int i, Key key) {
-        if (i < 0 || i >= numeroDeElementosMax) throw new IndexOutOfBoundsException();
-        if (contains(i)) throw new IllegalArgumentException("index is already in the priority queue");
-        numeroDeElementos++;
-        qp[i] = numeroDeElementos;
-        pq[numeroDeElementos] = i;
-        keys[i] = key;
-        swim(numeroDeElementos);
-    }
-
-    public int delMin() { 
-        if (numeroDeElementos == 0) throw new NoSuchElementException("Priority queue underflow");
-        int min = pq[1];        
-        exch(1, numeroDeElementos--); 
-        sink(1);
-        qp[min] = -1;            // delete
-        keys[pq[numeroDeElementos+1]] = null;    // to help with garbage collection
-        pq[numeroDeElementos+1] = -1;            // not needed
-        return min; 
-    }
-
-    public void change(int i, Key key) {
-        if (i < 0 || i >= numeroDeElementosMax) throw new IndexOutOfBoundsException();
-        if (!contains(i)) throw new NoSuchElementException("index is not in the priority queue");
-        keys[i] = key;
-        swim(qp[i]);
-        sink(qp[i]);
-    }
-
-    public void decreaseKey(int i, Key key) {
-        if (i < 0 || i >= numeroDeElementosMax) throw new IndexOutOfBoundsException();
-        if (!contains(i)) throw new NoSuchElementException("index is not in the priority queue");
-        if (keys[i].compareTo(key) <= 0) throw new IllegalArgumentException("Calling decreaseKey() with given argument would not strictly decrease the key");
-        keys[i] = key;
-        swim(qp[i]);
-    }
-    
-    private boolean greater(int i, int j) {
-        return keys[pq[i]].compareTo(keys[pq[j]]) > 0;
-    }
-
-    private void exch(int i, int j) {
-        int swap = pq[i]; pq[i] = pq[j]; pq[j] = swap;
-        qp[pq[i]] = i; qp[pq[j]] = j;
-    }
-
-    private void swim(int k)  {
-        while (k > 1 && greater(k/2, k)) {
-            exch(k, k/2);
-            k = k/2;
+public class ColaDePrioridades<E> {
+	private ArrayList<Contenedor<E>> monticulo;
+	
+	public ColaDePrioridades() {
+		monticulo = new ArrayList<Contenedor<E>>();
+	}
+	
+	public void add(Contenedor dato){
+		try{
+			monticulo.add(dato);
+			flotar(monticulo.size()-1);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	public Boolean isEmpty(){
+		return monticulo.size()==0;
+	}
+	
+	public boolean contains(Integer nodo){
+		for(Contenedor<E> n: monticulo){
+			if(n.getDato().equals(nodo)){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public void change(Integer i, Double minDistancia) {
+        for(int index=0; index< monticulo.size(); index++){
+        	if(monticulo.get(index).getDato().equals(i)){
+        		monticulo.get(index).setMinDistance(minDistancia);
+        		i=index;
+        		break;
+        	}
         }
+        i=flotar(i);
+        hundir(i); 
     }
+	
 
-    private void sink(int k) {
-        while (2*k <= numeroDeElementos) {
-            int j = 2*k;
-            if (j < numeroDeElementos && greater(j, j+1)) j++;
-            if (!greater(k, j)) break;
-            exch(k, j);
-            k = j;
-        }
-    }
+	private Integer padre(Integer i){
+		return (i-1)/2;
+	}
+	
+	private Integer izquierda(Integer i){
+		return i*2+1;
+	}
+	
+	private Integer derecha(Integer i){
+		return i*2+2;
+	}
+	
+	private Boolean tieneIzquierda(Integer i){
+		return i*2+1<monticulo.size();
+	}
+	
+	private Boolean tieneDerecha(Integer i){
+		return i*2+2<monticulo.size();
+	}
+	
+	private Integer flotar(Integer i){
+		Contenedor<E> nodo = monticulo.get(i);
+		while(i>0 && monticulo.get(padre(i)).getMinDistance()>nodo.getMinDistance()){
+			monticulo.set(i,monticulo.get(padre(i)));
+			i=padre(i);
+		}
+		monticulo.set(i, nodo);
+		return i;
+	}
+	
+	
+	public void hundir(int i) {
+		while (tieneIzquierda(i)) { 
+			int elMasChico = izquierda(i); 
+			if (tieneDerecha(i)) {
+				if (monticulo.get(izquierda(i)).getMinDistance() > monticulo.get(derecha(i)).getMinDistance())
+					elMasChico = derecha(i); 
+			}
+			if (monticulo.get(elMasChico).getMinDistance() >= monticulo.get(i).getMinDistance())
+				break; 
+			
+			Contenedor<E> temp = monticulo.get(i);
+			monticulo.set(i, monticulo.get(elMasChico));
+			monticulo.set(elMasChico, temp);
+			
+			i = elMasChico; 
+		}
+	}
 
+	public Contenedor<Integer> remove(){
+		if(isEmpty()) return null;
+		Integer i=0;
+		Contenedor<Integer> nodo = new Contenedor(monticulo.get(i).getDato(), monticulo.get(i).getMinDistance());
+		monticulo.set(i, monticulo.get(monticulo.size()-1));
+		monticulo.remove(monticulo.size()-1);
+		if(!isEmpty())
+			hundir(i);
+		return nodo;
+	}
 
-   /***********************************************************************
-    * Iterators
-    **********************************************************************/
+	public String toString(){
+		StringBuilder salida = new StringBuilder();
+		for(int i=0; i<monticulo.size(); i++){
+			salida.append(monticulo.get(i).toString() + " - ");
+		}
+		return salida.toString();
+	}
+	
+	public Integer size(){
+		return monticulo.size();
+	}
+	
+	public static void main(String[] args) {
+		ColaDePrioridades<Integer> cola = new ColaDePrioridades<Integer>();
+		
+		for(int i=1; i<=7; i++){
+			Double valor = (double) Math.round(Math.random()*100);
+			Contenedor<Integer>  nodo = new Contenedor<Integer>(i, valor);
+			cola.add(nodo);
+		}
+		System.out.println();
+		System.out.println(cola);
+		
+		cola.change(5, 15.2);
+		System.out.println(cola);
+		try {
+			while(!cola.isEmpty()){
+				System.out.print("removido: " + cola.remove().toString());
+				System.out.println(" cola: " + cola);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
-    /**
-     * Returns an iterator that iterates over the keys on the
-     * priority queue in ascending order.
-     * The iterator doesn't implement <tt>remove()</tt> since it's optional.
-     * @return an iterator that iterates over the keys in ascending order
-     */
-    public Iterator<Integer> iterator() { return new HeapIterator(); }
-
-    private class HeapIterator implements Iterator<Integer> {
-        // create a new pq
-        private ColaDePrioridades<Key> copy;
-
-        // add all elements to copy of heap
-        // takes linear time since already in heap order so no keys move
-        public HeapIterator() {
-            copy = new ColaDePrioridades<Key>(pq.length - 1);
-            for (int i = 1; i <= numeroDeElementos; i++)
-                copy.insert(pq[i], keys[pq[i]]);
-        }
-
-        public boolean hasNext()  { return !copy.isEmpty();                     }
-        public void remove()      { throw new UnsupportedOperationException();  }
-
-        public Integer next() {
-            if (!hasNext()) throw new NoSuchElementException();
-            return copy.delMin();
-        }
-    }
-
+	
 }
