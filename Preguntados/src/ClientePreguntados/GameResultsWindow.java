@@ -30,6 +30,7 @@ public class GameResultsWindow extends JDialog {
 	private JLabel winnerLabel;
 	private JLabel loserLabel;
 	private ArrayList<Player> scoreTable;
+	private Integer userType;
 	
 
 	/**
@@ -41,7 +42,9 @@ public class GameResultsWindow extends JDialog {
 	 * Create the dialog.
 	 */
 	public GameResultsWindow() {
+		setResizable(false);
 		setBounds(100, 100, 444, 235);
+		setLocationRelativeTo(null);
 		getContentPane().setLayout(null);
 		contentPanel.setBounds(0, 0, 434, 229);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -58,8 +61,9 @@ public class GameResultsWindow extends JDialog {
 			contentPanel.add(okButton);
 			okButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					ScoreGameTableScreen scoreTableScreen = new ScoreGameTableScreen(scoreTable);
+					ScoreGameTableScreen scoreTableScreen = new ScoreGameTableScreen(scoreTable, userType);
 					scoreTableScreen.setVisible(true);
+					dispose();
 			
 				}
 			});
@@ -109,7 +113,8 @@ public class GameResultsWindow extends JDialog {
 					tiedManyUsersLabel.setVisible(true);
 	}
 
-	public void setScoreTable(ArrayList<Player> scoreTable) {
+	public void setScoreTableAndUserType(ArrayList<Player> scoreTable, Integer userType) {
 		this.scoreTable = scoreTable;
+		this.userType = userType;
 	}
 }
