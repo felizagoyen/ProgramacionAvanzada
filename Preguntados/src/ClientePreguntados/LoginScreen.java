@@ -1,17 +1,19 @@
 package ClientePreguntados;
 
 import javax.swing.JFrame;
-
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import java.awt.Color;
+
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
 import javax.swing.JTextArea;
 import javax.swing.JPasswordField;
 
@@ -54,30 +56,15 @@ public class LoginScreen extends JFrame {
 	public static JTextArea jUsuarioInexistenteTextArea;
 	public static JTextArea jCamposVaciosTextArea;
 
-	/**
-	 * Launch the application.
-	 */
-	// public static void main(String[] args) {
-	// EventQueue.invokeLater(new Runnable() {
-	// public void run() {
-	// try {
-	// LoginScreen frame = new LoginScreen();
-	// frame.setVisible(true);
-	// } catch (Exception e) {
-	// e.printStackTrace();
-	// }
-	// }
-	// });
-	// }
 
-	/**
-	 * Create the frame.
-	 */
 	public LoginScreen(final ClientePreguntados cliente) {
+		setTitle("Preguntados");
 		setBackground(Color.BLUE);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new ClosingListener());
 		setBounds(100, 100, 300, 500);
+		setLocationRelativeTo(null);
+		setResizable(false);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(255, 153, 0));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -85,15 +72,15 @@ public class LoginScreen extends JFrame {
 		contentPane.setLayout(null);
 
 		JLabel lblUsername = new JLabel("Usuario");
-		lblUsername.setBounds(31, 129, 46, 14);
+		lblUsername.setBounds(31, 170, 46, 14);
 		contentPane.add(lblUsername);
 
 		JLabel lblPassword = new JLabel("Contrase\u00F1a");
-		lblPassword.setBounds(31, 185, 74, 14);
+		lblPassword.setBounds(31, 218, 74, 14);
 		contentPane.add(lblPassword);
 
 		jUserTextField = new JTextField();
-		jUserTextField.setBounds(136, 125, 86, 23);
+		jUserTextField.setBounds(136, 166, 86, 23);
 		contentPane.add(jUserTextField);
 		jUserTextField.setColumns(10);
 
@@ -120,7 +107,7 @@ public class LoginScreen extends JFrame {
 		
 
 		jLoginButton.addActionListener(new ActionLogin(jUsuarioInexistenteTextArea, jCamposVaciosTextArea));
-		jLoginButton.setBounds(84, 262, 89, 23);
+		jLoginButton.setBounds(84, 274, 89, 23);
 		contentPane.add(jLoginButton);
 
 		jPasswordField = new JPasswordField();
@@ -131,20 +118,21 @@ public class LoginScreen extends JFrame {
 					new ActionLogin (jUsuarioInexistenteTextArea, jCamposVaciosTextArea).actionPerformed(null);
 			}
 		});
-		jPasswordField.setBounds(136, 182, 86, 20);
+		jPasswordField.setBounds(136, 215, 86, 20);
 		contentPane.add(jPasswordField);
 
 		JButton jSalirButton = new JButton("Salir");
 		jSalirButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ClientePreguntados.closeClient();
-//				EndClientConectionRequest er = new EndClientConectionRequest();
-//				Connection.sendPackage(er);
-//				System.exit(NORMAL);
 			}
 		});
-		jSalirButton.setBounds(84, 310, 89, 23);
+		jSalirButton.setBounds(84, 322, 89, 23);
 		contentPane.add(jSalirButton);
+		
+		JLabel lblLogoPreguntados = new JLabel(new ImageIcon("Logo_Preguntados3.png"));
+		lblLogoPreguntados.setBounds(52, 0, 170, 160);
+		contentPane.add(lblLogoPreguntados);
 		
 
 	}
@@ -159,6 +147,7 @@ public class LoginScreen extends JFrame {
 		} else {
 			if(loginresponse.getUserType() == 1){
 				UserMenuScreen userscreen = new UserMenuScreen();
+				//userscreen.setLocation(getLocation());
 				userscreen.setVisible(true);
 				setVisible(false);
 				
