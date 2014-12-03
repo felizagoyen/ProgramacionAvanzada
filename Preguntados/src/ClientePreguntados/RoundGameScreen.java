@@ -41,6 +41,7 @@ public class RoundGameScreen extends JFrame {
 	private JLabel lblRonda;
 	private JLabel lblTiempoRestante;
 	private int roundNumber = 0;
+	private JLabel lblCategora;
 	
 	class TimerThread extends Thread{
 		public void run() {
@@ -76,6 +77,8 @@ public class RoundGameScreen extends JFrame {
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new ClosingListener());
 		setBounds(100, 100, 335, 581);
+		setLocationRelativeTo(null);
+		setResizable(false);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -85,7 +88,7 @@ public class RoundGameScreen extends JFrame {
 		txtrPregunta.setLineWrap(true);
 		txtrPregunta.setEditable(false);
 		txtrPregunta.setText("Pregunta");
-		txtrPregunta.setBounds(43, 79, 250, 116);
+		txtrPregunta.setBounds(25, 127, 281, 115);
 		contentPane.add(txtrPregunta);
 		
 		respuesta1Button = new JButton("Respuesta 1");
@@ -103,7 +106,7 @@ public class RoundGameScreen extends JFrame {
 				Connection.sendPackage(answer);
 			}
 		});
-		respuesta1Button.setBounds(86, 237, 175, 23);
+		respuesta1Button.setBounds(86, 278, 175, 23);
 		contentPane.add(respuesta1Button);
 		
 		respuesta2Button = new JButton("Respuesta 2");
@@ -121,7 +124,7 @@ public class RoundGameScreen extends JFrame {
 				Connection.sendPackage(answer);
 			}
 		});
-		respuesta2Button.setBounds(86, 271, 175, 23);
+		respuesta2Button.setBounds(86, 312, 175, 23);
 		contentPane.add(respuesta2Button);
 		
 		respuesta3Button = new JButton("Respuesta 3");
@@ -139,7 +142,7 @@ public class RoundGameScreen extends JFrame {
 				Connection.sendPackage(answer);
 			}
 		});
-		respuesta3Button.setBounds(86, 305, 175, 23);
+		respuesta3Button.setBounds(86, 346, 175, 23);
 		contentPane.add(respuesta3Button);
 		
 		respuesta4Button = new JButton("Respuesta 4");
@@ -157,17 +160,17 @@ public class RoundGameScreen extends JFrame {
 				Connection.sendPackage(answer);
 			}
 		});
-		respuesta4Button.setBounds(86, 339, 175, 23);
+		respuesta4Button.setBounds(86, 380, 175, 23);
 		contentPane.add(respuesta4Button);
 		
-		lblRespuesta = new JLabel("Respuesta correcta/incorrecta ", JLabel.CENTER);
+		lblRespuesta = new JLabel("Respuesta correcta/incorrecta ", SwingConstants.CENTER);
 		lblRespuesta.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblRespuesta.setBounds(-102, 394, 545, 26);
+		lblRespuesta.setBounds(-101, 427, 545, 26);
 		contentPane.add(lblRespuesta);
 		
 		timerLabel = new JLabel("30");
 		timerLabel.setFont(new Font("Tahoma", Font.PLAIN, 19));
-		timerLabel.setBounds(214, 431, 31, 53);
+		timerLabel.setBounds(210, 464, 31, 53);
 		contentPane.add(timerLabel);
 		
 		lblRonda = new JLabel("Ronda N");
@@ -177,8 +180,14 @@ public class RoundGameScreen extends JFrame {
 		
 		lblTiempoRestante = new JLabel("Tiempo restante:");
 		lblTiempoRestante.setFont(new Font("Tahoma", Font.PLAIN, 19));
-		lblTiempoRestante.setBounds(59, 431, 159, 53);
+		lblTiempoRestante.setBounds(57, 464, 159, 53);
 		contentPane.add(lblTiempoRestante);
+		
+		lblCategora = new JLabel("Categor\u00EDa");
+		lblCategora.setHorizontalAlignment(SwingConstants.CENTER);
+		lblCategora.setFont(new Font("Vani", Font.BOLD, 16));
+		lblCategora.setBounds(35, 73, 250, 30);
+		contentPane.add(lblCategora);
 		lblRespuesta.setVisible(false);
 		
 
@@ -186,7 +195,7 @@ public class RoundGameScreen extends JFrame {
 
 	}
 	
-	public void setQuestion (Question question){
+	public void setQuestionAndCategory (Question question){
 		txtrPregunta.setText(question.getQuestion());
 		ArrayList<String> asnwers = new ArrayList<String>();
 		asnwers.add(question.getCorrectAnswer());
@@ -198,6 +207,7 @@ public class RoundGameScreen extends JFrame {
 		respuesta2Button.setText(asnwers.get(1));
 		respuesta3Button.setText(asnwers.get(2));
 		respuesta4Button.setText(asnwers.get(3));
+		lblCategora.setText(question.getCategory());
 		if(respuesta1Button.getText().equals(question.getCorrectAnswer()))
 			correctAnswerButton = respuesta1Button;
 		else
