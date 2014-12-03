@@ -7,6 +7,7 @@ import java.util.Queue;
 import java.util.Stack;
 
 import colaDePrioridad.ColaDePrioridades;
+import colaDePrioridad.Contenedor;
 
 public class Grafo {
 	private Integer numeroDeNodos; 
@@ -109,7 +110,7 @@ public class Grafo {
 		Arista[] edgeTo = new Arista[numeroDeNodos];        
 	    double[] minDistancia = new double[numeroDeNodos];      
 	    boolean [] fueVisitado = new boolean[numeroDeNodos];
-	    ColaDePrioridades<Double> cola = new ColaDePrioridades<Double>(numeroDeNodos);
+	    ColaDePrioridades<Double> cola = new ColaDePrioridades<Double>();
 	    
 	    for(int i=0; i<numeroDeNodos; i++){
 	    	minDistancia[i]=Double.POSITIVE_INFINITY;
@@ -118,9 +119,9 @@ public class Grafo {
 	    for (int i = 0; i < numeroDeNodos; i++){      
             if (!fueVisitado[i]){
             	minDistancia[i] = 0.0;
-                cola.insert(i, minDistancia[i]);
+                cola.add(new Contenedor(i, minDistancia[i]));
                 while (!cola.isEmpty()) {
-                    int v = cola.delMin();
+                    int v = cola.remove().getDato();
                     fueVisitado[v] = true;
                     for (Arista cadaArista : adj(v)) {
                         int w = cadaArista.elOtroExtremo(v);
@@ -130,9 +131,9 @@ public class Grafo {
                         	minDistancia[w] = cadaArista.getPeso();
                             edgeTo[w] = cadaArista;
                             if (cola.contains(w)) 
-                            	cola.decreaseKey(w, minDistancia[w]);
+                            	cola.change(w, minDistancia[w]);
                             else                
-                            	cola.insert(w, minDistancia[w]);
+                            	cola.add(new Contenedor(w, minDistancia[w]));
                         }
                     }
                 }
@@ -148,14 +149,14 @@ public class Grafo {
 	}
 	
 	public ArrayList<Integer> dijkstra(Integer origen){
-		ColaDePrioridades<Double> cola = new ColaDePrioridades<Double>(numeroDeNodos);
+		ColaDePrioridades<Double> cola = new ColaDePrioridades<Double>();
 		ArrayList<Integer> caminoMasCorto = new ArrayList<Integer>(); 
 		
 		adj[origen].setMinDistancia(0.0); 
-	    cola.insert(origen, 0.0);
+	    cola.add(new Contenedor(origen, 0.0));
 		
 	    while( !cola.isEmpty() ){   
-	    	Integer actual = cola.delMin();
+	    	Integer actual = cola.remove().getDato();
 	    	System.out.print(actual+1 + " ");
 	    	caminoMasCorto.add(actual);
 	    	for(Arista arista : adj[actual]){
@@ -166,7 +167,7 @@ public class Grafo {
 						cola.change(destino, adj[destino].getMinDistancia());
 					}
 					else 
-						cola.insert(destino, adj[destino].getMinDistancia());
+						cola.add(new Contenedor(destino, adj[destino].getMinDistancia()));
 				}
 			}
 	    }
@@ -219,14 +220,20 @@ public class Grafo {
 	public static void main(String[] args) {
 		Grafo grafo = new Grafo("grafo.in");
 		grafo.mostrarAristas();
+		System.out.println("GrafoConMatrizDeAdyacencia");
+		grafo.mostrarAristas();
+		System.out.println("busquedaEnAnchura");
 		grafo.busquedaEnAnchura(0);
 		System.out.println();
+		System.out.println("busquedaEnProfundidad");
 		grafo.busquedaEnProfundidad(0);
 		System.out.println();
+		System.out.println("dijkstra");
 		grafo.dijkstra(0);
 		System.out.println();
-		Iterable<Arista> arbolRecubridorMinimo1 = grafo.prim();
-		for(Arista cadaArista: arbolRecubridorMinimo1){
+		System.out.println("prim");
+		Iterable<Arista> bordesDelArbol = grafo.prim();
+		for(Arista cadaArista: bordesDelArbol){
 			System.out.println(cadaArista);
 		}
 		
