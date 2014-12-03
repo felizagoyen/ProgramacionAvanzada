@@ -37,6 +37,8 @@ public class CantStartGameWindow extends JDialog {
 	 */
 	public CantStartGameWindow() {
 		setBounds(100, 100, 378, 263);
+		setLocationRelativeTo(null);
+		setResizable(false);
 		getContentPane().setLayout(null);
 		contentPanel.setBackground(SystemColor.control);
 		contentPanel.setBounds(0, 0, 434, 229);

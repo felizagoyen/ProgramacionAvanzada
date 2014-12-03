@@ -40,6 +40,8 @@ public class UserMenuScreen extends JFrame {
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new ClosingListener());
 		setBounds(100, 100, 300, 500);
+		setLocationRelativeTo(null);
+		setResizable(false);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(255, 153, 0));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

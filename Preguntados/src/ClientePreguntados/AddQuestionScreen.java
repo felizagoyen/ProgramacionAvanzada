@@ -33,26 +33,13 @@ public class AddQuestionScreen extends JFrame {
 	private JTextField jRespuestaInc2tf;
 	private JTextField jRespuestaInc3tf;
 
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					AddQuestionScreen frame = new AddQuestionScreen();
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
 
-	/**
-	 * Create the frame.
-	 */
 	public AddQuestionScreen() {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 300, 500);
+		setLocationRelativeTo(null);
+		setResizable(false);
 		setTitle("Preguntados");
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

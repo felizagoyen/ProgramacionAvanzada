@@ -76,21 +76,14 @@ public class ChooseQuestionWindow extends JDialog {
 	/**
 	 * Launch the application.
 	 */
-//	public static void main(String[] args) {
-//		try {
-//			ChooseQuestionWindow dialog = new ChooseQuestionWindow();
-//			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-//			dialog.setVisible(true);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
 
 	/**
 	 * Create the dialog.
 	 */
 	public ChooseQuestionWindow(final JComboBox<Question> combo) {
 		setBounds(100, 100, 571, 411);
+		setLocationRelativeTo(null);
+		setResizable(false);
 		setTitle("Preguntados");
 		getContentPane().setLayout(null);
 		contentPanel.setBounds(0, 0, 545, 339);
