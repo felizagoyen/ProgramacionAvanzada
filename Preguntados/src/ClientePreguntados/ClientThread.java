@@ -18,6 +18,7 @@ import Commons.ResultsGamePackage;
 public class ClientThread extends Thread {
 	
 	private LoginScreen loginscreen;
+	private Integer userType;
 	private static JDialog JDialogScreen;
 	private static JFrame JFrameScreen;
 	private static Package packageIn;
@@ -54,6 +55,7 @@ public class ClientThread extends Thread {
 				case LOGINRESPONSEID: // Respuesta de logeo del servidor.
 
 					UserLoginPackage loginresponse = (UserLoginPackage) packageIn;
+					userType = loginresponse.getUserType();
 					loginscreen.actionLogin(loginresponse);
 
 					break;
@@ -95,7 +97,7 @@ public class ClientThread extends Thread {
 					((JoinPlayerGameWindow)JDialogScreen).setVisible(false);
 					((RoundGameScreen)JFrameScreen).setVisible(false);
 					((RoundGameScreen)JFrameScreen).enableButtonsAndRefreshComponents();
-					((RoundGameScreen)JFrameScreen).setQuestion(question);
+					((RoundGameScreen)JFrameScreen).setQuestionAndCategory(question);
 					((RoundGameScreen)JFrameScreen).setVisible(true);
 					((RoundGameScreen)JFrameScreen).startTimer();
 					
@@ -105,9 +107,9 @@ public class ClientThread extends Thread {
 					ResultsGamePackage resultsGame = (ResultsGamePackage) packageIn;
 					GameResultsWindow gameresultswindow = new GameResultsWindow();
 					gameresultswindow.setLabelWinnerStatus(resultsGame.getPlayerWin(), resultsGame.getWinners().size());
-					gameresultswindow.setScoreTable(resultsGame.getScoreTable());
+					gameresultswindow.setScoreTableAndUserType(resultsGame.getScoreTable(), userType);
 					gameresultswindow.setVisible(true);
-					
+					((RoundGameScreen)JFrameScreen).dispose();
 					
 					break;
 				case ADDQUESTIONREESPONSEID: // Agregar pregunta

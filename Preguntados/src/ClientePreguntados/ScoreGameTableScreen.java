@@ -1,18 +1,28 @@
 package ClientePreguntados;
 
 import java.awt.BorderLayout;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+
 import java.awt.Font;
 import java.util.ArrayList;
+
 import Commons.Player;
+
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+
 import java.awt.SystemColor;
+
+import javax.swing.JButton;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ScoreGameTableScreen extends JFrame {
 
@@ -40,10 +50,15 @@ public class ScoreGameTableScreen extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @param userType 
 	 */
-	public ScoreGameTableScreen(ArrayList<Player> scoreTable) {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	public ScoreGameTableScreen(ArrayList<Player> scoreTable, final Integer userType) {
+		setTitle("Preguntados");
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		addWindowListener(new ClosingListener());
 		setBounds(100, 100, 352, 526);
+		setLocationRelativeTo(null);
+		setResizable(false);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -72,13 +87,12 @@ public class ScoreGameTableScreen extends JFrame {
 			}
 		));
 		table.setBounds(52, 110, 239, 201);
-//		contentPane.add(table);
+
 		
 		tableModel.addColumn("Jugador");
 		tableModel.addColumn("Puntuación");
 		
-		JLabel[] hola = new JLabel[6]; 
-		hola[1] = new JLabel("hola");
+
 		table.setRowHeight(30);
 		for(int i = 0; i < scoreTable.size() && i < 10; i++){
 			if(!scoreTable.get(i).disconnectedWhilePlaying())
@@ -97,17 +111,28 @@ public class ScoreGameTableScreen extends JFrame {
 		header.setResizingAllowed(false);
 
 		JPanel panel = new JPanel();
-		panel.setBounds(34, 75, 264, 372);
+		panel.setBounds(34, 75, 264, 343);
 		panel.setLayout(new BorderLayout(0, 0));
 		panel.add(header, BorderLayout.NORTH);
 		panel.add(table, BorderLayout.CENTER);
 		
 		contentPane.add(panel);
 		
-	
-
-		
-		
+		JButton btnVolverAlMen = new JButton("Volver al men\u00FA principal");
+		btnVolverAlMen.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(userType == 0){
+					AdminMenuScreen adminmenuscreen = new AdminMenuScreen();
+					adminmenuscreen.setVisible(true);
+				}else{
+					UserMenuScreen usermenuscreen = new UserMenuScreen();
+					usermenuscreen.setVisible(true);
+				}
+				setVisible(false);
+			}
+		});
+		btnVolverAlMen.setBounds(135, 453, 180, 23);
+		contentPane.add(btnVolverAlMen);
 		
 	}
 }
