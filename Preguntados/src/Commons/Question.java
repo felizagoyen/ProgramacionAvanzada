@@ -10,6 +10,7 @@ public class Question implements Serializable, Package {
 	private Integer id;
 	private String question;
 	private String category;
+	private Integer categoryId;
 	private String correctAnswer;
 	private ArrayList<String> wrongAnswers = new ArrayList<String>();
 
@@ -51,6 +52,10 @@ public class Question implements Serializable, Package {
 		return id;
 	}
 
+	public Integer getCategoryId() {
+		return categoryId;
+	}
+	
 	public Integer getPackageID() {
 		return PACKAGEID;
 	}

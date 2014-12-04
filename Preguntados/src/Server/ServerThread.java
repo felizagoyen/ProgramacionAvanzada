@@ -26,9 +26,11 @@ public class ServerThread extends Thread {
 
 	public void run() {
 		Boolean endConection = false;
+		Boolean gameStarted = false;
 		Game game = null;
+		
 		try {
-			ClientConnection clientConnectionInstance = ClientConnection.getInstance();
+			UserConnection clientConnectionInstance = UserConnection.getInstance();
 			
 			while (!endConection) {
 				Package packageOut = null;
@@ -115,8 +117,9 @@ public class ServerThread extends Thread {
 					Logger.info("Iniciando partida...");
 					
 					if(game.isCreated() && game.canStartGame()) {
-						game.start();
 						canStartGame = true;
+						gameStarted = true;
+						game.startGame();
 						Logger.info("La partida se ha iniciado correctamente.");
 					} else if(!game.isCreated()) {
 						canStartGame = false;
@@ -172,6 +175,9 @@ public class ServerThread extends Thread {
 				}
 
 				if(packageOut != null) clientConnectionInstance.sendPackage(clientId, packageOut);
+				if(gameStarted == true && game.isCreated() == false) {
+					gameStarted = false;
+				}
 				clientConnectionInstance.releaseSocket(clientId);
 			}
 			if(clientName != null)
@@ -189,9 +195,9 @@ public class ServerThread extends Thread {
 
 	private Integer validateClient(UserLoginPackage client) {
 		DataBaseUtil db = new DataBaseUtil();
-		User user = db.getUserDB(client.getUser());
-		if(user != null && user.getPass().equals(client.getPassword()))
-			return user.getTipo();
+		UserLoginPackage user = db.getUserDB(client.getUser());
+		if(user != null && user.getPassword().equals(client.getPassword()))
+			return user.getUserType();
 		return -1;
 	}
 	

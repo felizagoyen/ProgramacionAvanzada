@@ -14,6 +14,11 @@ public class UserLoginPackage implements Serializable, Package {
 		this.user = user;
 		this.password = password;
 	}
+
+	public UserLoginPackage(String user, String password, Integer userType) {
+		this(user, password);
+		this.userType = userType;
+	}
 	
 	public Integer getPackageID() {
 		return PACKAGEID;
