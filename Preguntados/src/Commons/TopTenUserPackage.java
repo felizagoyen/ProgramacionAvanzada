@@ -9,6 +9,10 @@ public class TopTenUserPackage implements Package, Serializable {
 	private static final Integer PACKAGEID = 8;
 	private ArrayList<User> topTen;
 	
+	public TopTenUserPackage(){
+		
+	}
+	
 	public TopTenUserPackage(ArrayList<User> topTen) {
 		this.topTen = topTen;
 	}

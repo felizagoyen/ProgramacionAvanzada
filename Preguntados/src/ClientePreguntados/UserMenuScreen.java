@@ -11,14 +11,11 @@ import javax.swing.JButton;
 
 import Commons.EndClientConnectionPackage;
 import Commons.PlayerJoinPackage;
+import Commons.TopTenUserPackage;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.awt.Color;
-import javax.swing.event.AncestorListener;
-import javax.swing.event.AncestorEvent;
 
 public class UserMenuScreen extends JFrame {
 
@@ -26,6 +23,7 @@ public class UserMenuScreen extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 2554687664946344696L;
+	private Connection connection = Connection.getInstance();
 	private JPanel contentPane;
 
 	/**
@@ -36,7 +34,7 @@ public class UserMenuScreen extends JFrame {
 	 * Create the frame.
 	 */
 	public UserMenuScreen() {
-		setTitle("Preguntados");
+		setTitle(LoginScreen.title);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new ClosingListener());
 		setBounds(100, 100, 300, 500);
@@ -60,12 +58,12 @@ public class UserMenuScreen extends JFrame {
 		jUnirsePartidaButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		jUnirsePartidaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JoinPlayerGameWindow joinplayergamewindow = new JoinPlayerGameWindow();
-				RoundGameScreen rgs = new RoundGameScreen();
-				ClientThread.recieveScreen(rgs);
-				ClientThread.recieveScreen(joinplayergamewindow);
+//				JoinPlayerGameWindow joinplayergamewindow = new JoinPlayerGameWindow();
+//				RoundGameScreen rgs = new RoundGameScreen();
+//				ClientThread.recieveScreen(rgs);
+//				ClientThread.recieveScreen(joinplayergamewindow);
 				PlayerJoinPackage joinrequest = new PlayerJoinPackage();
-				Connection.sendPackage(joinrequest);
+				connection.sendPackage(joinrequest);
 				dispose();
 		
 			}
@@ -76,6 +74,8 @@ public class UserMenuScreen extends JFrame {
 		JButton btnNewButton = new JButton("Tabla hist\u00F3rica");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				TopTenUserPackage toptenuserrequest = new TopTenUserPackage();
+				connection.sendPackage(toptenuserrequest);
 			}
 		});
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -85,7 +85,9 @@ public class UserMenuScreen extends JFrame {
 		JButton btnNewButton_1 = new JButton("Salir");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ClientePreguntados.closeClient();
+		        EndClientConnectionPackage er = new EndClientConnectionPackage();
+		        connection.sendPackage(er);
+		        System.exit(0);
 			}
 		});
 		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 13));

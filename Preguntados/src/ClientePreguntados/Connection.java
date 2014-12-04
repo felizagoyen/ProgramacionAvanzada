@@ -13,8 +13,8 @@ public class Connection {
 	private ObjectInputStream inputObject;
 	private Socket socket;
 	private static Connection connection;
-	private static String ip;
-	private static int port;
+	private String ip;
+	private int port;
 
 	
 	private Connection (){
@@ -37,7 +37,7 @@ public class Connection {
 		return connection;
 	}
 	
-	public static void sendPackage (Object paquete){
+	public void sendPackage (Object paquete){
 		try{
 			connection.outputObject.writeObject(paquete);
 		}catch(Exception e){
@@ -45,28 +45,28 @@ public class Connection {
 		}
 	}
 	
-	public static Object recievePackage (){
+	public Object recievePackage (){
 		Object response = -1;
 		try{
-			response = connection.inputObject.readObject();
+			response = inputObject.readObject();
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 		return response;
 	}
 
-	public static void endConnection() {
+	public void endConnection() {
 		try {
-			connection.inputObject.close();
-			connection.outputObject.close();
-			connection.socket.close();
+			inputObject.close();
+			outputObject.close();
+			socket.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
 	}
 	
-	public static void getProperties (){
+	public void getProperties (){
 		try{
 			Properties properties = new Properties();
 			properties.load(new FileInputStream("propiedades.properties"));

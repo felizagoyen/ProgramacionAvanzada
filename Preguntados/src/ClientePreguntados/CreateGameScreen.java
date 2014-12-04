@@ -39,6 +39,7 @@ public class CreateGameScreen extends JFrame {
 	private JLabel errorCantMaxLabel;
 	private ArrayList<Integer> questionsID = new ArrayList<Integer>();
 	private CreateGameScreen thisFrame;
+	private Connection connection = Connection.getInstance();
 
 	/**
 	 * Launch the application.
@@ -56,6 +57,7 @@ public class CreateGameScreen extends JFrame {
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new ClosingListener());
 		setBounds(100, 100, 604, 300);
+		setTitle(LoginScreen.title);
 		setLocationRelativeTo(null);
 		setResizable(false);
 		contentPane = new JPanel();
@@ -120,14 +122,14 @@ public class CreateGameScreen extends JFrame {
 				}
 				else{
 					CreateGamePackage gamerequest = new CreateGamePackage(nombrePartidaTextField.getText(),  Integer.parseInt(cantMaxTextField.getText()), questionsID);
-					Connection.sendPackage(gamerequest);
-					JoinPlayerGameWindow joinadmingamewindow = new JoinPlayerGameWindow();
-					RoundGameScreen roundgamescreen = new RoundGameScreen();
-					ClientThread.recieveScreen(joinadmingamewindow);
-					ClientThread.recieveScreen(roundgamescreen);
-					GameCreatedAdminScreen gamecreated = new GameCreatedAdminScreen();
+					connection.sendPackage(gamerequest);
+//					JoinPlayerGameWindow joinadmingamewindow = new JoinPlayerGameWindow();
+//					RoundGameScreen roundgamescreen = new RoundGameScreen();
+//					ClientThread.recieveScreen(joinadmingamewindow);
+//					ClientThread.recieveScreen(roundgamescreen);
+//					GameCreatedAdminScreen gamecreated = new GameCreatedAdminScreen();
+//					gamecreated.setVisible(true);
 					setVisible(false);
-					gamecreated.setVisible(true);
 				}
 				
 				

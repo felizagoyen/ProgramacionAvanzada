@@ -6,13 +6,28 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JTextArea;
 
 import java.awt.Font;
+import java.awt.Frame;
+import java.awt.Window;
 
 import javax.swing.JButton;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowListener;
 
 import Commons.EndClientConnectionPackage;
+import Commons.TopTenUserPackage;
+
+import java.awt.event.WindowStateListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.HierarchyListener;
+import java.awt.event.HierarchyEvent;
+
+import javax.swing.event.AncestorListener;
+import javax.swing.event.AncestorEvent;
+
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
 
 public class AdminMenuScreen extends JFrame {
 
@@ -21,6 +36,7 @@ public class AdminMenuScreen extends JFrame {
 	 */
 	private static final long serialVersionUID = 8573202483454046346L;
 	private JPanel contentPane;
+	private Connection connection = Connection.getInstance();
 
 	/**
 	 * Launch the application.
@@ -30,13 +46,23 @@ public class AdminMenuScreen extends JFrame {
 	 * Create the frame.
 	 */
 	public AdminMenuScreen() {
-		setTitle("Preguntados");
+
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new ClosingListener());
 		setBounds(100, 100, 300, 500);
+		setTitle(LoginScreen.title);
 		setLocationRelativeTo(null);
 		setResizable(false);
 		contentPane = new JPanel();
+		contentPane.addAncestorListener(new AncestorListener() {
+			public void ancestorAdded(AncestorEvent arg0) {
+			}
+			public void ancestorMoved(AncestorEvent arg0) {
+			}
+			public void ancestorRemoved(AncestorEvent arg0) {
+				setEnabled(true);
+			}
+		});
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -70,8 +96,19 @@ public class AdminMenuScreen extends JFrame {
 		contentPane.add(jUnirsePartidaButton);
 
 		JButton btnNewButton = new JButton("Tabla hist\u00F3rica");
+		btnNewButton.addAncestorListener(new AncestorListener() {
+			public void ancestorAdded(AncestorEvent event) {
+			}
+			public void ancestorMoved(AncestorEvent event) {
+			}
+			public void ancestorRemoved(AncestorEvent event) {
+				setEnabled(true);
+			}
+		});
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				TopTenUserPackage toptenuserrequest = new TopTenUserPackage();
+				connection.sendPackage(toptenuserrequest);
 			}
 		});
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -81,9 +118,9 @@ public class AdminMenuScreen extends JFrame {
 		JButton jSalirButton = new JButton("Salir");
 		jSalirButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				EndClientConnectionPackage er = new EndClientConnectionPackage();
-				Connection.sendPackage(er);
-				System.exit(NORMAL);
+		        EndClientConnectionPackage er = new EndClientConnectionPackage();
+		        connection.sendPackage(er);
+		        System.exit(0);
 			}
 		});
 		jSalirButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -104,6 +141,7 @@ public class AdminMenuScreen extends JFrame {
 		contentPane.add(btnNewButton_2);
 	}
 	
+
 
 
 }
