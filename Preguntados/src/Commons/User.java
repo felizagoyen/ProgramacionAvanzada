@@ -16,6 +16,14 @@ public class User implements Serializable {
 		this.id = id;
 		this.socket = socket;
 		this.name = "";
+		this.historicalScore = null;
+	}
+	
+	public User(String name, Score historicalScore) {
+		this.id = null;
+		this.socket = null;
+		this.name = name;
+		this.historicalScore = historicalScore;
 	}
 	
 	public Integer getId() {
@@ -37,8 +45,5 @@ public class User implements Serializable {
 	public Score getHistoricalScore() {
 		return historicalScore;
 	}
-	
-	public void setHistoricalScore(Score historicalScore) {
-		this.historicalScore = historicalScore;
-	}
+
 }

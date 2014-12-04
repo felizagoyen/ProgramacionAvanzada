@@ -101,7 +101,7 @@ CONSTRAINT user FOREIGN KEY (user)
 REFERENCES user(user)
 );
 
-INSERT score VALUES ('admin', 0, 0, 0, 0, 0);
+INSERT score VALUES ('admin', 50, 20, 30, 200, 300);
 INSERT score VALUES ('fer', 0, 0, 0, 0, 0);
 INSERT score VALUES ('diego', 0, 0, 0, 0, 0);
 INSERT score VALUES ('eze', 0, 0, 0, 0, 0);
@@ -111,5 +111,5 @@ INSERT score VALUES ('juan', 0, 0, 0, 0, 0);
 INSERT score VALUES ('carlos', 0, 0, 0, 0, 0);
 INSERT score VALUES ('lucas', 0, 0, 0, 0, 0);
 INSERT score VALUES ('julio', 0, 0, 0, 0, 0);
-INSERT score VALUES ('tequi', 0, 0, 0, 0, 0);
+INSERT score VALUES ('tequi', 100, 100, 0, 1000, 0);
 INSERT score VALUES ('dark', 0, 0, 0, 0, 0);

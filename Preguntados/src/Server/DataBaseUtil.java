@@ -3,8 +3,10 @@ package Server;
 import java.sql.*;
 import java.util.ArrayList;
 
+import Commons.Category;
 import Commons.Question;
 import Commons.Score;
+import Commons.User;
 import Commons.UserLoginPackage;
 
 public class DataBaseUtil {
@@ -93,13 +95,13 @@ public class DataBaseUtil {
 		return questions;
 	}
 	
-	public ArrayList<String> getCategoryDB(){
-		ResultSet rs = queryDB("SELECT `name` FROM `category`");
-		ArrayList<String> categories = new ArrayList<String>();
+	public ArrayList<Category> getCategoryDB(){
+		ResultSet rs = queryDB("SELECT * FROM `category`");
+		ArrayList<Category> categories = new ArrayList<Category>();
 		if(rs != null){
 			try {
 				while(rs.next())
-					categories.add(rs.getString("name"));
+					categories.add(new Category(rs.getInt("id"), rs.getString("name")));
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -154,14 +156,15 @@ public class DataBaseUtil {
 		return questions;
 	}
 	
-	public ArrayList<Score> getTopTenUserDB(String user){
-		ResultSet rs = queryDB("SELECT * FROM `score` ORDER BY `gamesWon`");
-		ArrayList<Score> topTen = new ArrayList<Score>();
+	public ArrayList<User> getTopTenUsersDB(){
+		ResultSet rs = queryDB("SELECT * FROM `score` ORDER BY `gamesWon` DESC");
+		ArrayList<User> topTen = new ArrayList<User>();
 		if(rs != null) {
 			try {
 				int totalUser = 0;
 				while(rs.next() && totalUser <= 10) {
-					topTen.add(new Score(rs.getInt("gamesPlayed"), rs.getInt("gamesWon"), rs.getInt("gamesLost"), rs.getInt("correctAnswers"), rs.getInt("wrongAnswers")));
+					Score score = new Score(rs.getInt("gamesPlayed"), rs.getInt("gamesWon"), rs.getInt("gamesLost"), rs.getInt("correctAnswers"), rs.getInt("wrongAnswers"));
+					topTen.add(new User(rs.getString("user"), score));
 					totalUser++;
 				}
 			} catch (SQLException e) {

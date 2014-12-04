@@ -132,12 +132,14 @@ public class ServerThread extends Thread {
 					packageOut = new StartGamePackage(canStartGame);
 					break;
 				case CATEGORYREQUESTID:
-					//Category category = new
+					ArrayList<Category> categories = getAllCategories(); 
+					packageOut = new CategoryPackage(categories);
 					break;
 				case POINTSTABLEREQUESTID:
-					// Busco la tabla de puntajes de la base de datos
-					// Creo el paquete para enviar la tabla al cliente que la
-					// solicito
+					ArrayList<User> topTen = getTopTenUsers();
+					for(User top: topTen) 
+						System.out.println(top.getName() + " - " + top.getHistoricalScore().getGamesPlayed());
+					packageOut = new TopTenUserPackage(topTen);
 					break;
 				case ADDQUESTIONREQUESTID: // Agregar pregunta
 					Question question = (Question) packageIn;
@@ -209,6 +211,16 @@ public class ServerThread extends Thread {
 	private ArrayList<Question> getQuestionByCategory(String category) {
 		DataBaseUtil db = new DataBaseUtil();
 		return db.getQuestionByCategoryDB(category);
+	}
+	
+	private ArrayList<Category> getAllCategories() {
+		DataBaseUtil db = new DataBaseUtil();
+		return db.getCategoryDB();
+	}
+	
+	private ArrayList<User> getTopTenUsers() {
+		DataBaseUtil db = new DataBaseUtil();
+		return db.getTopTenUsersDB();
 	}
 
 }
