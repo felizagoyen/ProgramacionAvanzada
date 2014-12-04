@@ -58,7 +58,7 @@ public class Score implements Serializable {
 	}
 
 	public void increaseWrongAnswers(Integer wrongAnswers) {
-		this.wrongAnswers =+ wrongAnswers;
+		this.wrongAnswers += wrongAnswers;
 	}
 	
 	
