@@ -2,17 +2,18 @@ package ClientePreguntados;
 
 import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
 
 import Commons.AddQuestionConfirmationPackage;
 import Commons.AnswerQuestionPackage;
+import Commons.CategoryPackage;
+import Commons.CreateGamePackage;
 import Commons.StartGamePackage;
+import Commons.TopTenUserPackage;
 import Commons.UserLoginPackage;
 import Commons.Package;
 import Commons.PlayerJoinPackage;
 import Commons.Question;
 import Commons.QuestionsByCategoryPackage;
-import Commons.StartGamePackage;
 import Commons.ResultsGamePackage;
 
 public class ClientThread extends Thread {
@@ -23,11 +24,12 @@ public class ClientThread extends Thread {
 	private static JFrame JFrameScreen;
 	private static Package packageIn;
 	private static final int LOGINRESPONSEID = 1;
-	private static final int CREATEGAMEREQUESTID = 2;
+	private static final int CREATEGAMERESPONSEID = 2;
 	private static final int PLAYERJOINRESPONSEID = 3;
 	private static final int STARTGAMERESPONSEID = 4;
+	private static final int CATEGORYRESPONSEID = 5;
 	private static final int GAMERUNNINGID = 6;
-	private static final int POINTSTABLEREQUESTID = 8;
+	private static final int POINTSTABLERESPONSEID = 8;
 	private static final int ADDQUESTIONREESPONSEID = 9;
 	private static final int ENDCONNECTIONRESPONSEID = 10;
 	private static final int QUESTIONSRESPONSEID = 11;
@@ -35,6 +37,7 @@ public class ClientThread extends Thread {
 	private static final int ANSWERQUESTIONRESPONSEID = 13;
 	private static final int RESULTSGAMEID = 14;
 	private Boolean endConnection = false;
+	private Connection connection = Connection.getInstance();
 	
 	public ClientThread(LoginScreen loginscreen){
 		this.loginscreen = loginscreen;
@@ -47,9 +50,11 @@ public class ClientThread extends Thread {
 		try {
 
 
+			JoinPlayerGameWindow joinplayergamewindow = null;
+			RoundGameScreen rgs = null;
 			while (!endConnection) {
 
-				packageIn = (Package) Connection.recievePackage();
+				packageIn = (Package) connection.recievePackage();
 
 				switch (packageIn.getPackageID()) {
 				case LOGINRESPONSEID: // Respuesta de logeo del servidor.
@@ -59,6 +64,11 @@ public class ClientThread extends Thread {
 					loginscreen.actionLogin(loginresponse);
 
 					break;
+					
+				case CATEGORYRESPONSEID:
+					CategoryPackage categoryresponse = (CategoryPackage) packageIn;
+					((ChooseQuestionWindow) JDialogScreen).setCategories(categoryresponse);
+					break;
 				case QUESTIONSRESPONSEID:  
 					
 					QuestionsByCategoryPackage questionsresponse = (QuestionsByCategoryPackage) packageIn;
@@ -66,13 +76,25 @@ public class ClientThread extends Thread {
 					
 	
 					break;
-				case CREATEGAMEREQUESTID: // Creacion de partida
+				case CREATEGAMERESPONSEID: // Creacion de partida
+					CreateGamePackage creategameresponse = (CreateGamePackage) packageIn;
+					if(creategameresponse.gameCreated() == true){
+						rgs = new RoundGameScreen();
+						GameCreatedAdminScreen gamecreated = new GameCreatedAdminScreen();
+						gamecreated.setVisible(true);
+					}
+					else{
+						//Ventana "La partida ya esta creada"
+					}
+						
 			
 					break;
 				case PLAYERJOINRESPONSEID: // Se pudo unir a la partida?
 					PlayerJoinPackage playerjoinresponse = (PlayerJoinPackage) packageIn;
-					((JoinPlayerGameWindow)JDialogScreen).setLabelAndButton(playerjoinresponse.getJoinStatus());
-					((JoinPlayerGameWindow)JDialogScreen).setVisible(true);
+					rgs = new RoundGameScreen();
+					joinplayergamewindow = new JoinPlayerGameWindow();
+					joinplayergamewindow.setLabelAndButton(playerjoinresponse.getJoinStatus());
+					joinplayergamewindow.setVisible(true);
 					
 					break;
 				case STARTGAMERESPONSEID: // Se pudo comenzar la partida?
@@ -84,23 +106,31 @@ public class ClientThread extends Thread {
 					
 					
 					break;
-				case POINTSTABLEREQUESTID:
-			
+				case POINTSTABLERESPONSEID:
+					TopTenUserPackage toptenscore = (TopTenUserPackage) packageIn;
+					AllTimeScoreTableScreen alltimescoretablescreen = new AllTimeScoreTableScreen(toptenscore.getTopTen());
+					alltimescoretablescreen.setVisible(true);
 					break;
 					
 				case GAMERUNNINGID:
 					
 					Question question = (Question) packageIn;
 					
-
+					if(joinplayergamewindow != null)
+						joinplayergamewindow.setVisible(false);
+					rgs.setVisible(false);
+					rgs.enableButtonsAndRefreshComponents();
+					rgs.setQuestionAndCategory(question);
+					rgs.setVisible(true);
+					rgs.startTimer();
 					
-					((JoinPlayerGameWindow)JDialogScreen).setVisible(false);
-					((RoundGameScreen)JFrameScreen).setVisible(false);
-					((RoundGameScreen)JFrameScreen).enableButtonsAndRefreshComponents();
-					((RoundGameScreen)JFrameScreen).setQuestionAndCategory(question);
-					((RoundGameScreen)JFrameScreen).setVisible(true);
-					((RoundGameScreen)JFrameScreen).startTimer();
-					
+//					((JoinPlayerGameWindow)JDialogScreen).setVisible(false);
+//					((RoundGameScreen)JFrameScreen).setVisible(false);
+//					((RoundGameScreen)JFrameScreen).enableButtonsAndRefreshComponents();
+//					((RoundGameScreen)JFrameScreen).setQuestionAndCategory(question);
+//					((RoundGameScreen)JFrameScreen).setVisible(true);
+//					((RoundGameScreen)JFrameScreen).startTimer();
+//					
 					break;
 					
 				case RESULTSGAMEID:
@@ -109,7 +139,7 @@ public class ClientThread extends Thread {
 					gameresultswindow.setLabelWinnerStatus(resultsGame.getPlayerWin(), resultsGame.getWinners().size());
 					gameresultswindow.setScoreTableAndUserType(resultsGame.getScoreTable(), userType);
 					gameresultswindow.setVisible(true);
-					((RoundGameScreen)JFrameScreen).dispose();
+					rgs.dispose();
 					
 					break;
 				case ADDQUESTIONREESPONSEID: // Agregar pregunta
@@ -124,15 +154,15 @@ public class ClientThread extends Thread {
 					
 				case ANSWERQUESTIONRESPONSEID:
 					AnswerQuestionPackage answer = (AnswerQuestionPackage) packageIn;
-					((RoundGameScreen)JFrameScreen).setLabelAnswer(answer.isCorrect());
-					((RoundGameScreen)JFrameScreen).paintButtons(answer.isCorrect());
+					rgs.setLabelAnswer(answer.isCorrect());
+					rgs.paintButtons(answer.isCorrect());
 					
 					
 					break;
 				
 				case ENDCONNECTIONRESPONSEID: // Fin conexion
 					endConnection = true;
-					Connection.endConnection();
+					connection.endConnection();
 				}
 
 			}
@@ -143,9 +173,7 @@ public class ClientThread extends Thread {
 		}
 	}
 	
-	public static Object recievePackage(){
-		return packageIn;
-	}
+
 
 
 	public static void recieveScreen(JDialog screen) {

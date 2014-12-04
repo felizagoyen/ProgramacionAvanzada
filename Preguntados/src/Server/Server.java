@@ -15,7 +15,7 @@ public class Server {
 			Logger.info("Puerto: " + PORT);
 			Logger.info("Conexiones maximas: " + MAXCONNECTIONS);
 			Logger.info("Esperando conexiones...");
-			new AcceptClient(serverSocket).start(); //Hilo que se encarga de aceptar conecciones
+			new AcceptUser(serverSocket).start(); //Hilo que se encarga de aceptar conecciones
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

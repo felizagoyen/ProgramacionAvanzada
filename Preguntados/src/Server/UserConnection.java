@@ -6,17 +6,18 @@ import java.util.ArrayList;
 import java.util.concurrent.Semaphore;
 
 import Commons.Package;
+import Commons.User;
 
-public class ClientConnection {
+public class UserConnection {
 	
-	private static final ClientConnection instance = new ClientConnection();
+	private static final UserConnection instance = new UserConnection();
 	private static final int MAXCONNECTIONS = 50;
-	private ArrayList<Client> clients = new ArrayList<Client>();
+	private ArrayList<User> clients = new ArrayList<User>();
 	private ArrayList<ObjectOutputStream> outputStream = new ArrayList<ObjectOutputStream>();;
 	private ArrayList<ObjectInputStream> inputStream = new ArrayList<ObjectInputStream>();;
 	private ArrayList<Semaphore> semaphores = new ArrayList<Semaphore>();
 	
-	private ClientConnection() {
+	private UserConnection() {
 		for(int x = 0; x < MAXCONNECTIONS; x++) {
 			clients.add(null);
 			outputStream.add(null);
@@ -25,7 +26,7 @@ public class ClientConnection {
 		}
 	}
 	
-	public static ClientConnection getInstance() {
+	public static UserConnection getInstance() {
 		return instance;
 	}
 	
@@ -67,7 +68,7 @@ public class ClientConnection {
 		}
 	}
 	
-	public void setClientConnection(Client client) {
+	public void setClientConnection(User client) {
 		try {
 			clients.set(client.getId(), client);
 			outputStream.set(client.getId(), new ObjectOutputStream(client.getSocket().getOutputStream()));
@@ -77,7 +78,7 @@ public class ClientConnection {
 		}
 	}
 	
-	public Client getClient(int index) {
+	public User getClient(int index) {
 		return clients.get(index);
 	}
 	
@@ -92,7 +93,7 @@ public class ClientConnection {
 	}
 	
 	public Boolean clientIsLogged(String clientName) {
-		for(Client eachClient: clients)
+		for(User eachClient: clients)
 			if(eachClient != null && eachClient.getName().equals(clientName))
 				return true;
 		return false;

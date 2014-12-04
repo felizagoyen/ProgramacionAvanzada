@@ -3,15 +3,8 @@ package Commons;
 import java.io.Serializable;
 
 public class Player implements Comparable<Player>, Serializable {
-	
-
-
-
-
 
 	private static final long serialVersionUID = -36672672438995887L;
-
-
 	private Integer id;
 	private String name;
 	private Integer score;
@@ -62,6 +55,10 @@ public class Player implements Comparable<Player>, Serializable {
 		if(this.score < otherPlayer.score) return 1;
 		if(this.score > otherPlayer.score) return -1;
 		return 0;
+	}
+
+	public void setScore(Integer score) {
+		this.score = score;
 	}
 	
 	

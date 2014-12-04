@@ -1,29 +1,28 @@
 package Commons;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class CategoryPackage implements Serializable, Package {
 
 	private static final long serialVersionUID = 1322572983931253501L;
 	private static final Integer PACKAGEID = 5;
-	private Integer id;
-	private String category;
+	private ArrayList<Category> categories; 
 	
-	public CategoryPackage(Integer id, String category) {
-		this.id = id;
-		this.category = category;
+	public CategoryPackage(){
+		
+	}
+	
+	public CategoryPackage(ArrayList<Category> categories) {
+		this.categories = categories;
+	}
+	
+	public ArrayList<Category> getCategories() {
+		return categories;
 	}
 	
 	public Integer getPackageID() {
 		return PACKAGEID;
 	}
-	
-	public Integer getId() {
-		return id;
-	}
-	
-	public String getCategory() {
-		return category;
-	}
-	
+
 }

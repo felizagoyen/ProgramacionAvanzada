@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 
 
 
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -32,6 +33,7 @@ public class AddQuestionScreen extends JFrame {
 	private JTextField jRespuestaInc1tf;
 	private JTextField jRespuestaInc2tf;
 	private JTextField jRespuestaInc3tf;
+	private Connection connection = Connection.getInstance();
 
 
 	public AddQuestionScreen() {
@@ -40,7 +42,7 @@ public class AddQuestionScreen extends JFrame {
 		setBounds(100, 100, 300, 500);
 		setLocationRelativeTo(null);
 		setResizable(false);
-		setTitle("Preguntados");
+		setTitle(LoginScreen.title);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -116,7 +118,7 @@ public class AddQuestionScreen extends JFrame {
 				String categoria = new String ();
 				categoria = (String)jCategoriaComboBox.getSelectedItem();
 				Question question = new Question (null, jPreguntaTextArea.getText(), categoria, jRespuestaCorrectaTextField.getText(), incorrectas);
-				Connection.sendPackage(question);
+				connection.sendPackage(question);
 			}
 		});
 		jAgregarPreguntaButton.setBounds(23, 416, 243, 23);

@@ -7,6 +7,7 @@ import Commons.EndClientConnectionPackage;
 
 public class ClosingListener implements WindowListener {
 
+	private Connection connection = Connection.getInstance();
 	
 	public void windowActivated(WindowEvent e) {
 	}
@@ -19,7 +20,7 @@ public class ClosingListener implements WindowListener {
 	
 	public void windowClosing(WindowEvent e) {
         EndClientConnectionPackage er = new EndClientConnectionPackage();
-        Connection.sendPackage(er);
+        connection.sendPackage(er);
         System.exit(0);
 	}
 

@@ -15,6 +15,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 
+import Commons.CategoryPackage;
 import Commons.Question;
 import Commons.QuestionsByCategoryPackage;
 
@@ -23,6 +24,7 @@ import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
 
@@ -37,6 +39,8 @@ public class ChooseQuestionWindow extends JDialog {
 	final  JList<Question> questionList = new JList<Question>();
 	private CustomListModel customModel = new CustomListModel();
 	private JButton okButton;
+	private JComboBox<String> categoriaComboBox; 
+	private Connection connection = Connection.getInstance();
 
 
  class CustomListModel extends AbstractListModel<Question>{
@@ -120,16 +124,17 @@ public class ChooseQuestionWindow extends JDialog {
 			barraDesplazamiento.setBounds(37, 56, 465, 261);
 			contentPanel.add(barraDesplazamiento);
 			
-			final JComboBox<String> categoriaComboBox = new JComboBox<String>();
+			categoriaComboBox = new JComboBox<String>();
 			categoriaComboBox.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					if(!categoriaComboBox.getSelectedItem().equals("Categor�a") && categoriaComboBox.getItemAt(0).equals("Categor�a"))
 						categoriaComboBox.removeItem("Categor�a");
 					customModel.removeAllQuestions();
-					Connection.sendPackage(new QuestionsByCategoryPackage(categoriaComboBox.getSelectedItem().toString()));
+					connection.sendPackage(new QuestionsByCategoryPackage(categoriaComboBox.getSelectedItem().toString()));
 				}
 			});
-			categoriaComboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"Categor\u00EDa", "Deportes", "Ciencia y Tecnolog�a", "Entretenimiento", "Geograf\u00EDa", "Historia", "Arte y Literatura"}));
+			
+			connection.sendPackage(new CategoryPackage());
 			categoriaComboBox.setBounds(159, 25, 195, 20);
 			contentPanel.add(categoriaComboBox);
 			{
@@ -172,5 +177,17 @@ public class ChooseQuestionWindow extends JDialog {
 			customModel.addQuestion(cadauno);							
 		}
 		questionList.setModel(customModel);
+	}
+
+
+
+	public void setCategories(CategoryPackage categoryresponse) {
+		DefaultComboBoxModel<String> comboboxmodel = new DefaultComboBoxModel<String>();
+		comboboxmodel.addElement("Categor\u00EDa");
+		for(int i = 0; i < categoryresponse.getCategories().size(); i++)
+			comboboxmodel.addElement(categoryresponse.getCategories().get(i).getCategory());
+		
+		categoriaComboBox.setModel(comboboxmodel);
+		
 	}
 }

@@ -10,11 +10,16 @@ public class CreateGamePackage implements Serializable, Package {
 	private String gameName;
 	private Integer maxPlayers;
 	private ArrayList<Integer> questionsID = new ArrayList<Integer>();
+	private Boolean gameCreated;
 
 	public CreateGamePackage(String gameName, Integer maxPlayers, ArrayList<Integer> questionsID) {
 		this.gameName = gameName;
 		this.maxPlayers = maxPlayers;
 		this.questionsID = questionsID;
+	}
+	
+	public CreateGamePackage(Boolean gameCreated){
+		this.gameCreated = gameCreated;
 	}
 	
 	public Integer getPackageID() {
@@ -31,5 +36,9 @@ public class CreateGamePackage implements Serializable, Package {
 	
 	public ArrayList<Integer> getQuestionsID() {
 		return questionsID;
+	}
+	
+	public Boolean gameCreated(){
+		return gameCreated;
 	}
 }

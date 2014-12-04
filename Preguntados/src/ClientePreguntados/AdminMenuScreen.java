@@ -6,13 +6,16 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JTextArea;
 
 import java.awt.Font;
-
 import javax.swing.JButton;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
 import Commons.EndClientConnectionPackage;
+import Commons.TopTenUserPackage;
+
+import javax.swing.event.AncestorListener;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
 
 public class AdminMenuScreen extends JFrame {
 
@@ -21,6 +24,7 @@ public class AdminMenuScreen extends JFrame {
 	 */
 	private static final long serialVersionUID = 8573202483454046346L;
 	private JPanel contentPane;
+	private Connection connection = Connection.getInstance();
 
 	/**
 	 * Launch the application.
@@ -30,10 +34,11 @@ public class AdminMenuScreen extends JFrame {
 	 * Create the frame.
 	 */
 	public AdminMenuScreen() {
-		setTitle("Preguntados");
+
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new ClosingListener());
 		setBounds(100, 100, 300, 500);
+		setTitle(LoginScreen.title);
 		setLocationRelativeTo(null);
 		setResizable(false);
 		contentPane = new JPanel();
@@ -72,6 +77,8 @@ public class AdminMenuScreen extends JFrame {
 		JButton btnNewButton = new JButton("Tabla hist\u00F3rica");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				TopTenUserPackage toptenuserrequest = new TopTenUserPackage();
+				connection.sendPackage(toptenuserrequest);
 			}
 		});
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -81,9 +88,9 @@ public class AdminMenuScreen extends JFrame {
 		JButton jSalirButton = new JButton("Salir");
 		jSalirButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				EndClientConnectionPackage er = new EndClientConnectionPackage();
-				Connection.sendPackage(er);
-				System.exit(NORMAL);
+		        EndClientConnectionPackage er = new EndClientConnectionPackage();
+		        connection.sendPackage(er);
+		        System.exit(0);
 			}
 		});
 		jSalirButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -104,6 +111,7 @@ public class AdminMenuScreen extends JFrame {
 		contentPane.add(btnNewButton_2);
 	}
 	
+
 
 
 }

@@ -3,22 +3,24 @@ package Server;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class AcceptClient extends Thread {
+import Commons.User;
+
+public class AcceptUser extends Thread {
 	private ServerSocket serverSocket;
 	
-	public AcceptClient(ServerSocket serverSocket) {
+	public AcceptUser(ServerSocket serverSocket) {
 		this.serverSocket = serverSocket;
 	}
 
 	public void run() {
 		Socket clientSocket;
-		ClientConnection clientSocketInstance = ClientConnection.getInstance();
+		UserConnection clientSocketInstance = UserConnection.getInstance();
 		int clientId;
 		while(true) {
 			try {
 				clientSocket = serverSocket.accept();
 				if((clientId = clientSocketInstance.getFreeIndexClient()) != -1) {
-					clientSocketInstance.setClientConnection(new Client(clientId, clientSocket));
+					clientSocketInstance.setClientConnection(new User(clientId, clientSocket));
 					Logger.info("Conexion Aceptada. ClientId: " + clientId);
 					new ServerThread(clientId).start(); //Crea una conexion nueva de escucha para cada cliente
 				} else {

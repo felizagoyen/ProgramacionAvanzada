@@ -23,10 +23,13 @@ import java.util.TimerTask;
 import javax.swing.JLabel;
 
 import java.awt.Font;
+
 import javax.swing.SwingConstants;
 
 public class RoundGameScreen extends JFrame {
 
+	private Connection connection = Connection.getInstance();
+	
 	private JPanel contentPane;
 	private JTextArea txtrPregunta;
 	private JButton respuesta1Button;
@@ -73,7 +76,7 @@ public class RoundGameScreen extends JFrame {
 
 	public RoundGameScreen() {
 		
-		
+		setTitle(LoginScreen.title);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new ClosingListener());
 		setBounds(100, 100, 335, 581);
@@ -103,7 +106,7 @@ public class RoundGameScreen extends JFrame {
 				respuesta2Button.setEnabled(false);
 				respuesta3Button.setEnabled(false);
 				respuesta4Button.setEnabled(false);
-				Connection.sendPackage(answer);
+				connection.sendPackage(answer);
 			}
 		});
 		respuesta1Button.setBounds(86, 278, 175, 23);
@@ -121,7 +124,7 @@ public class RoundGameScreen extends JFrame {
 				respuesta2Button.setEnabled(false);
 				respuesta3Button.setEnabled(false);
 				respuesta4Button.setEnabled(false);
-				Connection.sendPackage(answer);
+				connection.sendPackage(answer);
 			}
 		});
 		respuesta2Button.setBounds(86, 312, 175, 23);
@@ -139,7 +142,7 @@ public class RoundGameScreen extends JFrame {
 				respuesta2Button.setEnabled(false);
 				respuesta3Button.setEnabled(false);
 				respuesta4Button.setEnabled(false);
-				Connection.sendPackage(answer);
+				connection.sendPackage(answer);
 			}
 		});
 		respuesta3Button.setBounds(86, 346, 175, 23);
@@ -157,7 +160,7 @@ public class RoundGameScreen extends JFrame {
 				respuesta2Button.setEnabled(false);
 				respuesta3Button.setEnabled(false);
 				respuesta4Button.setEnabled(false);
-				Connection.sendPackage(answer);
+				connection.sendPackage(answer);
 			}
 		});
 		respuesta4Button.setBounds(86, 380, 175, 23);

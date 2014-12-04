@@ -44,7 +44,7 @@ public class LoginScreen extends JFrame {
 			}
 			else {
 				UserLoginPackage loginrequest = new UserLoginPackage(jUserTextField.getText(), new String (jPasswordField.getPassword()));
-				Connection.sendPackage(loginrequest);
+				connection.sendPackage(loginrequest);
 			}
 		}
 	}
@@ -53,8 +53,10 @@ public class LoginScreen extends JFrame {
 	private JPanel contentPane;
 	private JTextField jUserTextField;
 	private JPasswordField jPasswordField;
-	public static JTextArea jUsuarioInexistenteTextArea;
-	public static JTextArea jCamposVaciosTextArea;
+	private  JTextArea jUsuarioInexistenteTextArea;
+	private  JTextArea jCamposVaciosTextArea;
+	private Connection connection = Connection.getInstance();
+	static String title;
 
 
 	public LoginScreen(final ClientePreguntados cliente) {
@@ -124,7 +126,9 @@ public class LoginScreen extends JFrame {
 		JButton jSalirButton = new JButton("Salir");
 		jSalirButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ClientePreguntados.closeClient();
+		        EndClientConnectionPackage er = new EndClientConnectionPackage();
+		        connection.sendPackage(er);
+		        System.exit(0);
 			}
 		});
 		jSalirButton.setBounds(84, 322, 89, 23);
@@ -140,12 +144,14 @@ public class LoginScreen extends JFrame {
 	
 	public void actionLogin(UserLoginPackage loginresponse){
 		if (loginresponse.getUserType() == 0) {
+			title = "Preguntados - Usuario: " + loginresponse.getUser();
 			AdminMenuScreen adminscreen = new AdminMenuScreen();
 			adminscreen.setVisible(true);
 			setVisible(false);
 			
 		} else {
 			if(loginresponse.getUserType() == 1){
+				title = "Preguntados - Usuario: " + loginresponse.getUser();
 				UserMenuScreen userscreen = new UserMenuScreen();
 				//userscreen.setLocation(getLocation());
 				userscreen.setVisible(true);

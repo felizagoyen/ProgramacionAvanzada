@@ -17,6 +17,7 @@ import java.awt.event.ActionEvent;
 public class GameCreatedAdminScreen extends JFrame {
 
 	private JPanel contentPane;
+	private Connection connection = Connection.getInstance();
 
 
 	public GameCreatedAdminScreen() {
@@ -33,7 +34,7 @@ public class GameCreatedAdminScreen extends JFrame {
 		btnIniciarPartida.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				StartGamePackage start = new StartGamePackage();
-				Connection.sendPackage(start);
+				connection.sendPackage(start);
 				dispose();
 			}
 		});

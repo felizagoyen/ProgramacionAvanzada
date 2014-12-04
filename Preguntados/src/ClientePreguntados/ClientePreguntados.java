@@ -3,11 +3,12 @@ package ClientePreguntados;
 import Commons.EndClientConnectionPackage;
 
 public class ClientePreguntados {
+	private Connection connection;
 
 
 	public ClientePreguntados() {
 		try {
-			Connection.getInstance();
+			connection = Connection.getInstance();
 			LoginScreen loginscreen = new LoginScreen(this);
 			new ClientThread(loginscreen).start();
 			loginscreen.setVisible(true);
@@ -21,10 +22,6 @@ public class ClientePreguntados {
 	}
 
 	
-	public static void closeClient (){
-		EndClientConnectionPackage er = new EndClientConnectionPackage();
-		Connection.sendPackage(er);
-		System.exit(0);
-	}
+
 	
 }
