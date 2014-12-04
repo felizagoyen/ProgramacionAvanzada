@@ -9,6 +9,10 @@ public class CategoryPackage implements Serializable, Package {
 	private static final Integer PACKAGEID = 5;
 	private ArrayList<Category> categories; 
 	
+	public CategoryPackage(){
+		
+	}
+	
 	public CategoryPackage(ArrayList<Category> categories) {
 		this.categories = categories;
 	}
