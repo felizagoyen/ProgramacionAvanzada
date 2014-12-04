@@ -82,23 +82,20 @@ public class Grafo {
 	}
 	
 	public Iterable<Arista> Kruskal() {
-		double pesoDelArbolRecubridor=0;  // weight of MST
+		double pesoDelArbolRecubridor=0;  
 	    Queue<Arista> arbolRecubridorMinimo = new LinkedList<Arista>();
-        // more efficient to build heap by passing array of edges
         PriorityQueue<Arista> cola = new PriorityQueue<Arista>();
         for (Arista e : this.edges()) {
             cola.add(e);
         }
-
-        // run greedy algorithm
-        UF uf = new UF(numeroDeNodos);
+        UniónBuscar ub = new UniónBuscar(numeroDeNodos);
         while (!cola.isEmpty() && arbolRecubridorMinimo.size() < numeroDeNodos - 1) {
             Arista e = cola.remove();
             int v = e.getOrigen();
             int w = e.elOtroExtremo(v);
-            if (!uf.connected(v, w)) { // v-w does not create a cycle
-                uf.union(v, w);  // merge v and w components
-                arbolRecubridorMinimo.add(e);  // add edge e to mst
+            if (ub.Find(v)!=ub.Find(w)) { 
+                ub.Union(v, w); 
+                arbolRecubridorMinimo.add(e);  
                 pesoDelArbolRecubridor += e.getPeso();
             }
         }
@@ -237,7 +234,7 @@ public class Grafo {
 			System.out.println(cadaArista);
 		}
 		
-		System.out.println();
+		System.out.println("Kruskal");
 		Iterable<Arista> arbolRecubridorMinimo2 = grafo.Kruskal();
 		for(Arista cadaArista: arbolRecubridorMinimo2){
 			System.out.println(cadaArista);
