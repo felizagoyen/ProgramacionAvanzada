@@ -81,7 +81,7 @@ public class Grafo {
 			System.out.print("nodo " + (i+1) + ": ");
 			for(Integer j: adj[i]){
 				
-				System.out.print((j+1) + " ");
+				System.out.print((j+1) +" ");
 			}
 			System.out.println();
 		}
