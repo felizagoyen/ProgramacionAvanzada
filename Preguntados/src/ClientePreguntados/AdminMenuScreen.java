@@ -6,26 +6,14 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JTextArea;
 
 import java.awt.Font;
-import java.awt.Frame;
-import java.awt.Window;
-
 import javax.swing.JButton;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.event.WindowListener;
-
 import Commons.EndClientConnectionPackage;
 import Commons.TopTenUserPackage;
 
-import java.awt.event.WindowStateListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.HierarchyListener;
-import java.awt.event.HierarchyEvent;
-
 import javax.swing.event.AncestorListener;
-import javax.swing.event.AncestorEvent;
-
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 
@@ -54,15 +42,6 @@ public class AdminMenuScreen extends JFrame {
 		setLocationRelativeTo(null);
 		setResizable(false);
 		contentPane = new JPanel();
-		contentPane.addAncestorListener(new AncestorListener() {
-			public void ancestorAdded(AncestorEvent arg0) {
-			}
-			public void ancestorMoved(AncestorEvent arg0) {
-			}
-			public void ancestorRemoved(AncestorEvent arg0) {
-				setEnabled(true);
-			}
-		});
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -96,15 +75,6 @@ public class AdminMenuScreen extends JFrame {
 		contentPane.add(jUnirsePartidaButton);
 
 		JButton btnNewButton = new JButton("Tabla hist\u00F3rica");
-		btnNewButton.addAncestorListener(new AncestorListener() {
-			public void ancestorAdded(AncestorEvent event) {
-			}
-			public void ancestorMoved(AncestorEvent event) {
-			}
-			public void ancestorRemoved(AncestorEvent event) {
-				setEnabled(true);
-			}
-		});
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TopTenUserPackage toptenuserrequest = new TopTenUserPackage();
