@@ -1,0 +1,138 @@
+﻿Ventana login
+
+Flujo normal: 
+- Ingresar usuario y contraseña existente en la base de datos.
+- Si es administrador, el sistema debe mostrarlos el menú para el administrador. Si no es administrador, debe mostrarnos el menú para los jugadores.
+
+Casos Alternativos:
+
+Caso 1
+- Ingresar un usuario y/o contraseña que no existen en la base de datos.
+- El sistema debe informar que el usuario y/o la contraseña son inválidos.
+
+Caso 2
+- Ingresar con un usuario ya loggeado.
+- El sistema no debe permitir el acceso e informar que ya se encuentra loggeado.
+
+Detección de error: No informaba el mensaje correcto, decía que no se encontraba en la base de datos.
+
+Caso 3
+- Presionar el botón salir.
+- El sistema debe finalizar.
+
+
+Casos únicamente para el administrador
+Menú administrador.
+
+Crear partida.
+Flujo normal:
+- El administrador presiona el botón de crear partida.
+- El sistema le da la posibilidad de elegir las preguntas, el nombre y la cantidad de jugadores.
+- El administrador configura la partida y presiona aceptar.
+- El sistema lo lleva a la pantalla para iniciar la partida
+
+Flujos Alternativos:
+Caso 1)
+- El administrador no completa el nombre y/o cantidad de jugadores.
+- El sistema debe informar que no puede crease la partida si no se completan dicha información.
+
+Caso 2)
+- El administrador quiere crear una partida, cuando ya hay una en curso.
+- El sistema debe informar que no es posible crear una partida, porque ya hay una en curso.
+
+
+Selección de preguntas.
+Flujo normal:
+- El administrador presiona el botón para seleccionar las preguntas de la partida.
+- El sistema lo lleva a la pantalla de selección de preguntas.
+Para cada pregunta que desea seleccionar, se repite:
+- El administrador selecciona una categoría.
+- El sistema muestra las preguntas de la categoría seleccionada.
+- El administrador selecciona una pregunta.
+
+Flujo Alternativo:
+Caso 1)
+- El administrador se arrepiente y presiona cancelar en lugar de seleccionar una pregunta.
+- El sistema debe volver a la pantalla anterior y mantener el criterio aleatorio para dicha pregunta.
+
+Detección de error: No se estaba enviando paquete del servidor para que esto no ocurra.
+
+
+
+Inicio de partida.
+- El administrador lanza la partida.
+- El sistema muestra para cada jugador conectado, la pantalla correspondiente a la primer ronda del juego.
+
+Flujos Alternativo:
+Caso 1
+- El sistema detecta que no hay suficientes jugadores para lanzar la partida. En este caso debe informar al administrador que no puede lanzarla.
+
+
+Agregar pregunta
+- El administrador presiona el botón de agregar pregunta.
+- El sistema lo lleva a la ventana correspondiente para agregar una pregunta.
+- El administrador completa los datos requeridos.
+- El sistema guarda en la base de datos la nueva pregunta
+
+Flujo Alternativo
+Caso 1
+- El administrador no completa todos los campos.
+- El sistema debe informar que todos los campos son obligatorios, sin guardar la nueva pregunta en la base de datos.
+
+Detección de error: El sistema no controlaba que los campos estuvieran completos y realizaba el insert en la base de datos.
+
+Caso 2
+- El administrador no desea agregar una nueva pregunta y presiona el botón atrás.
+- El sistema debe llevarlo al menú principal nuevamente, sin agregar la pregunta a la base de datos.
+
+
+Casos para el administrador y jugador.
+Unirse a partida
+- El usuario presiona el botón para unirse a la partida.
+- El sistema lo conecta a la partida y le informa que debe esperar a que el administrador lance la partida.
+
+Flujos Alternativos:
+Caso 1
+- La partida no fue creada. El sistema debe informar al usuario que no hay partida existente para jugar.
+
+Caso 2
+- La partida está llena. El sustema debe informar que el usuario no puede unirse a la partida porque ésta se encuentra llena.
+
+
+Tabla histórica.
+Flujo normal.
+- El usuario presiona el botón de tabla histórica.
+- El sistema informa al usuario los 10 mejores jugadores de todos los tiempos, ordenados por cantidad de partidas ganadas.
+Detección de error: Devolvía los 10 jugadores en orden ascendente, colocando primero los jugadores sin partidas ganadas.
+
+
+Juego
+Flujo normal:
+Para cada ronda:
+- El sistema muestra la categoría, la pregunta, las 4 opciones posibles y un contador informando el tiempo.
+- El jugador pulsa el botón de la respuesta correcta.
+- El sistema, tras la respuesta de todos los jugadores (o se agota el tiempo), informa que la respuesta seleccionada es correcta, pintándola de verde.
+
+Flujos alternativos
+Caso 1:
+- El jugador pulsa una respuesta incorrecta.
+- El sistema debe informar que es incorrecta, marcándola de rojo y marcando la respuesta correcta con verde.
+
+Caso 2:
+- El jugador no contesta.
+- Tras finalizar el tiempo, el sistema informa que no ha contestado y marca la pregunta correcta.
+
+Caso 3:
+- El jugador se desconecta de la partida.
+- El sistema no debe de considerar a este jugador como posible ganador.
+
+Fin del juego:
+- El sistema debe informar al jugador si ha ganado la partida o la ha perdido, permitiéndole ver la tabla de jugadores.
+- El usuario pulsa el botón para ver la tabla de puntuación final
+- El sistema debe informar la tabla ordenado de mayor a menor, según la cantidad de respuestas correctas, y debajo los usuario que participaron y se desconectaron.
+- El usuario pulsa el botón de volver al menú principal.
+- El sistema debe llevar al usuario hacia la pantalla principal.
+
+
+
+
