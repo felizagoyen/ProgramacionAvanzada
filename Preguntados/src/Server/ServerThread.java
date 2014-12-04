@@ -79,7 +79,9 @@ public class ServerThread extends Thread {
 						game.createGame(gameRequest.getGameName(), gameRequest.getMaxPlayers(), gameRequest.getQuestionsID());
 						Logger.info("Partida creada correctamente.");
 						game.addPlayer(clientId, clientName); //Al crear la partida el administrador se une.
+						packageOut = new CreateGamePackage(true);
 					} else {
+						packageOut = new CreateGamePackage(false);
 						Logger.warn("La partida ya estaba creada");
 					}
 					
