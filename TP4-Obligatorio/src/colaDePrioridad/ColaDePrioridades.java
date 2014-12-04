@@ -115,30 +115,5 @@ public class ColaDePrioridades<E> {
 	public Integer size(){
 		return monticulo.size();
 	}
-	
-	public static void main(String[] args) {
-		ColaDePrioridades<Integer> cola = new ColaDePrioridades<Integer>();
-		
-		for(int i=1; i<=7; i++){
-			Double valor = (double) Math.round(Math.random()*100);
-			Contenedor<Integer>  nodo = new Contenedor<Integer>(i, valor);
-			cola.add(nodo);
-		}
-		System.out.println();
-		System.out.println(cola);
-		
-		cola.change(5, 15.2);
-		System.out.println(cola);
-		try {
-			while(!cola.isEmpty()){
-				System.out.print("removido: " + cola.remove().toString());
-				System.out.println(" cola: " + cola);
-			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 
-	
 }

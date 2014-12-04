@@ -4,23 +4,23 @@ import java.util.ArrayList;
 
 public class UniónBuscar {
 	 
-	ArrayList<Integer> p = new ArrayList<Integer>(); 
+	ArrayList<Integer> padre = new ArrayList<Integer>(); 
 
 
 	public UniónBuscar( int n ) {
 		for( int i = 0 ; i < n ; i++ ){
-	    	p.add(i);
+	    	padre.add(i);
 	    }
 	}
 
 	//Método para encontrar la raiz del vértice actual X
 	int Find( int x ){
-	    if( x == p.get(x) ){          
+	    if( x == padre.get(x) ){          
 	        return x;                   
 	    }
 	    else{ 
-	    	p.set(x, Find( p.get(x) )); //Compresion de caminos
-	    	return p.get(x);
+	    	padre.set(x, Find( padre.get(x) )); //Compresion de caminos
+	    	return padre.get(x);
 	    }
 	}
 
@@ -28,7 +28,7 @@ public class UniónBuscar {
 	void Union( int x , int y ){
 	    int xRoot = Find( x );   
 	    int yRoot = Find( y );    
-	    p.set(xRoot, yRoot);  
+	    padre.set(xRoot, yRoot);  
 	}
 
 

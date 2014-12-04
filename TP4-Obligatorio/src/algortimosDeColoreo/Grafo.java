@@ -199,41 +199,13 @@ public class Grafo {
 		return recorrido;
 	}
 	
-	public ArrayList<Integer> busquedaEnProfundidad(Integer nodo){
-		ArrayList<Integer> recorrido = new ArrayList<Integer>();
-		Stack<Integer> pila = new Stack<Integer>();
-		boolean [] fueVisitado = new boolean[numeroDeNodos];
-		pila.push(nodo);
-		fueVisitado[nodo]=true;
-		System.out.print((nodo+1) + " ");
-		recorrido.add(nodo);
-		while(!pila.isEmpty()){
-			Integer n1= pila.peek();
-			boolean visitoArista = false;
-			for(Integer j: adj[n1]){
-				if(!fueVisitado[j]){
-					System.out.print((j+1) + " ");
-					recorrido.add(j);
-					visitoArista=true;
-					fueVisitado[j]=true;
-					pila.push(j);
-					break;
-				}
-			}
-			if(!visitoArista){
-				pila.pop();
-			}
-		}
-		return recorrido;
-	}
-	
 	public static void main(String[] args) {
 		Grafo grafo = new Grafo("grafo.in");
 		grafo.mostrarAristas();
 		grafo.busquedaEnAnchura(0);
 		System.out.println();
 		System.out.println("Coloreo Secuencial Aleatorio");
-		System.out.println("cantidad de colores usados: "+grafo.secuencialAleatorio(grafo.busquedaEnProfundidad(0)));
+		System.out.println("cantidad de colores usados: "+grafo.secuencialAleatorio(grafo.busquedaEnAnchura(0)));
 		System.out.println("Coloreo Welsh-Powell");
 		System.out.println("cantidad de colores usados: "+grafo.welshPowell());
 		System.out.println("Coloreo Matula");
