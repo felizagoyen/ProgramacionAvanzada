@@ -132,13 +132,13 @@ public class ServerThread extends Thread {
 					packageOut = new StartGamePackage(canStartGame);
 					break;
 				case CATEGORYREQUESTID:
+					Logger.info("El usuario " + clientName + " ha solicitado las categorias.");
 					ArrayList<Category> categories = getAllCategories(); 
 					packageOut = new CategoryPackage(categories);
 					break;
 				case POINTSTABLEREQUESTID:
+					Logger.info("El usuario " + clientName + " ha solicitado la tabla de puntuacion historica.");
 					ArrayList<User> topTen = getTopTenUsers();
-					for(User top: topTen) 
-						System.out.println(top.getName() + " - " + top.getHistoricalScore().getGamesPlayed());
 					packageOut = new TopTenUserPackage(topTen);
 					break;
 				case ADDQUESTIONREQUESTID: // Agregar pregunta

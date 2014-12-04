@@ -73,11 +73,10 @@ public class DataBaseUtil {
 	
 	public ArrayList<Question> getQuestionDB(String category) {
 		ArrayList<Question> questions = new ArrayList<Question>();
-		ResultSet rsCategory = queryDB("SELECT * FROM `category` WHERE `name` = '"+ category +"'");
-		if(rsCategory != null) {
-			try {
-				Integer categoryId = rsCategory.getInt("id");
-				rsCategory.next();
+
+		try {
+			Integer categoryId = getCategoryId(category);
+			if(categoryId != null) {
 				ResultSet rs = queryDB("SELECT * FROM `question` WHERE `categoryId` = '"+ categoryId +"'");
 				if(rs!=null){
 					while(rs.next()){
@@ -88,9 +87,9 @@ public class DataBaseUtil {
 						questions.add(new Question(null, rs.getString("question"), category, rs.getString("correctAnswer"), answer));
 					}
 				}
-			} catch (SQLException e) {
-				e.printStackTrace();
 			}
+		} catch (SQLException e) {
+				e.printStackTrace();
 		}
 		return questions;
 	}
@@ -118,7 +117,7 @@ public class DataBaseUtil {
 			ps.setString(4, question.getWrongAnswers().get(1));
 			ps.setString(5, question.getWrongAnswers().get(2));
 			ps.setString(6, question.getCorrectAnswer());
-			ps.setInt(7, question.getCategoryId());
+			ps.setInt(7, getCategoryId(question.getCategory()));
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -138,20 +137,18 @@ public class DataBaseUtil {
 	}
 	
 	public ArrayList<Question> getQuestionByCategoryDB(String category) {
-		ResultSet rsCategory = queryDB("SELECT * FROM `category` WHERE `name` = '"+ category +"'");
 		ArrayList<Question> questions = new ArrayList<Question>();
-		if(rsCategory != null) {
-			try {
-				rsCategory.next();
-				Integer categoryId = rsCategory.getInt("id");
+		try {
+			Integer categoryId = getCategoryId(category);
+			if(categoryId != null) {
 				ResultSet rs = queryDB("SELECT `id`, `question` FROM `question` WHERE `categoryId`='" + categoryId + "'");
 				if(rs != null)
 					while(rs.next())
 						questions.add(new Question(rs.getInt("id"), rs.getString("question")));
-			} catch (Exception e) {
-				e.printStackTrace();
-				questions = null;
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			questions = null;
 		}
 		return questions;
 	}
@@ -202,5 +199,17 @@ public class DataBaseUtil {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private Integer getCategoryId(String categoryName) {
+		ResultSet rsCategory = queryDB("SELECT * FROM `category` WHERE `name` = '"+ categoryName +"'");
+		if(rsCategory != null)
+			try {
+				rsCategory.next();
+				return rsCategory.getInt("id");
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		return null;
 	}
 }
