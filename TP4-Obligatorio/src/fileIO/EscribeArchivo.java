@@ -1,4 +1,4 @@
-package generadores;
+package fileIO;
 
 import java.io.*;
 

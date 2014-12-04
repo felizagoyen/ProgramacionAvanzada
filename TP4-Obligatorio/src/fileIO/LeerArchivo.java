@@ -1,4 +1,4 @@
-package grafosConListaDeAdyacenciaAristaConPeso;
+package fileIO;
 
 import java.io.*;
 

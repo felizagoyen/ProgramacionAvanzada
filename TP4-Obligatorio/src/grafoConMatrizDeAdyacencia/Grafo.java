@@ -1,6 +1,7 @@
 package grafoConMatrizDeAdyacencia;
 
 
+import fileIO.LeerArchivo;
 import grafosConListaDeAdyacenciaAristaConPeso.Arista;
 
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ import java.util.Stack;
 
 import colaDePrioridad.ColaDePrioridades;
 import colaDePrioridad.Contenedor;
-import matriz.MatrizDeAdyacencia;
+import matrizDeAdyacencia.MatrizDeAdyacencia;
 
 public class Grafo {
 	private Integer numeroDeNodos;

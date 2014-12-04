@@ -1,4 +1,4 @@
-package matriz;
+package matrizDeAdyacencia;
 
 import java.util.Arrays;
 import java.util.HashSet;

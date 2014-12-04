@@ -3,7 +3,8 @@ package generadores;
 
 import java.util.Scanner;
 
-import matriz.MatrizDeAdyacencia;
+import fileIO.EscribeArchivo;
+import matrizDeAdyacencia.MatrizDeAdyacencia;
 
 public class Generador{
 	private static final int PORCENTAJE_ADYACENCIA_ALEATORIO = 1;
