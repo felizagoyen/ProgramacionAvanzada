@@ -95,7 +95,6 @@ public class Grafo {
 			ArrayList<String> colores = new ArrayList<String>(); 
 			for(Integer cadaNodoAdy : adj[cadaNodo]){
 				if(tieneColor[cadaNodoAdy]){
-					//existe el color en arraylist
 					boolean existe = false;
 					for(String cadaColor: colores){
 						if(cadaColor.equals(coloreo.get(cadaNodoAdy))){
@@ -109,7 +108,6 @@ public class Grafo {
 			}
 			Collections.sort(colores);
 			Integer i=0;
-			//busco el primer color que no este
 			for(String cadaColor: colores){
 				if(cadaColor.equals(String.valueOf(Character.toChars(color+i))))
 					i++;
