@@ -2,13 +2,11 @@ package ClientePreguntados;
 
 public class Client {
 
+	private Connection connection;
 
 	public Client() {
-		Connection connection = null;
-		
-		 connection = Connection.getInstance();	
+		connection = Connection.getInstance();
 	
-		
 		if(connection.getSocket() != null){
 			LoginScreen loginscreen = new LoginScreen();
 			new ClientThread(loginscreen).start();
