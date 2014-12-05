@@ -130,13 +130,12 @@ public class ChooseQuestionWindow extends JDialog {
 			categoriaComboBox.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					if(!categoriaComboBox.getSelectedItem().equals("Categoría") && categoriaComboBox.getItemAt(0).equals("Categoría"))
-						categoriaComboBox.removeItem("Categorï¿½a");
+						categoriaComboBox.removeItem("Categoría");
 					customModel.removeAllQuestions();
 					connection.sendPackage(new QuestionsByCategoryPackage(categoriaComboBox.getSelectedItem().toString()));
 				}
 			});
 			
-			connection.sendPackage(new CategoryPackage());
 			categoriaComboBox.setBounds(159, 25, 195, 20);
 			contentPanel.add(categoriaComboBox);
 			{
