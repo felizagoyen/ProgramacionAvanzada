@@ -1,6 +1,7 @@
 package ClientePreguntados;
 
 import javax.swing.JDialog;
+
 import javax.swing.JFrame;
 
 import Commons.AddQuestionConfirmationPackage;
@@ -51,7 +52,7 @@ public class ClientThread extends Thread {
 
 
 			JoinPlayerGameWindow joinplayergamewindow = null;
-			RoundGameScreen rgs = null;
+			RoundGameScreen roundgamescreen = null;
 			while (!endConnection) {
 
 				packageIn = (Package) connection.recievePackage();
@@ -67,8 +68,12 @@ public class ClientThread extends Thread {
 					
 				case CATEGORYRESPONSEID:
 					CategoryPackage categoryresponse = (CategoryPackage) packageIn;
-					((ChooseQuestionWindow) JDialogScreen).setCategories(categoryresponse);
+					if(categoryresponse.getIdScreen() == 1)
+						((ChooseQuestionWindow) JDialogScreen).setCategories(categoryresponse);
+					else
+						((AddQuestionScreen)JFrameScreen).setCategories(categoryresponse);
 					break;
+
 				case QUESTIONSRESPONSEID:  
 					
 					QuestionsByCategoryPackage questionsresponse = (QuestionsByCategoryPackage) packageIn;
@@ -79,8 +84,8 @@ public class ClientThread extends Thread {
 				case CREATEGAMERESPONSEID: // Creacion de partida
 					CreateGamePackage creategameresponse = (CreateGamePackage) packageIn;
 					if(creategameresponse.gameCreated() == true){
-						rgs = new RoundGameScreen();
-						GameCreatedAdminScreen gamecreated = new GameCreatedAdminScreen();
+						roundgamescreen = new RoundGameScreen();
+						GameCreatedAdminScreen gamecreated = new GameCreatedAdminScreen(CreateGameScreen.getMaxPlayersInGame());
 						gamecreated.setVisible(true);
 					}
 					else{
@@ -91,7 +96,7 @@ public class ClientThread extends Thread {
 					break;
 				case PLAYERJOINRESPONSEID: // Se pudo unir a la partida?
 					PlayerJoinPackage playerjoinresponse = (PlayerJoinPackage) packageIn;
-					rgs = new RoundGameScreen();
+					roundgamescreen = new RoundGameScreen();
 					joinplayergamewindow = new JoinPlayerGameWindow();
 					joinplayergamewindow.setLabelAndButton(playerjoinresponse.getJoinStatus());
 					joinplayergamewindow.setVisible(true);
@@ -118,11 +123,11 @@ public class ClientThread extends Thread {
 					
 					if(joinplayergamewindow != null)
 						joinplayergamewindow.setVisible(false);
-					rgs.setVisible(false);
-					rgs.enableButtonsAndRefreshComponents();
-					rgs.setQuestionAndCategory(question);
-					rgs.setVisible(true);
-					rgs.startTimer();
+					roundgamescreen.setVisible(false);
+					roundgamescreen.enableButtonsAndRefreshComponents();
+					roundgamescreen.setQuestionAndCategory(question);
+					roundgamescreen.setVisible(true);
+					roundgamescreen.startTimer();
 					
 //					((JoinPlayerGameWindow)JDialogScreen).setVisible(false);
 //					((RoundGameScreen)JFrameScreen).setVisible(false);
@@ -139,7 +144,7 @@ public class ClientThread extends Thread {
 					gameresultswindow.setLabelWinnerStatus(resultsGame.getPlayerWin(), resultsGame.getWinners().size());
 					gameresultswindow.setScoreTableAndUserType(resultsGame.getScoreTable(), userType);
 					gameresultswindow.setVisible(true);
-					rgs.dispose();
+					roundgamescreen.dispose();
 					
 					break;
 				case ADDQUESTIONREESPONSEID: // Agregar pregunta
@@ -154,8 +159,8 @@ public class ClientThread extends Thread {
 					
 				case ANSWERQUESTIONRESPONSEID:
 					AnswerQuestionPackage answer = (AnswerQuestionPackage) packageIn;
-					rgs.setLabelAnswer(answer.isCorrect());
-					rgs.paintButtons(answer.isCorrect());
+					roundgamescreen.setLabelAnswer(answer.isCorrect());
+					roundgamescreen.paintButtons(answer.isCorrect());
 					
 					
 					break;

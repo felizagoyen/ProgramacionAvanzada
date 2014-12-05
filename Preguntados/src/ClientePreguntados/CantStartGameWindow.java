@@ -56,7 +56,7 @@ public class CantStartGameWindow extends JDialog {
 			JButton okButton = new JButton("OK");
 			okButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					GameCreatedAdminScreen gamecreated = new GameCreatedAdminScreen();
+					GameCreatedAdminScreen gamecreated = new GameCreatedAdminScreen(CreateGameScreen.getMaxPlayersInGame());
 					gamecreated.setVisible(true);
 					dispose();		
 				}
