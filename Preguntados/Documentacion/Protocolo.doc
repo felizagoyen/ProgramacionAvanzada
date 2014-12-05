@@ -1,0 +1,113 @@
+﻿Protocolo de comunicación
+
+El protocolo de comunicación usado en el desarrollo de este trabajo práctico es bastante simple. Tanto el cliente como el servidor, envía objetos (que implementan la interfaz Package) a través de un socket. Cada objeto posee un PACKAGEID, el cual es único y permite identificar unívocamente cada paquete. Además, cuenta con información adicional, la cual será procesada por la entidad que lo reciba.
+
+Paquetes enviados por el cliente
+
+UserLoginPackage:
+PACKAGEID: 1
+Posee la información de logueo del usuario. Esto es, nombre de usuario y contraseña.
+
+CreateGamePackage:
+PACKAGEID: 2
+Posee la información de la solicitud de creación de partida realizada por un administrador. Dicha información consta de un nombre de partida, cantidad de jugadores máxima y el id de las preguntas seleccionadas por el administrador para dicha partida
+
+PlayerJoinPackage:
+PACKAGEID: 3
+Solicitud de un usuario o administrador para unirse a una partida.
+
+StartGamePackage
+PACKAGEID: 4
+Solicitud de un administrador para iniciar una partida
+
+CategoryPackage
+PACKAGEID: 5
+Solicitud de las categorías existentes en la base de dato del servidor, realizada por un administrador
+
+Question
+PACKAGEID: 6
+Solicitud realizada por un administrador para agregar una nueva pregunta a la base de datos
+
+TopTenUserPackage
+PACKAGEID: 7
+Solicitud de un usuario o administrador de la tabla histórica de puntuación.
+
+EndClientConnectionPackage
+PACKAGEID: 8
+Paquete que informa al servidor que un cliente se ha desconectado.
+
+QuestionsByCategoryPackage
+PACKAGEID: 9
+Solicitud del administrador de las preguntas de una determinada categoría, para la selección de preguntas de la partida.
+
+AnswerQuestionPackage
+PACKAGEID: 10
+Envío de la respuesta seleccionada por el jugador en la ronda determinada.
+
+
+
+
+
+
+
+
+
+
+
+
+Paquetes enviados por el servidor
+UserLoginPackage:
+PACKAGEID: 1
+Posee la información de si la información del usuario recibido es valida, es incorrecta o estaba conectado.
+
+CreateGamePackage:
+PACKAGEID: 2
+Es la respuesta del servidor ante el pedido de creación de la partida realizada por un administrador. Contiene un campo el cual indica si la partida fue creada correctamente o no.
+
+PlayerJoinPackage:
+PACKAGEID: 3
+Posee un campo el cuando indica si el usuario o administrador pudo unirse correctamente a la partida. En caso de que no haya sido posible unirse, indica el motivo (Ya sea que no existe la partida o que la partida se encuentra llena)
+
+StartGamePackage
+PACKAGEID: 4
+Posee un campo el cual indica si ha sido posible (o no) iniciar la partida.
+
+CategoryPackage
+PACKAGEID: 5
+Envío de las categorías solicitadas por el administrador
+
+Question
+PACKAGEID: 6
+Contiene la información que debe mostrar cada cliente en cada ronda, tal como pregunta, las 4 posibles respuestas, la categoría de la pregunta.
+
+TopTenUserPackage
+PACKAGEID: 7
+Contiene la información de los 10 mejores usuarios, tal como número de partidas jugadas, partidas ganadas, partidas perdidas, respuestas correctas y respuestas incorrectas.
+
+EndClientConnectionPackage
+PACKAGEID: 8
+Paquete que informa al hilo del cliente que debe terminar.
+
+QuestionsByCategoryPackage
+PACKAGEID: 9
+Contiene un campo con las preguntas de la categoría solicitada por el administrador.
+
+AnswerQuestionPackage
+PACKAGEID: 10
+El servidor informa a cada cliente, si la respuesta que ha seleccionado es correcta o no.
+
+AddQuestionConfirmationPackage
+PACKAGEID: 11
+Informa al administrador si se ha podido insertar correctamente la pregunta a la base de datos
+
+EndTimePackage
+PACKAGEID: 12
+Informa a cada jugador, el tiempo limite para responder la pregunta de la ronda. Además, es usado para agregar un tiempo de espera entre cada pregunta.
+
+ResultsGamePackage
+PACKAGEID: 13
+Envía a cada jugador, la tabla de puntuación final de la partida que se ha jugado, informando los ganadores, su puntuación y si hubo algún desconectado.
+
+EndServerPackage
+PACKAGEID: 14
+Informa a cada cliente, que el servidor se ha cerrado para que finalicen.

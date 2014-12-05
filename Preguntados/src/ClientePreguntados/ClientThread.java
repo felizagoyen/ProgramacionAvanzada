@@ -29,13 +29,13 @@ public class ClientThread extends Thread {
 	private static final int STARTGAMERESPONSEID = 4;
 	private static final int CATEGORYRESPONSEID = 5;
 	private static final int GAMERUNNINGID = 6;
-	private static final int POINTSTABLERESPONSEID = 8;
-	private static final int ADDQUESTIONREESPONSEID = 9;
-	private static final int ENDCONNECTIONRESPONSEID = 10;
-	private static final int QUESTIONSRESPONSEID = 11;
+	private static final int POINTSTABLERESPONSEID = 7;
+	private static final int ENDCONNECTIONRESPONSEID = 8;
+	private static final int QUESTIONSRESPONSEID = 9;
+	private static final int ANSWERQUESTIONRESPONSEID = 10;
+	private static final int ADDQUESTIONREESPONSEID = 11;
 	private static final int ENDTIMEID = 12;
-	private static final int ANSWERQUESTIONRESPONSEID = 13;
-	private static final int RESULTSGAMEID = 14;
+	private static final int RESULTSGAMEID = 13;
 	private Boolean endConnection = false;
 	private Connection connection = Connection.getInstance();
 	
