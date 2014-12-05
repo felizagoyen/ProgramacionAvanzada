@@ -25,7 +25,9 @@ public class Generador{
 			m.generarPorPorcentajeDeAdyacencia(porcentajeAdyacencia);
 		}break;
 		case PROBABILIDAD_ARISTA_ALEATORIO:{
-			m.generarProbabilidadDeArista();
+			System.out.println("Ingrese porcentaje adyacencia: ");
+			Integer porcentajeAdyacencia = entrada.nextInt(); 
+			m.generarProbabilidadDeArista(porcentajeAdyacencia);
 		}break;
 		case N_PARTITO:{
 			System.out.println("Ingrese numero de particiones: ");

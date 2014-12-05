@@ -5,6 +5,8 @@ import fileIO.LeerArchivo;
 import grafosConListaDeAdyacenciaAristaConPeso.Arista;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
@@ -185,22 +187,39 @@ public class Grafo {
 	
 	public static void main(String[] args) {
 		Grafo grafo = new Grafo("grafo.in");
-		System.out.println("GrafoConMatrizDeAdyacencia");
-		grafo.mostrarAristas();
-		System.out.println("busquedaEnAnchura");
-		grafo.busquedaEnAnchura(0);
-		System.out.println();
-		System.out.println("busquedaEnProfundidad");
-		grafo.busquedaEnProfundidad(0);
-		System.out.println();
-		System.out.println("dijkstra");
-		grafo.dijkstra(0);
-		System.out.println();
-		System.out.println("prim");
+		
+		Calendar tIni = new GregorianCalendar();
+		
 		Iterable<Arista> bordesDelArbol = grafo.prim();
-		for(Arista cadaArista: bordesDelArbol){
-			System.out.println(cadaArista);
-		}
+		
+		Calendar tFin = new GregorianCalendar();
+		
+		long diff = tFin.getTimeInMillis() - tIni.getTimeInMillis();
+
+		System.out.println(diff);
+
+//		for(Arista cadaArista: bordesDelArbol){
+//			System.out.println(cadaArista);
+//		}
+		
+		
+		
+//		System.out.println("GrafoConMatrizDeAdyacencia");
+//		grafo.mostrarAristas();
+//		System.out.println("busquedaEnAnchura");
+//		grafo.busquedaEnAnchura(0);
+//		System.out.println();
+//		System.out.println("busquedaEnProfundidad");
+//		grafo.busquedaEnProfundidad(0);
+//		System.out.println();
+//		System.out.println("dijkstra");
+//		grafo.dijkstra(0);
+//		System.out.println();
+//		System.out.println("prim");
+//		Iterable<Arista> bordesDelArbol = grafo.prim();
+//		for(Arista cadaArista: bordesDelArbol){
+//			System.out.println(cadaArista);
+//		}
 	}
 	
 	

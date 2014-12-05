@@ -233,11 +233,20 @@ public class MatrizDeAdyacencia {
 		}
 	}
 
-	public void generarProbabilidadDeArista() {
+	public void generarProbabilidadDeArista(Integer porcentajeAdyacencia) {
 		for(int i=0; i<numeroDeNodos; i++){
 			for(int j=0; j<numeroDeNodos; j++){
 				if(i!=j)
 					matriz[i][j] = (int)Math.round(Math.random()*100);	
+			}
+		}
+		Integer numeroDeAristasAQuitar = (((int) Math.pow(numeroDeNodos,2)-numeroDeNodos)*(100-porcentajeAdyacencia)/100);
+		while(numeroDeAristasAQuitar>0){
+			Integer i = (int)Math.round(Math.random()*100)%numeroDeNodos;
+			Integer j = (int)Math.round(Math.random()*100)%numeroDeNodos;
+			if(i!=j){
+				matriz[i][j]=0;
+				numeroDeAristasAQuitar--;
 			}
 		}
 	}

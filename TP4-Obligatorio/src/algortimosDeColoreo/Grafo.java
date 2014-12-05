@@ -1,23 +1,17 @@
 package algortimosDeColoreo;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.Map.Entry;
 import java.util.Queue;
-import java.util.SortedSet;
-import java.util.Stack;
 import java.util.TreeMap;
 
-import colaDePrioridad.ColaDePrioridades;
 import fileIO.LeerArchivo;
 
 public class Grafo {
@@ -162,8 +156,8 @@ public class Grafo {
 		        else { return 1; } 
 		    }
 		}
-		ValueComparator bvc =  new ValueComparator(grados);
-		TreeMap<Integer,Integer> ordenadoPorGrados = new TreeMap<Integer,Integer>(bvc);
+		ValueComparator comparador =  new ValueComparator(grados);
+		TreeMap<Integer,Integer> ordenadoPorGrados = new TreeMap<Integer,Integer>(comparador);
 		for(int i=0; i<numeroDeNodos; i++){
 			grados.put(i, adj[i].size());
 		}
