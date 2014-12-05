@@ -66,7 +66,7 @@ public class Connection {
 		
 	}
 	
-	public void getProperties (){
+	private void getProperties (){
 		try{
 			Properties properties = new Properties();
 			properties.load(new FileInputStream("propiedades.properties"));
@@ -76,7 +76,11 @@ public class Connection {
 			e.printStackTrace();
 		}
 	}
- 
+	
+	public Socket getSocket (){
+		return socket;
+	}
+
 
 
 }
