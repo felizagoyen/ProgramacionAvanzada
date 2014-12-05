@@ -2,6 +2,9 @@ package Server;
 
 import java.net.ServerSocket;
 
+import Commons.EndServerPackage;
+import Commons.User;
+
 public class Server {
 
 	private static final int PORT = 10000;
@@ -15,7 +18,21 @@ public class Server {
 			Logger.info("Puerto: " + PORT);
 			Logger.info("Conexiones maximas: " + MAXCONNECTIONS);
 			Logger.info("Esperando conexiones...");
-			new AcceptUser(serverSocket).start(); //Hilo que se encarga de aceptar conecciones
+			Logger.info("Ingrese q para finalizar.");
+			ServerEnd.getInstance().start();
+			AcceptUser server = new AcceptUser(serverSocket); //Hilo que se encarga de aceptar conecciones
+			server.start();
+			ServerEnd.getInstance().join();
+			Logger.info("Finalizando servidor...");
+			UserConnection userConnectionInstance = UserConnection.getInstance();
+			for(User eachUser: userConnectionInstance.getUsers()) 
+				if(eachUser != null) {
+					userConnectionInstance.blockSocket(eachUser.getId());
+					userConnectionInstance.sendPackage(eachUser.getId(), new EndServerPackage());
+					userConnectionInstance.releaseSocket(eachUser.getId());
+				}
+			Logger.info("Servidor finalizado correctamente");
+			System.exit(1);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

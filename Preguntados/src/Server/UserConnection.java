@@ -12,14 +12,14 @@ public class UserConnection {
 	
 	private static final UserConnection instance = new UserConnection();
 	private static final int MAXCONNECTIONS = 50;
-	private ArrayList<User> clients = new ArrayList<User>();
+	private ArrayList<User> users = new ArrayList<User>();
 	private ArrayList<ObjectOutputStream> outputStream = new ArrayList<ObjectOutputStream>();;
 	private ArrayList<ObjectInputStream> inputStream = new ArrayList<ObjectInputStream>();;
 	private ArrayList<Semaphore> semaphores = new ArrayList<Semaphore>();
 	
 	private UserConnection() {
 		for(int x = 0; x < MAXCONNECTIONS; x++) {
-			clients.add(null);
+			users.add(null);
 			outputStream.add(null);
 			inputStream.add(null);
 			semaphores.add(new Semaphore(1));
@@ -68,33 +68,37 @@ public class UserConnection {
 		}
 	}
 	
-	public void setClientConnection(User client) {
+	public void setUserConnection(User user) {
 		try {
-			clients.set(client.getId(), client);
-			outputStream.set(client.getId(), new ObjectOutputStream(client.getSocket().getOutputStream()));
-			inputStream.set(client.getId(), new ObjectInputStream(client.getSocket().getInputStream()));
+			users.set(user.getId(), user);
+			outputStream.set(user.getId(), new ObjectOutputStream(user.getSocket().getOutputStream()));
+			inputStream.set(user.getId(), new ObjectInputStream(user.getSocket().getInputStream()));
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public User getClient(int index) {
-		return clients.get(index);
+	public User getUser(int index) {
+		return users.get(index);
 	}
 	
-	public int getFreeIndexClient() {
+	public ArrayList<User> getUsers() {
+		return users;
+	}
+	
+	public int getFreeIndexUser() {
 		for(int x = 0; x < MAXCONNECTIONS; x++) 
-			if(clients.get(x) == null) return x; 
+			if(users.get(x) == null) return x; 
 		return -1;
 	}
 	
-	public void freeClient(int index) {
-		clients.set(index, null);
+	public void freeUser(int index) {
+		users.set(index, null);
 	}
 	
-	public Boolean clientIsLogged(String clientName) {
-		for(User eachClient: clients)
-			if(eachClient != null && eachClient.getName().equals(clientName))
+	public Boolean userIsLogged(String userName) {
+		for(User eachUser: users)
+			if(eachUser != null && eachUser.getName().equals(userName))
 				return true;
 		return false;
 	}

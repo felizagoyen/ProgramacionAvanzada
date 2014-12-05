@@ -16,11 +16,11 @@ public class AcceptUser extends Thread {
 		Socket clientSocket;
 		UserConnection clientSocketInstance = UserConnection.getInstance();
 		int clientId;
-		while(true) {
+		while(ServerEnd.getInstance().isTheEnd() == false) {
 			try {
 				clientSocket = serverSocket.accept();
-				if((clientId = clientSocketInstance.getFreeIndexClient()) != -1) {
-					clientSocketInstance.setClientConnection(new User(clientId, clientSocket));
+				if((clientId = clientSocketInstance.getFreeIndexUser()) != -1) {
+					clientSocketInstance.setUserConnection(new User(clientId, clientSocket));
 					Logger.info("Conexion Aceptada. ClientId: " + clientId);
 					new ServerThread(clientId).start(); //Crea una conexion nueva de escucha para cada cliente
 				} else {

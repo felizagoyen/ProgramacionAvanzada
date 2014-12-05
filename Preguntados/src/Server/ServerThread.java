@@ -17,11 +17,11 @@ public class ServerThread extends Thread {
 	private static final int ENDCONECTIONREQUESTID = 10;
 	private static final int QUESTIONSREQUESTID = 11;
 	private static final int ANSWERQUESTIONREQUESTID = 13;
-	private Integer clientId;
-	private String clientName = null;
+	private Integer userId;
+	private String userName = null;
 	
-	public ServerThread(Integer clientId) {
-		this.clientId = clientId;
+	public ServerThread(Integer userId) {
+		this.userId = userId;
 	}
 
 	public void run() {
@@ -30,32 +30,32 @@ public class ServerThread extends Thread {
 		Game game = null;
 		
 		try {
-			UserConnection clientConnectionInstance = UserConnection.getInstance();
+			UserConnection userConnectionInstance = UserConnection.getInstance();
 			
 			while (!endConection) {
 				Package packageOut = null;
-				Package packageIn = clientConnectionInstance.readPackage(clientId);
-				clientConnectionInstance.blockSocket(clientId);
+				Package packageIn = userConnectionInstance.readPackage(userId);
+				userConnectionInstance.blockSocket(userId);
 				
 				switch (packageIn.getPackageID()) {
 				case LOGINREQUESTID: // Pedido de logeo del cliente
 					UserLoginPackage userLogin = (UserLoginPackage) packageIn;
 					int loginStatus; // 0: Usuario Valido, -1: Usuario Invalido, -2: Usuario ya estaba loggeado
-					String clientLoginName = userLogin.getUser();
+					String userLoginName = userLogin.getUser();
 					Logger.info("Solicitud de loggeo recibida.");
 					
 					loginStatus = validateClient(userLogin);
 					if(loginStatus != -1) { 
-						if(!clientConnectionInstance.clientIsLogged(clientLoginName)) {
-							clientName = clientLoginName;
-							clientConnectionInstance.getClient(clientId).setName(clientName);
-							Logger.info("Se ha conectado el usuario " + clientName);
+						if(!userConnectionInstance.userIsLogged(userLoginName)) {
+							userName = userLoginName;
+							userConnectionInstance.getUser(userId).setName(userName);
+							Logger.info("Se ha conectado el usuario " + userName);
 						} else {
 							loginStatus = -2;
-							Logger.warn("Se esta intentando ingresar con un usuario que ya esta loggeado. Nombre de usuario: " + clientLoginName);
+							Logger.warn("Se esta intentando ingresar con un usuario que ya esta loggeado. Nombre de usuario: " + userLoginName);
 						}
 					} else {
-						Logger.info("Los datos ingresados por el cliente " + clientId + " no se encuentra en la base de datos. Nombre de usuario: " + clientLoginName);
+						Logger.info("Los datos ingresados por el cliente " + userId + " no se encuentra en la base de datos. Nombre de usuario: " + userLoginName);
 					}
 					
 					userLogin.setUserType(loginStatus);
@@ -78,7 +78,7 @@ public class ServerThread extends Thread {
 					if(!game.isCreated()) {
 						game.createGame(gameRequest.getGameName(), gameRequest.getMaxPlayers(), gameRequest.getQuestionsID());
 						Logger.info("Partida creada correctamente.");
-						game.addPlayer(clientId, clientName); //Al crear la partida el administrador se une.
+						game.addPlayer(userId, userName); //Al crear la partida el administrador se une.
 						packageOut = new CreateGamePackage(true);
 					} else {
 						packageOut = new CreateGamePackage(false);
@@ -91,22 +91,22 @@ public class ServerThread extends Thread {
 									// 0: La partida está llena. 1: El jugador se puede unir
 									//-3: Partida ya iniciada.
 					game = Game.getGameInstance();
-					Logger.info(clientName + " solicita ingresar a la partida.");
+					Logger.info(userName + " solicita ingresar a la partida.");
 					
 					if(!game.isCreated()) {
 						joinStatus = -1;
 						Logger.warn("La partida no existe.");
-					} else if(game.playerInGame(clientId)) {
+					} else if(game.playerInGame(userId)) {
 						joinStatus = -2;
 						Logger.warn("El jugador ya se encuentra dentro de la partida.");
 					} else if(game.isStarted()) {
 						joinStatus = -3;
-						Logger.info("La partida ya comenzo. El jugador " + clientName + " no se pudo unir.");
+						Logger.info("La partida ya comenzo. El jugador " + userName + " no se pudo unir.");
 					} else if(game.gameIsFull()) {
 						joinStatus = 0;
-						Logger.info("La partida está llena. El jugador " + clientName + " no se pudo unir.");
+						Logger.info("La partida está llena. El jugador " + userName + " no se pudo unir.");
 					} else {
-						game.addPlayer(clientId, clientName);
+						game.addPlayer(userId, userName);
 						joinStatus = 1;
 					}
 					
@@ -134,12 +134,12 @@ public class ServerThread extends Thread {
 					packageOut = new StartGamePackage(canStartGame);
 					break;
 				case CATEGORYREQUESTID:
-					Logger.info("El usuario " + clientName + " ha solicitado las categorias.");
+					Logger.info("El usuario " + userName + " ha solicitado las categorias.");
 					ArrayList<Category> categories = getAllCategories(); 
 					packageOut = new CategoryPackage(categories);
 					break;
 				case POINTSTABLEREQUESTID:
-					Logger.info("El usuario " + clientName + " ha solicitado la tabla de puntuacion historica.");
+					Logger.info("El usuario " + userName + " ha solicitado la tabla de puntuacion historica.");
 					ArrayList<User> topTen = getTopTenUsers();
 					packageOut = new TopTenUserPackage(topTen);
 					break;
@@ -154,44 +154,44 @@ public class ServerThread extends Thread {
 					break;
 				case ANSWERQUESTIONREQUESTID: // Respuesta del jugador ante una pregunta 
 					game = Game.getGameInstance();
-					Logger.info(clientName + " ha enviado su respuesta.");
+					Logger.info(userName + " ha enviado su respuesta.");
 					
 					if(game.isCreated() && game.getWaitingAnswer()) {
 						AnswerQuestionPackage answerQuestion = (AnswerQuestionPackage) packageIn;
-						game.setAnswer(clientId, answerQuestion.getAnswer());
-						Logger.info("Respuesta recibida correctamente del cliente " + clientName);
+						game.setAnswer(userId, answerQuestion.getAnswer());
+						Logger.info("Respuesta recibida correctamente del cliente " + userName);
 					} else if(!game.isCreated()) {
-						Logger.warn("El cliente " + clientName + " envio una respuesta cuando no existe la partida. ClientId: " + clientId);
+						Logger.warn("El cliente " + userName + " envio una respuesta cuando no existe la partida. ClientId: " + userId);
 					} else {
-						Logger.warn("Respuesta recibida fuera del tiempo permitido del cliente " + clientName);
+						Logger.warn("Respuesta recibida fuera del tiempo permitido del cliente " + userName);
 					}
 					
 					break;
 				case ENDCONECTIONREQUESTID: // Fin conexion
 					game = Game.getGameInstance();
-					Logger.info("Finalizando conexion con el cliente " + clientId);
+					Logger.info("Finalizando conexion con el cliente " + userId);
 
 					if(game.isCreated())
-						game.removePlayer(clientId);
+						game.removePlayer(userId);
 					
 					packageOut = new EndClientConnectionPackage();
 					endConection = true;
 				}
 
-				if(packageOut != null) clientConnectionInstance.sendPackage(clientId, packageOut);
+				if(packageOut != null) userConnectionInstance.sendPackage(userId, packageOut);
 				if(gameStarted == true && game.isCreated() == false) {
 					gameStarted = false;
 				}
-				clientConnectionInstance.releaseSocket(clientId);
+				userConnectionInstance.releaseSocket(userId);
 			}
-			if(clientName != null)
-				Logger.info("El usuario " + clientName + " se ha desconectado.");
+			if(userName != null)
+				Logger.info("El usuario " + userName + " se ha desconectado.");
 
-			clientConnectionInstance.closeOutputStream(clientId);
-			clientConnectionInstance.closeInputStream(clientId);
-			clientConnectionInstance.freeClient(clientId);
+			userConnectionInstance.closeOutputStream(userId);
+			userConnectionInstance.closeInputStream(userId);
+			userConnectionInstance.freeUser(userId);
 			
-			Logger.info("Conexion finalizada correctamente con el cliente: " + clientId);
+			Logger.info("Conexion finalizada correctamente con el cliente: " + userId);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
