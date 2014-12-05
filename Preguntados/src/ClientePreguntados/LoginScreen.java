@@ -56,7 +56,7 @@ public class LoginScreen extends JFrame {
 	private  JTextArea jUsuarioInexistenteTextArea;
 	private  JTextArea jCamposVaciosTextArea;
 	private Connection connection = Connection.getInstance();
-	static String title;
+	private static String title;
 
 
 	public LoginScreen() {
@@ -166,4 +166,11 @@ public class LoginScreen extends JFrame {
 		
 		
 	}
+	
+	public static String getTitleGame(){
+		return title;
+	}
+	
+	
 }
+

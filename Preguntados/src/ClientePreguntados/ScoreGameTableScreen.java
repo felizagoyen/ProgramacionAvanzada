@@ -53,7 +53,7 @@ public class ScoreGameTableScreen extends JFrame {
 	 * @param userType 
 	 */
 	public ScoreGameTableScreen(ArrayList<Player> scoreTable, final Integer userType) {
-		setTitle(LoginScreen.title);
+		setTitle(LoginScreen.getTitleGame());
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new ClosingListener());
 		setBounds(100, 100, 352, 526);

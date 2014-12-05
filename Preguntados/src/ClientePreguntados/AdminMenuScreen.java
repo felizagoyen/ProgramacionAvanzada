@@ -32,7 +32,7 @@ public class AdminMenuScreen extends JFrame {
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new ClosingListener());
 		setBounds(100, 100, 300, 500);
-		setTitle(LoginScreen.title);
+		setTitle(LoginScreen.getTitleGame());
 		setLocationRelativeTo(null);
 		setResizable(false);
 		contentPane = new JPanel();

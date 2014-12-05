@@ -34,6 +34,7 @@ public class CreateGameScreen extends JFrame {
 	private JLabel errorCantMaxLabel;
 	private ArrayList<Integer> questionsID = new ArrayList<Integer>();
 	private CreateGameScreen thisFrame;
+	private static int maxPlayersInGame;
 	private Connection connection = Connection.getInstance();
 
 	/**
@@ -52,7 +53,7 @@ public class CreateGameScreen extends JFrame {
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new ClosingListener());
 		setBounds(100, 100, 604, 300);
-		setTitle(LoginScreen.title);
+		setTitle(LoginScreen.getTitleGame());
 		setLocationRelativeTo(null);
 		setResizable(false);
 		contentPane = new JPanel();
@@ -116,6 +117,7 @@ public class CreateGameScreen extends JFrame {
 					camposMalLlenadosLabel.setVisible(true);
 				}
 				else{
+					maxPlayersInGame = Integer.parseInt(cantMaxTextField.getText());
 					CreateGamePackage gamerequest = new CreateGamePackage(nombrePartidaTextField.getText(),  Integer.parseInt(cantMaxTextField.getText()), questionsID);
 					connection.sendPackage(gamerequest);
 //					JoinPlayerGameWindow joinadmingamewindow = new JoinPlayerGameWindow();
@@ -214,5 +216,9 @@ public class CreateGameScreen extends JFrame {
 	
 	public void receiveQuestionsID(ArrayList<Integer> qID){
 		questionsID = qID;
+	}
+	
+	public static int getMaxPlayersInGame(){
+		return maxPlayersInGame;
 	}
 }

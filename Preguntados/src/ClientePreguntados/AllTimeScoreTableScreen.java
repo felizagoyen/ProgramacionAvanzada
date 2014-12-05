@@ -44,7 +44,7 @@ public class AllTimeScoreTableScreen extends JFrame {
 
 
 	public AllTimeScoreTableScreen(ArrayList<User> topTen) {
-		setTitle(LoginScreen.title);
+		setTitle(LoginScreen.getTitleGame());
 		Score historicalScore;
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

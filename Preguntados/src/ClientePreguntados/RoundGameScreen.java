@@ -74,7 +74,7 @@ public class RoundGameScreen extends JFrame {
 
 	public RoundGameScreen() {
 		
-		setTitle(LoginScreen.title);
+		setTitle(LoginScreen.getTitleGame());
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new ClosingListener());
 		setBounds(100, 100, 335, 581);
