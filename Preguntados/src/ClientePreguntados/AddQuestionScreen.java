@@ -2,6 +2,8 @@ package ClientePreguntados;
 
 
 import javax.swing.JFrame;
+
+
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
@@ -10,6 +12,7 @@ import javax.swing.JTextArea;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 
+import Commons.CategoryPackage;
 import Commons.Question;
 
 import java.awt.event.ActionListener;
@@ -28,6 +31,7 @@ public class AddQuestionScreen extends JFrame {
 	private JTextField jRespuestaInc1tf;
 	private JTextField jRespuestaInc2tf;
 	private JTextField jRespuestaInc3tf;
+	private JComboBox<String> jCategoriaComboBox;
 	private Connection connection = Connection.getInstance();
 
 
@@ -37,7 +41,7 @@ public class AddQuestionScreen extends JFrame {
 		setBounds(100, 100, 300, 500);
 		setLocationRelativeTo(null);
 		setResizable(false);
-		setTitle(LoginScreen.title);
+		setTitle(LoginScreen.getTitleGame());
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -52,7 +56,7 @@ public class AddQuestionScreen extends JFrame {
 		contentPane.add(jPreguntaTextArea);
 		
 		JLabel lblRespuestaCorrecta = new JLabel("Respuesta Correcta");
-		lblRespuestaCorrecta.setBounds(23, 145, 116, 14);
+		lblRespuestaCorrecta.setBounds(23, 145, 162, 14);
 		contentPane.add(lblRespuestaCorrecta);
 		
 		jRespuestaCorrectaTextField = new JTextField();
@@ -61,7 +65,7 @@ public class AddQuestionScreen extends JFrame {
 		jRespuestaCorrectaTextField.setColumns(10);
 		
 		JLabel lblRespuestaInorrecta = new JLabel("Respuesta Incorrecta 1");
-		lblRespuestaInorrecta.setBounds(23, 201, 116, 14);
+		lblRespuestaInorrecta.setBounds(23, 201, 162, 14);
 		contentPane.add(lblRespuestaInorrecta);
 		
 		jRespuestaInc1tf = new JTextField();
@@ -70,7 +74,7 @@ public class AddQuestionScreen extends JFrame {
 		contentPane.add(jRespuestaInc1tf);
 		
 		JLabel lblRespuestaIncorrecta = new JLabel("Respuesta Incorrecta 2");
-		lblRespuestaIncorrecta.setBounds(23, 257, 116, 14);
+		lblRespuestaIncorrecta.setBounds(23, 257, 162, 14);
 		contentPane.add(lblRespuestaIncorrecta);
 		
 		jRespuestaInc2tf = new JTextField();
@@ -79,7 +83,7 @@ public class AddQuestionScreen extends JFrame {
 		contentPane.add(jRespuestaInc2tf);
 		
 		JLabel lblRespuestaIncorrecta_1 = new JLabel("Respuesta Incorrecta 3");
-		lblRespuestaIncorrecta_1.setBounds(23, 313, 116, 14);
+		lblRespuestaIncorrecta_1.setBounds(23, 313, 162, 14);
 		contentPane.add(lblRespuestaIncorrecta_1);
 		
 		jRespuestaInc3tf = new JTextField();
@@ -91,15 +95,11 @@ public class AddQuestionScreen extends JFrame {
 		lblCategora.setBounds(23, 369, 57, 14);
 		contentPane.add(lblCategora);
 		
-		final JComboBox<String> jCategoriaComboBox = new JComboBox<String>();
+		jCategoriaComboBox = new JComboBox<String>();
 		jCategoriaComboBox.setBounds(90, 369, 176, 20);
+		connection.sendPackage(new CategoryPackage(2));
 		contentPane.add(jCategoriaComboBox);
-		jCategoriaComboBox.addItem("Deportes");
-		jCategoriaComboBox.addItem("Entretenimiento");
-		jCategoriaComboBox.addItem("Geograf�a");
-		jCategoriaComboBox.addItem("Historia");
-		jCategoriaComboBox.addItem("Arte");
-		jCategoriaComboBox.addItem("Ciencia");
+
 		
 		
 		
@@ -138,5 +138,12 @@ public class AddQuestionScreen extends JFrame {
 		jRespuestaInc1tf.setText("");
 		jRespuestaInc2tf.setText("");
 		jRespuestaInc3tf.setText("");
+	}
+
+	public void setCategories(CategoryPackage categoryresponse) {
+		for(int i = 0; i < categoryresponse.getCategories().size(); i++){
+			jCategoriaComboBox.addItem(categoryresponse.getCategories().get(i).getCategory());
+		}
+		
 	}
 }

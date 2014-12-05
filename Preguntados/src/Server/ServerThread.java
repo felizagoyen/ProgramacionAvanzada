@@ -135,8 +135,9 @@ public class ServerThread extends Thread {
 					break;
 				case CATEGORYREQUESTID:
 					Logger.info("El usuario " + userName + " ha solicitado las categorias.");
+					CategoryPackage categoryrequest = (CategoryPackage) packageIn;
 					ArrayList<Category> categories = getAllCategories(); 
-					packageOut = new CategoryPackage(categories);
+					packageOut = new CategoryPackage(categories, categoryrequest.getIdScreen());
 					break;
 				case POINTSTABLEREQUESTID:
 					Logger.info("El usuario " + userName + " ha solicitado la tabla de puntuacion historica.");

@@ -1,7 +1,6 @@
 package ClientePreguntados;
 
 import javax.swing.JFrame;
-
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
@@ -15,6 +14,7 @@ import java.util.ArrayList;
 
 import javax.swing.JButton;
 
+import Commons.CategoryPackage;
 import Commons.Question;
 
 public class ChooseQuestionsScreen extends JFrame {
@@ -25,6 +25,7 @@ public class ChooseQuestionsScreen extends JFrame {
 
 	private static final long serialVersionUID = 2812926432775478079L;
 	private JPanel contentPane;
+	private Connection connection = Connection.getInstance();
 
 	
 
@@ -100,6 +101,7 @@ public class ChooseQuestionsScreen extends JFrame {
 				{
 					ChooseQuestionWindow choosequestionwindow = new ChooseQuestionWindow(combo1);
 					ClientThread.recieveScreen(choosequestionwindow);
+					connection.sendPackage(new CategoryPackage(1));
 					setEnabled(false);
 					choosequestionwindow.setVisible(true);
 				}
@@ -122,6 +124,7 @@ public class ChooseQuestionsScreen extends JFrame {
 				{
 					ChooseQuestionWindow choosequestionwindow = new ChooseQuestionWindow(combo2);
 					ClientThread.recieveScreen(choosequestionwindow);
+					connection.sendPackage(new CategoryPackage(1));
 					setEnabled(false);
 					choosequestionwindow.setVisible(true);
 				}
@@ -144,6 +147,7 @@ public class ChooseQuestionsScreen extends JFrame {
 				{
 					ChooseQuestionWindow choosequestionwindow = new ChooseQuestionWindow(combo3);
 					ClientThread.recieveScreen(choosequestionwindow);
+					connection.sendPackage(new CategoryPackage(1));
 					setEnabled(false);
 					choosequestionwindow.setVisible(true);
 				}
@@ -166,6 +170,7 @@ public class ChooseQuestionsScreen extends JFrame {
 				{
 					ChooseQuestionWindow choosequestionwindow = new ChooseQuestionWindow(combo4);
 					ClientThread.recieveScreen(choosequestionwindow);
+					connection.sendPackage(new CategoryPackage(1));
 					setEnabled(false);
 					choosequestionwindow.setVisible(true);
 				}
@@ -188,6 +193,7 @@ public class ChooseQuestionsScreen extends JFrame {
 				{
 					ChooseQuestionWindow choosequestionwindow = new ChooseQuestionWindow(combo5);
 					ClientThread.recieveScreen(choosequestionwindow);
+					connection.sendPackage(new CategoryPackage(1));
 					setEnabled(false);
 					choosequestionwindow.setVisible(true);
 				}
@@ -210,6 +216,7 @@ public class ChooseQuestionsScreen extends JFrame {
 				{
 					ChooseQuestionWindow choosequestionwindow = new ChooseQuestionWindow(combo6);
 					ClientThread.recieveScreen(choosequestionwindow);
+					connection.sendPackage(new CategoryPackage(1));
 					setEnabled(false);
 					choosequestionwindow.setVisible(true);
 				}
@@ -232,6 +239,7 @@ public class ChooseQuestionsScreen extends JFrame {
 				{
 					ChooseQuestionWindow choosequestionwindow = new ChooseQuestionWindow(combo7);
 					ClientThread.recieveScreen(choosequestionwindow);
+					connection.sendPackage(new CategoryPackage(1));
 					setEnabled(false);
 					choosequestionwindow.setVisible(true);
 				}
@@ -254,6 +262,7 @@ public class ChooseQuestionsScreen extends JFrame {
 				{
 					ChooseQuestionWindow choosequestionwindow = new ChooseQuestionWindow(combo8);
 					ClientThread.recieveScreen(choosequestionwindow);
+					connection.sendPackage(new CategoryPackage(1));
 					setEnabled(false);
 					choosequestionwindow.setVisible(true);
 				}
@@ -276,6 +285,7 @@ public class ChooseQuestionsScreen extends JFrame {
 				{
 					ChooseQuestionWindow choosequestionwindow = new ChooseQuestionWindow(combo9);
 					ClientThread.recieveScreen(choosequestionwindow);
+					connection.sendPackage(new CategoryPackage(1));
 					setEnabled(false);
 					choosequestionwindow.setVisible(true);
 				}
@@ -298,6 +308,7 @@ public class ChooseQuestionsScreen extends JFrame {
 				{
 					ChooseQuestionWindow choosequestionwindow = new ChooseQuestionWindow(combo10);
 					ClientThread.recieveScreen(choosequestionwindow);
+					connection.sendPackage(new CategoryPackage(1));
 					setEnabled(false);
 					choosequestionwindow.setVisible(true);
 				}
