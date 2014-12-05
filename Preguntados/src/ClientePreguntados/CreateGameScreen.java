@@ -1,6 +1,7 @@
 package ClientePreguntados;
 
 import javax.swing.JFrame;
+
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
@@ -8,16 +9,10 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 
 import Commons.CreateGamePackage;
-import Commons.PlayerJoinPackage;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
-import javax.swing.JFormattedTextField;
-
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeEvent;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.FocusAdapter;

@@ -1,22 +1,21 @@
 package ClientePreguntados;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextArea;
-import java.awt.Color;
 import java.awt.SystemColor;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class CantStartGameWindow extends JDialog {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3318299029244473079L;
 	private final JPanel contentPanel = new JPanel();
 
 	/**

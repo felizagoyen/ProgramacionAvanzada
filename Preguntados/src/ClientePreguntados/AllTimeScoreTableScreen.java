@@ -1,24 +1,17 @@
 package ClientePreguntados;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.util.ArrayList;
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
 import Commons.Score;
-import Commons.TopTenUserPackage;
 import Commons.User;
-
-import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
-
 import java.awt.SystemColor;
 import java.awt.Font;
 import javax.swing.JButton;
@@ -27,6 +20,10 @@ import java.awt.event.ActionEvent;
 
 public class AllTimeScoreTableScreen extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7768905512518131458L;
 	private JPanel contentPane;
 	private JPanel panel;
 	private DefaultTableModel tableModel = new DefaultTableModel(){
@@ -72,6 +69,10 @@ public class AllTimeScoreTableScreen extends JFrame {
 				"Puntuacion"
 			}
 		) {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -7385778525133478554L;
 			boolean[] columnEditables = new boolean[] {
 				false
 			};

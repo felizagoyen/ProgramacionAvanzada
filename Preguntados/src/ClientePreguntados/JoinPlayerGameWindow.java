@@ -1,10 +1,7 @@
 package ClientePreguntados;
 
-import java.awt.EventQueue;
-
 import javax.swing.JDialog;
 import javax.swing.JLabel;
-import java.awt.BorderLayout;
 import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;

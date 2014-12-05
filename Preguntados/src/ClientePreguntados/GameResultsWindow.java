@@ -1,8 +1,5 @@
 package ClientePreguntados;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -24,6 +21,10 @@ import java.util.ArrayList;
 
 public class GameResultsWindow extends JDialog {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -491986429287473780L;
 	private final JPanel contentPanel = new JPanel();
 	private JTextArea tiedManyUsersLabel;
 	private JTextArea tiedWith1Label;

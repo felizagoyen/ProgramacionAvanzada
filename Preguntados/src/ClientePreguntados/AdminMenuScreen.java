@@ -4,18 +4,12 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextArea;
-
 import java.awt.Font;
 import javax.swing.JButton;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import Commons.EndClientConnectionPackage;
 import Commons.TopTenUserPackage;
-
-import javax.swing.event.AncestorListener;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeEvent;
 
 public class AdminMenuScreen extends JFrame {
 

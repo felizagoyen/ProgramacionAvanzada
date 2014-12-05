@@ -1,9 +1,5 @@
 package ClientePreguntados;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -17,9 +13,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Timer;
-import java.util.TimerTask;
-
 import javax.swing.JLabel;
 
 import java.awt.Font;
@@ -27,6 +20,11 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 
 public class RoundGameScreen extends JFrame {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8917730911809754360L;
 
 	private Connection connection = Connection.getInstance();
 	

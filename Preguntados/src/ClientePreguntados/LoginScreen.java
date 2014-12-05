@@ -59,7 +59,7 @@ public class LoginScreen extends JFrame {
 	static String title;
 
 
-	public LoginScreen(final ClientePreguntados cliente) {
+	public LoginScreen() {
 		setTitle("Preguntados");
 		setBackground(Color.BLUE);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);

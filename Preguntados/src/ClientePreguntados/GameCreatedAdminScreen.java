@@ -1,8 +1,5 @@
 package ClientePreguntados;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -16,6 +13,10 @@ import java.awt.event.ActionEvent;
 
 public class GameCreatedAdminScreen extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6472066543008643691L;
 	private JPanel contentPane;
 	private Connection connection = Connection.getInstance();
 

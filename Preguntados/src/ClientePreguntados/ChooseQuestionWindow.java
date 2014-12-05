@@ -22,8 +22,6 @@ import Commons.QuestionsByCategoryPackage;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
@@ -108,13 +106,17 @@ public class ChooseQuestionWindow extends JDialog {
 
 			questionList.setBackground(Color.ORANGE);
 			questionList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-			questionList.setModel(new AbstractListModel() {
+			questionList.setModel(new AbstractListModel<Question>() {
 
-				String[] values = new String[] {};
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = -7605920161475241349L;
+				Question[] values = new Question[] {};
 				public int getSize() {
 					return values.length;
 				}
-				public Object getElementAt(int index) {
+				public Question getElementAt(int index) {
 					return values[index];
 				}
 			});
@@ -127,7 +129,7 @@ public class ChooseQuestionWindow extends JDialog {
 			categoriaComboBox = new JComboBox<String>();
 			categoriaComboBox.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					if(!categoriaComboBox.getSelectedItem().equals("Categorï¿½a") && categoriaComboBox.getItemAt(0).equals("Categorï¿½a"))
+					if(!categoriaComboBox.getSelectedItem().equals("Categoría") && categoriaComboBox.getItemAt(0).equals("Categoría"))
 						categoriaComboBox.removeItem("Categorï¿½a");
 					customModel.removeAllQuestions();
 					connection.sendPackage(new QuestionsByCategoryPackage(categoriaComboBox.getSelectedItem().toString()));
