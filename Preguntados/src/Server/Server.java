@@ -39,6 +39,7 @@ public class Server {
 	}
 	
 	public static void main(String[] args) {
+		new ServerScreen().setVisible(true);
 		new Server();
 	}
 	
