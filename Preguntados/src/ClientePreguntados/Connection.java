@@ -51,6 +51,8 @@ public class Connection {
 			response = inputObject.readObject();
 		}catch(Exception e){
 			e.printStackTrace();
+			ServerErrorWindow servererrorwindow = new ServerErrorWindow();
+			servererrorwindow.setVisible(true);
 		}
 		return response;
 	}
