@@ -16,6 +16,8 @@ import javax.swing.JButton;
 
 import Commons.CategoryPackage;
 import Commons.Question;
+import java.awt.Font;
+import javax.swing.SwingConstants;
 
 public class ChooseQuestionsScreen extends JFrame {
 
@@ -39,7 +41,8 @@ public class ChooseQuestionsScreen extends JFrame {
 	public ChooseQuestionsScreen(final CreateGameScreen creategamescreen) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		addWindowListener(new ClosingListener());
-		setBounds(100, 100, 548, 374);
+		setBounds(100, 100, 548, 429);
+		setTitle(LoginScreen.getTitleGame());
 		setLocationRelativeTo(null);
 		setResizable(false);
 		contentPane = new JPanel();
@@ -132,7 +135,7 @@ public class ChooseQuestionsScreen extends JFrame {
 		});
 		combo2.addItem(new Question("Al azar"));
 		combo2.addItem(new Question("Seleccionar pregunta..."));
-		combo2.setBounds(141, 64, 338, 20);
+		combo2.setBounds(141, 61, 338, 20);
 		contentPane.add(combo2);
 		
 		final JComboBox<Question> combo3 = new JComboBox<Question>();
@@ -319,9 +322,23 @@ public class ChooseQuestionsScreen extends JFrame {
 		combo10.setBounds(141, 261, 338, 20);
 		contentPane.add(combo10);
 		
+		final JLabel lblPreguntaRepetida = new JLabel("Recuerde que cada pregunta puede elegirse solo una vez.");
+		lblPreguntaRepetida.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPreguntaRepetida.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblPreguntaRepetida.setBounds(0, 301, 522, 32);
+		lblPreguntaRepetida.setVisible(true);
+		contentPane.add(lblPreguntaRepetida);
+		
+		final JLabel lblPreguntaRepetida2 = new JLabel("Elimine la/las preguntas repetidas y vuelva a oprimir el bot\u00F3n \"Aceptar\".");
+		lblPreguntaRepetida2.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblPreguntaRepetida2.setBounds(50, 333, 465, 11);
+		lblPreguntaRepetida2.setVisible(false);
+		contentPane.add(lblPreguntaRepetida2);
+		
 		JButton btnAceptar = new JButton("Aceptar");
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				boolean questionRepeated = false;
 				ArrayList<Integer> questionsID = new ArrayList<Integer> ();
 				questionsID.add(((Question)combo1.getSelectedItem()).getID());
 				questionsID.add(((Question)combo2.getSelectedItem()).getID());
@@ -333,12 +350,30 @@ public class ChooseQuestionsScreen extends JFrame {
 				questionsID.add(((Question)combo8.getSelectedItem()).getID());
 				questionsID.add(((Question)combo9.getSelectedItem()).getID());
 				questionsID.add(((Question)combo10.getSelectedItem()).getID());
-				creategamescreen.receiveQuestionsID(questionsID);
-				creategamescreen.setEnabled(true);
-				setVisible(false);
+				
+				for(int i = 0; i < questionsID.size(); i++){
+					if(questionsID.get(i) != null && questionsID.lastIndexOf(questionsID.get(i)) != i ){
+						questionRepeated = true;
+						break;
+					}
+				}
+				if(!questionRepeated){
+					creategamescreen.receiveQuestionsID(questionsID);
+					creategamescreen.setEnabled(true);
+					setVisible(false);
+				}else{
+					lblPreguntaRepetida.setText("Al menos una pregunta se encuentra repetida.");
+					lblPreguntaRepetida2.setVisible(true);
+				}
 			}
 		});
-		btnAceptar.setBounds(390, 302, 89, 23);
+		btnAceptar.setBounds(368, 367, 111, 23);
 		contentPane.add(btnAceptar);
+		
+		JLabel lblNewLabel_1 = new JLabel("Seleccione las preguntas para su partida");
+		lblNewLabel_1.setFont(new Font("Trebuchet MS", Font.BOLD, 17));
+		lblNewLabel_1.setBounds(103, 8, 382, 20);
+		contentPane.add(lblNewLabel_1);
+		
 	}
 }

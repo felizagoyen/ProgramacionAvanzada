@@ -12,6 +12,8 @@ import Commons.StartGamePackage;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JList;
 import javax.swing.JLabel;
@@ -32,7 +34,14 @@ public class GameCreatedAdminScreen extends JFrame {
 
 	public GameCreatedAdminScreen(Integer maxPlayersInGame, String adminName) {
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		addWindowListener(new ClosingListener());
+		addWindowListener(new WindowAdapter(){
+			 public void windowClosing(WindowEvent e) {
+				 	AdminMenuScreen adminmenuscreen = new AdminMenuScreen();
+					adminmenuscreen.setVisible(true);
+					connection.sendPackage(new PlayerDisconnectPackage(null, true));
+					dispose();
+	            }	
+		});
 		setBounds(100, 100, 356, 401);
 		setTitle(LoginScreen.getTitleGame());
 		setLocationRelativeTo(null);
