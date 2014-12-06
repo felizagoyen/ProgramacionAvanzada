@@ -120,12 +120,6 @@ public class CreateGameScreen extends JFrame {
 					maxPlayersInGame = Integer.parseInt(cantMaxTextField.getText());
 					CreateGamePackage gamerequest = new CreateGamePackage(nombrePartidaTextField.getText(),  Integer.parseInt(cantMaxTextField.getText()), questionsID);
 					connection.sendPackage(gamerequest);
-//					JoinPlayerGameWindow joinadmingamewindow = new JoinPlayerGameWindow();
-//					RoundGameScreen roundgamescreen = new RoundGameScreen();
-//					ClientThread.recieveScreen(joinadmingamewindow);
-//					ClientThread.recieveScreen(roundgamescreen);
-//					GameCreatedAdminScreen gamecreated = new GameCreatedAdminScreen();
-//					gamecreated.setVisible(true);
 					setVisible(false);
 				}
 				

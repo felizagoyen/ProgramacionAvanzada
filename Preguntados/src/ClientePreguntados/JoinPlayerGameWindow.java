@@ -2,8 +2,13 @@ package ClientePreguntados;
 
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+
 import java.awt.Font;
+
 import javax.swing.JButton;
+
+import Commons.PlayerDisconnectPackage;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -11,22 +16,7 @@ public class JoinPlayerGameWindow extends JDialog {
 
 	/**
 	 * Launch the application.
-	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					JoinPlayerGameWindow dialog = new JoinPlayerGameWindow();
-//					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-//					dialog.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
 
-	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -8041209032068911221L;
@@ -36,11 +26,14 @@ public class JoinPlayerGameWindow extends JDialog {
 	private JLabel lblGameNotExist;
 	private JLabel lblGameStarted;
 	private JButton btnOkButton; 
+	private JButton btnLeaveGame; 
+	private Connection connection = Connection.getInstance();
 
 	/**
 	 * Create the dialog.
+	 * @param userType 
 	 */
-	public JoinPlayerGameWindow() {
+	public JoinPlayerGameWindow(final Integer userType) {
 		
 		
 		setBounds(100, 100, 450, 300);
@@ -62,7 +55,7 @@ public class JoinPlayerGameWindow extends JDialog {
 		
 		lblGameFull = new JLabel("La partida est\u00E1 llena.");
 		lblGameFull.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblGameFull.setBounds(64, 175, 231, 56);
+		lblGameFull.setBounds(104, 96, 231, 56);
 		getContentPane().add(lblGameFull);
 		
 		lblGameNotExist = new JLabel("Imposible unirse. La partida no existe.");
@@ -78,14 +71,41 @@ public class JoinPlayerGameWindow extends JDialog {
 		btnOkButton = new JButton("Ok");
 		btnOkButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				UserMenuScreen usermenuscreen = new UserMenuScreen();
-				usermenuscreen.setVisible(true);
+				if(userType == 1){
+					
+					UserMenuScreen usermenuscreen = new UserMenuScreen();
+					usermenuscreen.setVisible(true);
+				}
+				else{
+					AdminMenuScreen adminmenuscreen = new AdminMenuScreen();
+					adminmenuscreen.setVisible(true);
+				}
 				dispose();
+				connection.sendPackage(new PlayerDisconnectPackage(null));
 			}
 		});
 		btnOkButton.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnOkButton.setBounds(305, 209, 100, 23);
+		btnOkButton.setBounds(284, 221, 100, 23);
 		getContentPane().add(btnOkButton);
+		
+		btnLeaveGame = new JButton("Salir de la partida y volver al menu principal");
+		btnLeaveGame.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(userType == 1){
+					UserMenuScreen usermenuscreen = new UserMenuScreen();
+					usermenuscreen.setVisible(true);
+				}
+				else{
+					AdminMenuScreen adminmenuscreen = new AdminMenuScreen();
+					adminmenuscreen.setVisible(true);
+				}
+				dispose();
+				connection.sendPackage(new PlayerDisconnectPackage(null));
+			}
+		});
+		btnLeaveGame.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnLeaveGame.setBounds(40, 221, 350, 23);
+		getContentPane().add(btnLeaveGame);
 		
 		lblGameFull.setVisible(false);
 		lblGameNotExist.setVisible(false);
@@ -93,6 +113,7 @@ public class JoinPlayerGameWindow extends JDialog {
 		lblIsJoined.setVisible(false);
 		lblWaitGame.setVisible(false);
 		btnOkButton.setVisible(false);
+		btnLeaveGame.setVisible(false);
 
 	}
 	
@@ -102,6 +123,7 @@ public class JoinPlayerGameWindow extends JDialog {
 		case 1:
 			lblIsJoined.setVisible(true);
 			lblWaitGame.setVisible(true);
+			btnLeaveGame.setVisible(true);
 			break;
 		case 0:
 			lblGameFull.setVisible(true);

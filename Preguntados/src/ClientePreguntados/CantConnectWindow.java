@@ -8,7 +8,10 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+
 import java.awt.Font;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class CantConnectWindow extends JDialog {
 
@@ -17,6 +20,12 @@ public class CantConnectWindow extends JDialog {
 
 	public CantConnectWindow() {
 		setTitle("Preguntados - ERROR");
+		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+		addWindowListener(new WindowAdapter(){
+            public void windowClosing(WindowEvent e) {
+               System.exit(ERROR);
+            }	
+		});
 		setBounds(100, 100, 470, 178);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
