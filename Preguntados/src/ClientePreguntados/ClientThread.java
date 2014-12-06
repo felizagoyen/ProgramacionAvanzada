@@ -8,6 +8,7 @@ import Commons.AnswerQuestionPackage;
 import Commons.CategoryPackage;
 import Commons.CreateGamePackage;
 import Commons.NotifyPlayerJoinToAdminPackage;
+import Commons.PlayerDisconnectPackage;
 import Commons.StartGamePackage;
 import Commons.TopTenUserPackage;
 import Commons.UserLoginPackage;
@@ -39,6 +40,7 @@ public class ClientThread extends Thread {
 	private static final int ENDTIMEID = 12;
 	private static final int RESULTSGAMEID = 13;
 	private static final int PLAYERJOINEDNOTIFICATIONID = 15;
+	private static final int PLAYERDISCONNECTEDID = 16;
 	private Boolean endConnection = false;
 	private Connection connection = Connection.getInstance();
 	
@@ -109,6 +111,16 @@ public class ClientThread extends Thread {
 				case PLAYERJOINEDNOTIFICATIONID:
 					NotifyPlayerJoinToAdminPackage notification = (NotifyPlayerJoinToAdminPackage) packageIn;
 					gamecreated.playerHasJoined(notification.getUserName());
+					break;
+					
+				case PLAYERDISCONNECTEDID:
+					if(userType == 0){
+						PlayerDisconnectPackage playerdisconnect = (PlayerDisconnectPackage) packageIn;
+						gamecreated.playerHasLeft(playerdisconnect.getUserName());
+					}
+					else{
+						joinplayergamewindow.setGameCanceledLabel();
+					}
 					break;
 				case STARTGAMERESPONSEID: // Se pudo comenzar la partida?
 					StartGamePackage startgameresponse = (StartGamePackage) packageIn;

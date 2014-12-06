@@ -26,7 +26,9 @@ public class JoinPlayerGameWindow extends JDialog {
 	private JLabel lblGameNotExist;
 	private JLabel lblGameStarted;
 	private JButton btnOkButton; 
-	private JButton btnLeaveGame; 
+	private JButton btnLeaveGame;
+	private JLabel lblGameCanceled;
+	private JLabel lblGameCanceled2;
 	private Connection connection = Connection.getInstance();
 
 	/**
@@ -81,7 +83,6 @@ public class JoinPlayerGameWindow extends JDialog {
 					adminmenuscreen.setVisible(true);
 				}
 				dispose();
-				connection.sendPackage(new PlayerDisconnectPackage(null));
 			}
 		});
 		btnOkButton.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -100,12 +101,22 @@ public class JoinPlayerGameWindow extends JDialog {
 					adminmenuscreen.setVisible(true);
 				}
 				dispose();
-				connection.sendPackage(new PlayerDisconnectPackage(null));
+				connection.sendPackage(new PlayerDisconnectPackage(null, false));
 			}
 		});
 		btnLeaveGame.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnLeaveGame.setBounds(40, 221, 350, 23);
 		getContentPane().add(btnLeaveGame);
+		
+		lblGameCanceled = new JLabel("El administrador ha cancelado la partida, oprima");
+		lblGameCanceled.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblGameCanceled.setBounds(20, 54, 424, 56);
+		getContentPane().add(lblGameCanceled);
+		
+		lblGameCanceled2 = new JLabel("\"Ok\" para regresar al men\u00FA.");
+		lblGameCanceled2.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblGameCanceled2.setBounds(81, 96, 424, 56);
+		getContentPane().add(lblGameCanceled2);
 		
 		lblGameFull.setVisible(false);
 		lblGameNotExist.setVisible(false);
@@ -114,6 +125,8 @@ public class JoinPlayerGameWindow extends JDialog {
 		lblWaitGame.setVisible(false);
 		btnOkButton.setVisible(false);
 		btnLeaveGame.setVisible(false);
+		lblGameCanceled.setVisible(false);
+		lblGameCanceled2.setVisible(false);
 
 	}
 	
@@ -137,5 +150,17 @@ public class JoinPlayerGameWindow extends JDialog {
 			lblGameStarted.setVisible(true);
 			btnOkButton.setVisible(true);
 		}
+	}
+
+
+	public void setGameCanceledLabel() {
+		lblGameFull.setVisible(false);
+		lblGameNotExist.setVisible(false);
+		lblGameStarted.setVisible(false);
+		lblIsJoined.setVisible(false);
+		lblWaitGame.setVisible(false);
+		btnOkButton.setVisible(true);
+		lblGameCanceled.setVisible(true);
+		lblGameCanceled2.setVisible(true);
 	}
 }

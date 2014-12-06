@@ -4,11 +4,16 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextArea;
+
 import java.awt.Font;
+
 import javax.swing.JButton;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
 import Commons.EndClientConnectionPackage;
+import Commons.PlayerJoinPackage;
 import Commons.TopTenUserPackage;
 
 public class AdminMenuScreen extends JFrame {
@@ -63,6 +68,9 @@ public class AdminMenuScreen extends JFrame {
 		jUnirsePartidaButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		jUnirsePartidaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				PlayerJoinPackage joinrequest = new PlayerJoinPackage();
+				connection.sendPackage(joinrequest);
+				dispose();
 			}
 		});
 		jUnirsePartidaButton.setBounds(65, 194, 162, 23);

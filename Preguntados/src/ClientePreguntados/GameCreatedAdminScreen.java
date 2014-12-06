@@ -83,7 +83,7 @@ public class GameCreatedAdminScreen extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				AdminMenuScreen adminmenuscreen = new AdminMenuScreen();
 				adminmenuscreen.setVisible(true);
-				connection.sendPackage(new PlayerDisconnectPackage(null));
+				connection.sendPackage(new PlayerDisconnectPackage(null, true));
 				dispose();
 			}
 		});
@@ -97,6 +97,15 @@ public class GameCreatedAdminScreen extends JFrame {
 		players++;
 		playersInGameLabel.setText(players.toString());
 		listModel.addElement(userName);
+		playersList.setModel(listModel);
+	}
+
+
+	public void playerHasLeft(String userName) {
+		Integer players = Integer.parseInt(playersInGameLabel.getText());
+		players--;
+		playersInGameLabel.setText(players.toString());
+		listModel.removeElement(userName);		
 		playersList.setModel(listModel);
 	}
 }

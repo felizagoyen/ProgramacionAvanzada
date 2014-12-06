@@ -58,10 +58,6 @@ public class UserMenuScreen extends JFrame {
 		jUnirsePartidaButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		jUnirsePartidaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				JoinPlayerGameWindow joinplayergamewindow = new JoinPlayerGameWindow();
-//				RoundGameScreen rgs = new RoundGameScreen();
-//				ClientThread.recieveScreen(rgs);
-//				ClientThread.recieveScreen(joinplayergamewindow);
 				PlayerJoinPackage joinrequest = new PlayerJoinPackage();
 				connection.sendPackage(joinrequest);
 				dispose();
