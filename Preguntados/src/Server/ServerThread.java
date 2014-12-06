@@ -72,6 +72,7 @@ public class ServerThread extends Thread {
 					break;
 				case CREATEGAMEREQUESTID: // Creacion de partida
 					CreateGamePackage gameRequest = (CreateGamePackage) packageIn;
+					Boolean gameCreated = true;
 					game = Game.getGameInstance();
 					Logger.info("Creando partida...");
 					
@@ -79,12 +80,12 @@ public class ServerThread extends Thread {
 						game.createGame(gameRequest.getGameName(), gameRequest.getMaxPlayers(), gameRequest.getQuestionsID());
 						Logger.info("Partida creada correctamente.");
 						game.addPlayer(userId, userName); //Al crear la partida el administrador se une.
-						packageOut = new CreateGamePackage(true);
 					} else {
-						packageOut = new CreateGamePackage(false);
+						gameCreated = false;
 						Logger.warn("La partida ya estaba creada");
 					}
 					
+					packageOut = new CreateGamePackage(gameCreated);
 					break;
 				case PLAYERJOINREQUESTID: // Jugador uniendose a partida
 					int joinStatus; //-2: Ya estaba dentro el jugador, -1: No existe la partida
@@ -107,6 +108,8 @@ public class ServerThread extends Thread {
 						Logger.info("La partida está llena. El jugador " + userName + " no se pudo unir.");
 					} else {
 						game.addPlayer(userId, userName);
+						userConnectionInstance.sendPackage(game.getAdminPlayer().getId(), new NotifyPlayerJoinToAdminPackage(userName));
+						userConnectionInstance.releaseSocket(userId);
 						joinStatus = 1;
 					}
 					

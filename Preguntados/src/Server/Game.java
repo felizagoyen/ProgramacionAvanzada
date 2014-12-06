@@ -98,6 +98,10 @@ public class Game extends Thread {
 		return isStarted;
 	}
 	
+	public Player getAdminPlayer() {
+		return players.get(0);
+	}
+	
 	public void resetGame() {
 		players = new ArrayList<Player>();
 		gameName = null;
