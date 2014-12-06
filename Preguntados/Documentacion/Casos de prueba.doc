@@ -55,9 +55,6 @@ Caso 1)
 - El administrador se arrepiente y presiona cancelar en lugar de seleccionar una pregunta.
 - El sistema debe volver a la pantalla anterior y mantener el criterio aleatorio para dicha pregunta.
 
-Detección de error: No se estaba enviando paquete del servidor para que esto no ocurra.
-
-
 
 Inicio de partida.
 - El administrador lanza la partida.
@@ -67,6 +64,11 @@ Flujos Alternativo:
 Caso 1
 - El sistema detecta que no hay suficientes jugadores para lanzar la partida. En este caso debe informar al administrador que no puede lanzarla.
 
+Caso 2
+- El administrador cancela la partida.
+- El sistema debe informar a todos los jugadores que la partida se ha cancelado.
+
+Deteccion de error: El servidor no informaba a los jugadores que se había cancelado. No se reseteaba la partida. El cliente no ocultaba un botón.
 
 Agregar pregunta
 - El administrador presiona el botón de agregar pregunta.
@@ -89,15 +91,18 @@ Caso 2
 Casos para el administrador y jugador.
 Unirse a partida
 - El usuario presiona el botón para unirse a la partida.
-- El sistema lo conecta a la partida y le informa que debe esperar a que el administrador lance la partida.
+- El sistema lo conecta a la partida y le informa que debe esperar a que el administrador lance la partida. También informa al creador que alguien se ha unido.
 
 Flujos Alternativos:
 Caso 1
 - La partida no fue creada. El sistema debe informar al usuario que no hay partida existente para jugar.
 
 Caso 2
-- La partida está llena. El sustema debe informar que el usuario no puede unirse a la partida porque ésta se encuentra llena.
+- La partida está llena. El sistema debe informar que el usuario no puede unirse a la partida porque ésta se encuentra llena.
 
+Caso 3
+- Dentro de la sala de espera, el jugador abandona la partida.
+- El sistema debe informarle al administrador lo ocurrido.
 
 Tabla histórica.
 Flujo normal.
@@ -132,6 +137,14 @@ Fin del juego:
 - El sistema debe informar la tabla ordenado de mayor a menor, según la cantidad de respuestas correctas, y debajo los usuario que participaron y se desconectaron.
 - El usuario pulsa el botón de volver al menú principal.
 - El sistema debe llevar al usuario hacia la pantalla principal.
+
+Servidor.
+Fin del servidor.
+- El servidor es finalizado desde la consola con 'q'.
+- El servidor debe informarle a todos los usuarios conectados de lo ocurrido.
+- Cada cliente muestra un mensaje informando lo ocurrido y finaliza.
+
+Detección de errores: El cliente no finalizaba correctamente y seguía esperando paquetes del servidor.
 
 
 
