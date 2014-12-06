@@ -159,6 +159,7 @@ public class JoinPlayerGameWindow extends JDialog {
 		lblGameStarted.setVisible(false);
 		lblIsJoined.setVisible(false);
 		lblWaitGame.setVisible(false);
+		btnLeaveGame.setVisible(false);
 		btnOkButton.setVisible(true);
 		lblGameCanceled.setVisible(true);
 		lblGameCanceled2.setVisible(true);
