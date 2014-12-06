@@ -5,7 +5,6 @@ Flujo normal:
 - Si es administrador, el sistema debe mostrarlos el menú para el administrador. Si no es administrador, debe mostrarnos el menú para los jugadores.
 
 Casos Alternativos:
-
 Caso 1
 - Ingresar un usuario y/o contraseña que no existen en la base de datos.
 - El sistema debe informar que el usuario y/o la contraseña son inválidos.
@@ -19,6 +18,7 @@ Detección de error: No informaba el mensaje correcto, decía que no se encontra
 Caso 3
 - Presionar el botón salir.
 - El sistema debe finalizar.
+
 
 
 Casos únicamente para el administrador
@@ -40,6 +40,9 @@ Caso 2)
 - El administrador quiere crear una partida, cuando ya hay una en curso.
 - El sistema debe informar que no es posible crear una partida, porque ya hay una en curso.
 
+Detección de error: El sistema no le informaba al administrador que la partida ya existe y cerraba todas las ventanas
+
+
 
 Selección de preguntas.
 Flujo normal:
@@ -50,10 +53,24 @@ Para cada pregunta que desea seleccionar, se repite:
 - El sistema muestra las preguntas de la categoría seleccionada.
 - El administrador selecciona una pregunta.
 
+Deteccion de errores: El sistema permite elegir 2 o más veces la misma pregunta. En ocaciones falla al completar la lista de preguntas al elegir una categoría.
+
 Flujo Alternativo:
 Caso 1)
 - El administrador se arrepiente y presiona cancelar en lugar de seleccionar una pregunta.
 - El sistema debe volver a la pantalla anterior y mantener el criterio aleatorio para dicha pregunta.
+
+
+
+Sala de espera de inicio de partida
+Para cada jugador que se conecta:
+- El sistema informa al administrador, que usuario ha entrado a la partida
+
+Caso Alternativo:
+Caso 1)
+- Un jugador sale de la sala de espera.
+- El sistema le informa al administrador, quitandolo de la lista de jugadores.
+
 
 
 Inicio de partida.
@@ -69,6 +86,8 @@ Caso 2
 - El sistema debe informar a todos los jugadores que la partida se ha cancelado.
 
 Deteccion de error: El servidor no informaba a los jugadores que se había cancelado. No se reseteaba la partida. El cliente no ocultaba un botón.
+
+
 
 Agregar pregunta
 - El administrador presiona el botón de agregar pregunta.
@@ -86,8 +105,6 @@ Detección de error: El sistema no controlaba que los campos estuvieran completo
 Caso 2
 - El administrador no desea agregar una nueva pregunta y presiona el botón atrás.
 - El sistema debe llevarlo al menú principal nuevamente, sin agregar la pregunta a la base de datos.
-
-
 Casos para el administrador y jugador.
 Unirse a partida
 - El usuario presiona el botón para unirse a la partida.
@@ -101,14 +118,20 @@ Caso 2
 - La partida está llena. El sistema debe informar que el usuario no puede unirse a la partida porque ésta se encuentra llena.
 
 Caso 3
+- La partida ya se encuentra en curso. El sistema debe informar que el usuario no puede unirse a la partida porque ésta ya fue lanzada.
+
+Caso 4
 - Dentro de la sala de espera, el jugador abandona la partida.
 - El sistema debe informarle al administrador lo ocurrido.
+
+
 
 Tabla histórica.
 Flujo normal.
 - El usuario presiona el botón de tabla histórica.
 - El sistema informa al usuario los 10 mejores jugadores de todos los tiempos, ordenados por cantidad de partidas ganadas.
 Detección de error: Devolvía los 10 jugadores en orden ascendente, colocando primero los jugadores sin partidas ganadas.
+
 
 
 Juego
@@ -138,6 +161,7 @@ Fin del juego:
 - El usuario pulsa el botón de volver al menú principal.
 - El sistema debe llevar al usuario hacia la pantalla principal.
 
+
 Servidor.
 Fin del servidor.
 - El servidor es finalizado desde la consola con 'q'.
@@ -148,4 +172,4 @@ Detección de errores: El cliente no finalizaba correctamente y seguía esperand
 
 
 
-
+Se ha detectado también, que no todas las ventanas informan la desconexión del jugador cuando se cierra con la X.
