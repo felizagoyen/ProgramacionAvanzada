@@ -44,16 +44,9 @@ AnswerQuestionPackage
 PACKAGEID: 10
 Envío de la respuesta seleccionada por el jugador en la ronda determinada.
 
-
-
-
-
-
-
-
-
-
-
+PlayerDisconnectPackage
+PACKAGEID: 16
+El jugador informa al cliente que ha abandonado la sala de espera de la partida.
 
 Paquetes enviados por el servidor
 UserLoginPackage:
@@ -115,5 +108,9 @@ Informa a cada cliente, que el servidor se ha cerrado para que finalicen.
 NotifyPlayerJoinToAdminPackage
 PACKAGEID: 15
 Informa al administrador que creo la partida, que un usuario se ha unido a la partida, indicandole el nombre para que lo liste.
+
+PlayerDisconnectPackage
+PACKAGEID: 16
+Si el paquete lo recibe de un jugador cualquiera, le informa al administrador que se ha desconectado el jugador. Si el desconectado es el administrador, le informa al resto de los jugadores que la partida se ha cancelado.
 
 

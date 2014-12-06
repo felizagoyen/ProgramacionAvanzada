@@ -128,7 +128,9 @@ public class Game extends Thread {
 	}
 
 	public boolean empty() {
-		return (players.size() > 1);
+		if(players.size() > 1)
+			return false;
+		return true;
 	}
 
 }

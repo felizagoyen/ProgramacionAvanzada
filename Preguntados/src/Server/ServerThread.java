@@ -173,7 +173,7 @@ public class ServerThread extends Thread {
 					
 					break;
 				case PLAYERDISCONNECTREQUESTID:
-					if(userId.equals(game.getAdminPlayer())) {
+					if(userId.equals(game.getAdminPlayer().getId())) {
 						Logger.info("El administrador ha cancelado la partida");
 						if(!game.empty())
 							game.cancelGame();
