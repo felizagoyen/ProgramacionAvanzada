@@ -87,7 +87,7 @@ public class GameCreatedAdminScreen extends JFrame {
 				dispose();
 			}
 		});
-		btnNewButton.setBounds(39, 339, 264, 23);
+		btnNewButton.setBounds(23, 339, 317, 23);
 		contentPane.add(btnNewButton);
 	}
 

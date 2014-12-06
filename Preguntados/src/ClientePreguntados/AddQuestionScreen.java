@@ -38,7 +38,7 @@ public class AddQuestionScreen extends JFrame {
 	public AddQuestionScreen() {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 300, 500);
+		setBounds(100, 100, 300, 561);
 		setLocationRelativeTo(null);
 		setResizable(false);
 		setTitle(LoginScreen.getTitleGame());
@@ -106,6 +106,10 @@ public class AddQuestionScreen extends JFrame {
 		JButton jAgregarPreguntaButton = new JButton("Agregar Pregunta");
 		jAgregarPreguntaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(jPreguntaTextArea.getText().isEmpty() || jRespuestaCorrectaTextField.getText().isEmpty() || jRespuestaInc1tf.getText().isEmpty()
+						|| jRespuestaInc2tf.getText().isEmpty() || jRespuestaInc3tf.getText().isEmpty() ){
+					
+				}
 				ArrayList <String> incorrectas = new ArrayList <String> ();
 				incorrectas.add(jRespuestaInc1tf.getText());
 				incorrectas.add(jRespuestaInc2tf.getText());
@@ -116,7 +120,7 @@ public class AddQuestionScreen extends JFrame {
 				connection.sendPackage(question);
 			}
 		});
-		jAgregarPreguntaButton.setBounds(23, 416, 243, 23);
+		jAgregarPreguntaButton.setBounds(23, 499, 243, 23);
 		contentPane.add(jAgregarPreguntaButton);
 		
 		JButton jAtrasButton = new JButton("Atr\u00E1s");
@@ -130,6 +134,10 @@ public class AddQuestionScreen extends JFrame {
 		});
 		jAtrasButton.setBounds(177, 11, 89, 23);
 		contentPane.add(jAtrasButton);
+		
+		JLabel lblNoSePudo = new JLabel("No se pudo agregar la pregunta. Alguno de los campos esta vac\u00EDo");
+		lblNoSePudo.setBounds(10, 414, 368, 14);
+		contentPane.add(lblNoSePudo);
 	}
 	
 	public void clearScreen(){
