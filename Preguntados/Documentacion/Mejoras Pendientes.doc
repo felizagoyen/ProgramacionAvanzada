@@ -1,0 +1,7 @@
+﻿Por la falta de tiempo, no pudimos implementar varias ideas. A continuación se detallarán algunas:
+
+- Uso de handler para atrapar señales (CTRL-C) para finalizar el servidor.
+- Dar la posibilidad al administrador de expulsar jugadores en la sala de espera.
+- Aumentar el número de partidas que se pueden crear en simultaneo.
+- Creación de lobby, donde puede verse todas las partidas creadas.
+- Creación de nuevo usuario.
