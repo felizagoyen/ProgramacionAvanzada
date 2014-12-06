@@ -14,7 +14,7 @@ public class GameThread extends Thread {
 	
 	private static final int TIMETOANSWER = 30000;
 	private static final int TIMETONEXTQUESTION = 3000;
-	private static final int MAXROUND = 3;
+	private static final int MAXROUND = 10;
 	private Integer maxPlayers;
 	private ArrayList<Player> players = new ArrayList<Player>();
 	private ArrayList<Integer> questionsId = new ArrayList<Integer>();
