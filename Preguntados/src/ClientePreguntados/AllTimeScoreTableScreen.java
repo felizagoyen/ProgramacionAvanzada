@@ -2,29 +2,21 @@ package ClientePreguntados;
 
 import java.awt.BorderLayout;
 import java.util.ArrayList;
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
 import Commons.Score;
 import Commons.User;
-
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
-
 import java.awt.SystemColor;
 import java.awt.Font;
-
 import javax.swing.JButton;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 public class AllTimeScoreTableScreen extends JFrame {
 
@@ -51,24 +43,11 @@ public class AllTimeScoreTableScreen extends JFrame {
 	private JTable table;
 
 
-	public AllTimeScoreTableScreen(ArrayList<User> topTen, final Integer userType) {
+	public AllTimeScoreTableScreen(ArrayList<User> topTen) {
 		setTitle(LoginScreen.getTitleGame());
 		Score historicalScore;
 		
-		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		addWindowListener(new WindowAdapter(){
-			public void windowClosing (WindowEvent e){
-				if(userType == 0){
-					AdminMenuScreen adminmenuscreen = new AdminMenuScreen();
-					adminmenuscreen.setVisible(true);
-				}
-				else{
-					UserMenuScreen usermenuscreen = new UserMenuScreen();
-					usermenuscreen.setVisible(true);
-				}
-				dispose();
-			}
-		});
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 908, 508);
 		setResizable(false);
 		setLocationRelativeTo(null);
@@ -142,15 +121,7 @@ public class AllTimeScoreTableScreen extends JFrame {
 		JButton btnVolverAlMen = new JButton("Volver al men\u00FA");
 		btnVolverAlMen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(userType == 0){
-					AdminMenuScreen adminmenuscreen = new AdminMenuScreen();
-					adminmenuscreen.setVisible(true);
-				}
-				else{
-					UserMenuScreen usermenuscreen = new UserMenuScreen();
-					usermenuscreen.setVisible(true);
-				}
-				dispose();
+				setVisible(false);
 			}
 		});
 		btnVolverAlMen.setBounds(678, 446, 204, 23);

@@ -95,8 +95,7 @@ public class ClientThread extends Thread {
 						gamecreated.setVisible(true);
 					}
 					else{
-						GameAlreadyCreatedWindow gamealreadycreated = new GameAlreadyCreatedWindow();
-						gamealreadycreated.setVisible(true);
+						//Ventana "La partida ya esta creada"
 					}
 						
 			
@@ -138,7 +137,7 @@ public class ClientThread extends Thread {
 					break;
 				case POINTSTABLERESPONSEID:
 					TopTenUserPackage toptenscore = (TopTenUserPackage) packageIn;
-					AllTimeScoreTableScreen alltimescoretablescreen = new AllTimeScoreTableScreen(toptenscore.getTopTen(), userType);
+					AllTimeScoreTableScreen alltimescoretablescreen = new AllTimeScoreTableScreen(toptenscore.getTopTen());
 					alltimescoretablescreen.setVisible(true);
 					break;
 					

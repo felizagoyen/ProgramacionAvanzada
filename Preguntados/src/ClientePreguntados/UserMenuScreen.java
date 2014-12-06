@@ -72,7 +72,6 @@ public class UserMenuScreen extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				TopTenUserPackage toptenuserrequest = new TopTenUserPackage();
 				connection.sendPackage(toptenuserrequest);
-				dispose();
 			}
 		});
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 13));

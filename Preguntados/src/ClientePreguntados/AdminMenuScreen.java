@@ -12,7 +12,6 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-import Commons.CategoryPackage;
 import Commons.EndClientConnectionPackage;
 import Commons.PlayerJoinPackage;
 import Commons.TopTenUserPackage;
@@ -82,7 +81,6 @@ public class AdminMenuScreen extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				TopTenUserPackage toptenuserrequest = new TopTenUserPackage();
 				connection.sendPackage(toptenuserrequest);
-				dispose();
 			}
 		});
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -105,9 +103,8 @@ public class AdminMenuScreen extends JFrame {
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				AddQuestionScreen aq = new AddQuestionScreen();
-				ClientThread.recieveScreen(aq);
-				connection.sendPackage(new CategoryPackage(2));
 				aq.setVisible(true);
+				ClientThread.recieveScreen(aq);
 				dispose();
 			}
 		});

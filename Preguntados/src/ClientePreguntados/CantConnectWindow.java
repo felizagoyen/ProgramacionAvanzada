@@ -25,8 +25,6 @@ public class CantConnectWindow extends JDialog {
                System.exit(ERROR);
             }	
 		});
-		setLocationRelativeTo(null);
-		setResizable(false);
 		setBounds(100, 100, 470, 178);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));

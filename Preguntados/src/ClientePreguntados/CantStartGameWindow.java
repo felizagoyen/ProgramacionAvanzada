@@ -4,16 +4,11 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
 import java.awt.Font;
-
 import javax.swing.JTextArea;
-
 import java.awt.SystemColor;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 public class CantStartGameWindow extends JDialog {
 
@@ -28,13 +23,6 @@ public class CantStartGameWindow extends JDialog {
 		setBounds(100, 100, 378, 263);
 		setLocationRelativeTo(null);
 		setResizable(false);
-		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-		addWindowListener(new WindowAdapter(){
-			public void windowClosing (WindowEvent e){
-				gamecreated.setEnabled(true);
-				dispose();
-			}
-		});
 		getContentPane().setLayout(null);
 		contentPanel.setBackground(SystemColor.control);
 		contentPanel.setBounds(0, 0, 434, 229);
