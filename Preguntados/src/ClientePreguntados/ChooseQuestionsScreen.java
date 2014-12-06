@@ -41,7 +41,7 @@ public class ChooseQuestionsScreen extends JFrame {
 	public ChooseQuestionsScreen(final CreateGameScreen creategamescreen) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		addWindowListener(new ClosingListener());
-		setBounds(100, 100, 548, 429);
+		setBounds(100, 100, 647, 429);
 		setTitle(LoginScreen.getTitleGame());
 		setLocationRelativeTo(null);
 		setResizable(false);
@@ -112,7 +112,7 @@ public class ChooseQuestionsScreen extends JFrame {
 		});
 		combo1.addItem(new Question("Al azar"));
 		combo1.addItem(new Question("Seleccionar pregunta..."));
-		combo1.setBounds(141, 36, 338, 20);
+		combo1.setBounds(141, 36, 471, 20);
 		contentPane.add(combo1);
 		
 		final JComboBox<Question> combo2 = new JComboBox<Question>();
@@ -135,7 +135,7 @@ public class ChooseQuestionsScreen extends JFrame {
 		});
 		combo2.addItem(new Question("Al azar"));
 		combo2.addItem(new Question("Seleccionar pregunta..."));
-		combo2.setBounds(141, 61, 338, 20);
+		combo2.setBounds(141, 61, 471, 20);
 		contentPane.add(combo2);
 		
 		final JComboBox<Question> combo3 = new JComboBox<Question>();
@@ -158,7 +158,7 @@ public class ChooseQuestionsScreen extends JFrame {
 		});
 		combo3.addItem(new Question("Al azar"));
 		combo3.addItem(new Question("Seleccionar pregunta..."));
-		combo3.setBounds(141, 86, 338, 20);
+		combo3.setBounds(141, 86, 471, 20);
 		contentPane.add(combo3);
 		
 		final JComboBox<Question> combo4 = new JComboBox<Question>();
@@ -181,7 +181,7 @@ public class ChooseQuestionsScreen extends JFrame {
 		});
 		combo4.addItem(new Question("Al azar"));
 		combo4.addItem(new Question("Seleccionar pregunta..."));
-		combo4.setBounds(141, 111, 338, 20);
+		combo4.setBounds(141, 111, 471, 20);
 		contentPane.add(combo4);
 		
 		final JComboBox<Question> combo5 = new JComboBox<Question>();
@@ -204,7 +204,7 @@ public class ChooseQuestionsScreen extends JFrame {
 		});
 		combo5.addItem(new Question("Al azar"));
 		combo5.addItem(new Question("Seleccionar pregunta..."));
-		combo5.setBounds(141, 136, 338, 20);
+		combo5.setBounds(141, 136, 471, 20);
 		contentPane.add(combo5);
 		
 		final JComboBox<Question> combo6 = new JComboBox<Question>();
@@ -227,7 +227,7 @@ public class ChooseQuestionsScreen extends JFrame {
 		});
 		combo6.addItem(new Question("Al azar"));
 		combo6.addItem(new Question("Seleccionar pregunta..."));
-		combo6.setBounds(141, 161, 338, 20);
+		combo6.setBounds(141, 161, 471, 20);
 		contentPane.add(combo6);
 		
 		final JComboBox<Question> combo7 = new JComboBox<Question>();
@@ -250,7 +250,7 @@ public class ChooseQuestionsScreen extends JFrame {
 		});
 		combo7.addItem(new Question("Al azar"));
 		combo7.addItem(new Question("Seleccionar pregunta..."));
-		combo7.setBounds(141, 186, 338, 20);
+		combo7.setBounds(141, 186, 471, 20);
 		contentPane.add(combo7);
 		
 		final JComboBox<Question> combo8 = new JComboBox<Question>();
@@ -273,7 +273,7 @@ public class ChooseQuestionsScreen extends JFrame {
 		});
 		combo8.addItem(new Question("Al azar"));
 		combo8.addItem(new Question("Seleccionar pregunta..."));
-		combo8.setBounds(141, 211, 338, 20);
+		combo8.setBounds(141, 211, 471, 20);
 		contentPane.add(combo8);
 		
 		final JComboBox<Question> combo9 = new JComboBox<Question>();
@@ -296,7 +296,7 @@ public class ChooseQuestionsScreen extends JFrame {
 		});
 		combo9.addItem(new Question("Al azar"));
 		combo9.addItem(new Question("Seleccionar pregunta..."));
-		combo9.setBounds(141, 236, 338, 20);
+		combo9.setBounds(141, 236, 471, 20);
 		contentPane.add(combo9);
 		
 		final JComboBox<Question> combo10 = new JComboBox<Question>();
@@ -319,19 +319,19 @@ public class ChooseQuestionsScreen extends JFrame {
 		});
 		combo10.addItem(new Question("Al azar"));
 		combo10.addItem(new Question("Seleccionar pregunta..."));
-		combo10.setBounds(141, 261, 338, 20);
+		combo10.setBounds(141, 261, 471, 20);
 		contentPane.add(combo10);
 		
 		final JLabel lblPreguntaRepetida = new JLabel("Recuerde que cada pregunta puede elegirse solo una vez.");
 		lblPreguntaRepetida.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPreguntaRepetida.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblPreguntaRepetida.setBounds(0, 301, 522, 32);
+		lblPreguntaRepetida.setBounds(90, 292, 522, 32);
 		lblPreguntaRepetida.setVisible(true);
 		contentPane.add(lblPreguntaRepetida);
 		
 		final JLabel lblPreguntaRepetida2 = new JLabel("Elimine la/las preguntas repetidas y vuelva a oprimir el bot\u00F3n \"Aceptar\".");
 		lblPreguntaRepetida2.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblPreguntaRepetida2.setBounds(50, 333, 465, 11);
+		lblPreguntaRepetida2.setBounds(141, 324, 465, 20);
 		lblPreguntaRepetida2.setVisible(false);
 		contentPane.add(lblPreguntaRepetida2);
 		
@@ -367,12 +367,12 @@ public class ChooseQuestionsScreen extends JFrame {
 				}
 			}
 		});
-		btnAceptar.setBounds(368, 367, 111, 23);
+		btnAceptar.setBounds(450, 367, 162, 23);
 		contentPane.add(btnAceptar);
 		
 		JLabel lblNewLabel_1 = new JLabel("Seleccione las preguntas para su partida");
 		lblNewLabel_1.setFont(new Font("Trebuchet MS", Font.BOLD, 17));
-		lblNewLabel_1.setBounds(103, 8, 382, 20);
+		lblNewLabel_1.setBounds(180, 5, 382, 20);
 		contentPane.add(lblNewLabel_1);
 		
 	}
