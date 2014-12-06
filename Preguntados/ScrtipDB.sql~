@@ -102,8 +102,8 @@ REFERENCES user(user)
 );
 
 INSERT score VALUES ('admin', 50, 20, 30, 200, 300);
-INSERT score VALUES ('fer', 0, 0, 0, 0, 0);
-INSERT score VALUES ('diego', 0, 0, 0, 0, 0);
+INSERT score VALUES ('fer', 10, 1, 0, 10, 0);
+INSERT score VALUES ('diego', 0, 10, 1, 0, 10);
 INSERT score VALUES ('eze', 0, 0, 0, 0, 0);
 INSERT score VALUES ('seba', 0, 0, 0, 0, 0);
 INSERT score VALUES ('pepe', 0, 0, 0, 0, 0);
