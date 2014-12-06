@@ -39,6 +39,7 @@ public class ClientThread extends Thread {
 	private static final int ADDQUESTIONREESPONSEID = 11;
 	private static final int ENDTIMEID = 12;
 	private static final int RESULTSGAMEID = 13;
+	private static final int ENDSERVERPACKAGEID = 14;
 	private static final int PLAYERJOINEDNOTIFICATIONID = 15;
 	private static final int PLAYERDISCONNECTEDID = 16;
 	private Boolean endConnection = false;
@@ -186,6 +187,10 @@ public class ClientThread extends Thread {
 					roundgamescreen.paintButtons(answer.isCorrect());
 					
 					
+					break;
+				case ENDSERVERPACKAGEID:
+					ServerErrorWindow servererrorwindow = new ServerErrorWindow();
+					servererrorwindow.setVisible(true);
 					break;
 				
 				case ENDCONNECTIONRESPONSEID: // Fin conexion
