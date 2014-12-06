@@ -18,23 +18,8 @@ public class CantStartGameWindow extends JDialog {
 	private static final long serialVersionUID = 3318299029244473079L;
 	private final JPanel contentPanel = new JPanel();
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			CantStartGameWindow dialog = new CantStartGameWindow();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
-	/**
-	 * Create the dialog.
-	 */
-	public CantStartGameWindow() {
+	public CantStartGameWindow(final GameCreatedAdminScreen gamecreated) {
 		setBounds(100, 100, 378, 263);
 		setLocationRelativeTo(null);
 		setResizable(false);
@@ -56,9 +41,8 @@ public class CantStartGameWindow extends JDialog {
 			JButton okButton = new JButton("OK");
 			okButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					GameCreatedAdminScreen gamecreated = new GameCreatedAdminScreen(CreateGameScreen.getMaxPlayersInGame());
-					gamecreated.setVisible(true);
-					dispose();		
+					gamecreated.setEnabled(true);
+					dispose();
 				}
 			});
 			okButton.setBounds(251, 196, 97, 23);

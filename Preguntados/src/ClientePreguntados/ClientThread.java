@@ -1,13 +1,13 @@
 package ClientePreguntados;
 
 import javax.swing.JDialog;
-
 import javax.swing.JFrame;
 
 import Commons.AddQuestionConfirmationPackage;
 import Commons.AnswerQuestionPackage;
 import Commons.CategoryPackage;
 import Commons.CreateGamePackage;
+import Commons.NotifyPlayerJoinToAdminPackage;
 import Commons.StartGamePackage;
 import Commons.TopTenUserPackage;
 import Commons.UserLoginPackage;
@@ -21,6 +21,7 @@ public class ClientThread extends Thread {
 	
 	private LoginScreen loginscreen;
 	private Integer userType;
+	private String userName;
 	private static JDialog JDialogScreen;
 	private static JFrame JFrameScreen;
 	private static Package packageIn;
@@ -37,6 +38,7 @@ public class ClientThread extends Thread {
 	private static final int ADDQUESTIONREESPONSEID = 11;
 	private static final int ENDTIMEID = 12;
 	private static final int RESULTSGAMEID = 13;
+	private static final int PLAYERJOINEDNOTIFICATIONID = 15;
 	private Boolean endConnection = false;
 	private Connection connection = Connection.getInstance();
 	
@@ -49,8 +51,8 @@ public class ClientThread extends Thread {
 		
 
 		try {
-
-
+			
+			GameCreatedAdminScreen gamecreated = null;
 			JoinPlayerGameWindow joinplayergamewindow = null;
 			RoundGameScreen roundgamescreen = null;
 			while (!endConnection) {
@@ -62,6 +64,7 @@ public class ClientThread extends Thread {
 
 					UserLoginPackage loginresponse = (UserLoginPackage) packageIn;
 					userType = loginresponse.getUserType();
+					userName = loginresponse.getUser();
 					loginscreen.actionLogin(loginresponse);
 
 					break;
@@ -85,7 +88,7 @@ public class ClientThread extends Thread {
 					CreateGamePackage creategameresponse = (CreateGamePackage) packageIn;
 					if(creategameresponse.gameCreated() == true){
 						roundgamescreen = new RoundGameScreen();
-						GameCreatedAdminScreen gamecreated = new GameCreatedAdminScreen(CreateGameScreen.getMaxPlayersInGame());
+						gamecreated = new GameCreatedAdminScreen(CreateGameScreen.getMaxPlayersInGame(), userName );
 						gamecreated.setVisible(true);
 					}
 					else{
@@ -97,17 +100,25 @@ public class ClientThread extends Thread {
 				case PLAYERJOINRESPONSEID: // Se pudo unir a la partida?
 					PlayerJoinPackage playerjoinresponse = (PlayerJoinPackage) packageIn;
 					roundgamescreen = new RoundGameScreen();
-					joinplayergamewindow = new JoinPlayerGameWindow();
+					joinplayergamewindow = new JoinPlayerGameWindow(userType);
 					joinplayergamewindow.setLabelAndButton(playerjoinresponse.getJoinStatus());
 					joinplayergamewindow.setVisible(true);
 					
 					break;
+					
+				case PLAYERJOINEDNOTIFICATIONID:
+					NotifyPlayerJoinToAdminPackage notification = (NotifyPlayerJoinToAdminPackage) packageIn;
+					gamecreated.playerHasJoined(notification.getUserName());
+					break;
 				case STARTGAMERESPONSEID: // Se pudo comenzar la partida?
 					StartGamePackage startgameresponse = (StartGamePackage) packageIn;
 					if(!startgameresponse.canStartGame()){
-						CantStartGameWindow cantStart = new CantStartGameWindow();
+						gamecreated.setEnabled(false);
+						CantStartGameWindow cantStart = new CantStartGameWindow(gamecreated);
 						cantStart.setVisible(true);
 					}
+					else
+						gamecreated.dispose();
 					
 					
 					break;
