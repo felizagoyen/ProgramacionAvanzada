@@ -110,4 +110,25 @@ public class Game extends Thread {
 		isStarted = false;
 	}
 
+	public void cancelGame() {
+		UserConnection userConnectionInstance = UserConnection.getInstance();
+		removePlayer(getAdminPlayer().getId());
+		Logger.info("Envíado aviso de que la partida ha sido cancelada a todos los jugadores");
+		for(Player eachPlayer: players) {
+			try {
+				Integer playerId = eachPlayer.getId();
+				userConnectionInstance.blockSocket(playerId);
+				userConnectionInstance.sendPackage(playerId, new PlayerDisconnectPackage(null, true));
+				userConnectionInstance.releaseSocket(playerId);
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		resetGame();
+	}
+
+	public boolean empty() {
+		return (players.size() > 1);
+	}
+
 }

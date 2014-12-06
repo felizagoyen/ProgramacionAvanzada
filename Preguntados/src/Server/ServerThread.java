@@ -17,6 +17,7 @@ public class ServerThread extends Thread {
 	private static final int ENDCONECTIONREQUESTID = 8;
 	private static final int QUESTIONSREQUESTID = 9;
 	private static final int ANSWERQUESTIONREQUESTID = 10;
+	private static final int PLAYERDISCONNECTREQUESTID = 16;
 	private Integer userId;
 	private String userName = null;
 	
@@ -26,7 +27,6 @@ public class ServerThread extends Thread {
 
 	public void run() {
 		Boolean endConection = false;
-		Boolean gameStarted = false;
 		Game game = null;
 		
 		try {
@@ -107,9 +107,11 @@ public class ServerThread extends Thread {
 						joinStatus = 0;
 						Logger.info("La partida está llena. El jugador " + userName + " no se pudo unir.");
 					} else {
+						Integer adminId = game.getAdminPlayer().getId();
 						game.addPlayer(userId, userName);
-						userConnectionInstance.sendPackage(game.getAdminPlayer().getId(), new NotifyPlayerJoinToAdminPackage(userName));
-						userConnectionInstance.releaseSocket(userId);
+						userConnectionInstance.blockSocket(adminId);
+						userConnectionInstance.sendPackage(adminId, new NotifyPlayerJoinToAdminPackage(userName));
+						userConnectionInstance.releaseSocket(adminId);
 						joinStatus = 1;
 					}
 					
@@ -123,7 +125,6 @@ public class ServerThread extends Thread {
 					
 					if(game.isCreated() && game.canStartGame()) {
 						canStartGame = true;
-						gameStarted = true;
 						game.startGame();
 						Logger.info("La partida se ha iniciado correctamente.");
 					} else if(!game.isCreated()) {
@@ -171,6 +172,23 @@ public class ServerThread extends Thread {
 					}
 					
 					break;
+				case PLAYERDISCONNECTREQUESTID:
+					if(userId.equals(game.getAdminPlayer())) {
+						Logger.info("El administrador ha cancelado la partida");
+						if(!game.empty())
+							game.cancelGame();
+						Logger.info("Partida cancelada correctamente");
+					} else {
+						if(game.isCreated()) {
+							Integer adminId = game.getAdminPlayer().getId();
+							game.removePlayer(userId);
+							userConnectionInstance.blockSocket(adminId);
+							userConnectionInstance.sendPackage(adminId, new PlayerDisconnectPackage(userName, false));
+							userConnectionInstance.releaseSocket(adminId);
+							Logger.info("Se le ha notificado al administrador que el usuario " + userName + " ha abandonado la partida." );
+						}
+					}
+					break;
 				case ENDCONECTIONREQUESTID: // Fin conexion
 					game = Game.getGameInstance();
 					Logger.info("Finalizando conexion con el cliente " + userId);
@@ -183,9 +201,6 @@ public class ServerThread extends Thread {
 				}
 
 				if(packageOut != null) userConnectionInstance.sendPackage(userId, packageOut);
-				if(gameStarted == true && game.isCreated() == false) {
-					gameStarted = false;
-				}
 				userConnectionInstance.releaseSocket(userId);
 			}
 			if(userName != null)
