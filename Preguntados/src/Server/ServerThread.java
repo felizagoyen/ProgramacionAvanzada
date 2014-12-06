@@ -177,6 +177,8 @@ public class ServerThread extends Thread {
 						Logger.info("El administrador ha cancelado la partida");
 						if(!game.empty())
 							game.cancelGame();
+						else
+							game.resetGame();
 						Logger.info("Partida cancelada correctamente");
 					} else {
 						if(game.isCreated()) {
