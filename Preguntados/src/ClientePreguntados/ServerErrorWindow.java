@@ -26,7 +26,10 @@ public class ServerErrorWindow extends JDialog {
 
 	
 	public ServerErrorWindow() {
-		setBounds(100, 100, 450, 166);
+		setBounds(100, 100, 496, 158);
+		setLocationRelativeTo(null);
+		setResizable(false);
+		setAlwaysOnTop(true);
 		setTitle("Preguntados - ERROR");
 		addWindowListener(new WindowAdapter(){
             public void windowClosing(WindowEvent e) {
@@ -39,20 +42,21 @@ public class ServerErrorWindow extends JDialog {
 		contentPanel.setLayout(null);
 		{
 			JButton okButton = new JButton("OK");
+			okButton.setFont(new Font("Tahoma", Font.BOLD, 13));
 			okButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					System.exit(ERROR);
 				}
 			});
-			okButton.setBounds(366, 90, 47, 23);
+			okButton.setBounds(335, 86, 124, 23);
 			contentPanel.add(okButton);
 			okButton.setActionCommand("OK");
 			getRootPane().setDefaultButton(okButton);
 		}
 		{
 			JLabel lblNewLabel = new JLabel("Se produjo un error en la conexion con el servidor, el juego se cerrar\u00E1.");
-			lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 11));
-			lblNewLabel.setBounds(10, 11, 403, 68);
+			lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 13));
+			lblNewLabel.setBounds(10, 11, 499, 68);
 			contentPanel.add(lblNewLabel);
 		}
 	}

@@ -151,15 +151,7 @@ public class ClientThread extends Thread {
 					roundgamescreen.enableButtonsAndRefreshComponents();
 					roundgamescreen.setQuestionAndCategory(question);
 					roundgamescreen.setVisible(true);
-					roundgamescreen.startTimer();
-					
-//					((JoinPlayerGameWindow)JDialogScreen).setVisible(false);
-//					((RoundGameScreen)JFrameScreen).setVisible(false);
-//					((RoundGameScreen)JFrameScreen).enableButtonsAndRefreshComponents();
-//					((RoundGameScreen)JFrameScreen).setQuestionAndCategory(question);
-//					((RoundGameScreen)JFrameScreen).setVisible(true);
-//					((RoundGameScreen)JFrameScreen).startTimer();
-//					
+					roundgamescreen.startTimer();				
 					break;
 					
 				case RESULTSGAMEID:
@@ -188,9 +180,10 @@ public class ClientThread extends Thread {
 					
 					
 					break;
-				case ENDSERVERPACKAGEID:
+				case ENDSERVERPACKAGEID: // Error en el servidor
 					ServerErrorWindow servererrorwindow = new ServerErrorWindow();
 					servererrorwindow.setVisible(true);
+					endConnection = true;
 					break;
 				
 				case ENDCONNECTIONRESPONSEID: // Fin conexion
