@@ -55,6 +55,7 @@ public class LoginScreen extends JFrame {
 	private JPasswordField jPasswordField;
 	private  JTextArea jUsuarioInexistenteTextArea;
 	private  JTextArea jCamposVaciosTextArea;
+	private JTextArea jUsuarioLogueadoTextArea;
 	private Connection connection = Connection.getInstance();
 	private static String title;
 
@@ -138,6 +139,14 @@ public class LoginScreen extends JFrame {
 		lblLogoPreguntados.setBounds(52, 0, 170, 160);
 		contentPane.add(lblLogoPreguntados);
 		
+		jUsuarioLogueadoTextArea = new JTextArea();
+		jUsuarioLogueadoTextArea.setEditable(false);
+		jUsuarioLogueadoTextArea.setBackground(new Color(255, 153, 0));
+		jUsuarioLogueadoTextArea.setVisible(false);
+		jUsuarioLogueadoTextArea.setText("El usuario ya est\u00E1 logueado.");
+		jUsuarioLogueadoTextArea.setBounds(38, 381, 246, 35);
+		contentPane.add(jUsuarioLogueadoTextArea);
+		
 
 	}
 	
@@ -158,10 +167,16 @@ public class LoginScreen extends JFrame {
 				setVisible(false);
 				
 			}else
-			{
-				jCamposVaciosTextArea.setVisible(false);
-				jUsuarioInexistenteTextArea.setVisible(true);
-			}
+				if(loginresponse.getUserType() == -2){
+					jUsuarioLogueadoTextArea.setVisible(true);
+					jCamposVaciosTextArea.setVisible(false);
+					jUsuarioInexistenteTextArea.setVisible(false);
+					
+				}else{
+					jCamposVaciosTextArea.setVisible(false);
+					jUsuarioInexistenteTextArea.setVisible(true);
+					jUsuarioLogueadoTextArea.setVisible(false);
+				}
 		}
 		
 		
@@ -170,7 +185,5 @@ public class LoginScreen extends JFrame {
 	public static String getTitleGame(){
 		return title;
 	}
-	
-	
 }
 
