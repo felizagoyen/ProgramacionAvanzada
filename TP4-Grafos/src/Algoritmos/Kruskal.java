@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.PrintWriter;
+import java.util.GregorianCalendar;
 
 public class Kruskal {
 	Integer matrizAdyacencia[][];
@@ -119,11 +120,16 @@ public class Kruskal {
 	public static void main(String[] args) {
 	
 		Kruskal kruskal = new Kruskal();
-		
 		kruskal.cargarDatosDesdeArchivo(new File("grafo.in"));
-		kruskal.resolver();
-		kruskal.generarArchivoSalida(new File("arbol.in"));
 
+		GregorianCalendar tIni = new GregorianCalendar();
+		kruskal.resolver();
+		GregorianCalendar tFin = new GregorianCalendar();
+		long diff = tFin.getTimeInMillis() - tIni.getTimeInMillis();
+		System.out.println(diff);
+
+		kruskal.generarArchivoSalida(new File("arbolMinimo.out"));
+		
 	}
 
 }

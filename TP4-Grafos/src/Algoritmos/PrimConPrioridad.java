@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 
 public class PrimConPrioridad {
@@ -129,7 +130,13 @@ public class PrimConPrioridad {
 	public static void main(String[] args) {
 		PrimConPrioridad prim = new PrimConPrioridad();
 		prim.cargarDatosDesdeArchivo(new File("grafo.in"));
+		
+		GregorianCalendar tIni = new GregorianCalendar();
 		prim.resolver();
+		GregorianCalendar tFin = new GregorianCalendar();
+		long diff = tFin.getTimeInMillis() - tIni.getTimeInMillis();
+		System.out.println(diff);
+		
 		prim.generarArchivoSalida(new File("arbol.in"));
 	}
 
