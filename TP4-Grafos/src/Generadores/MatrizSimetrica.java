@@ -67,6 +67,14 @@ public class MatrizSimetrica {
 		return vector[indice];
 	}
 	
+	public int getCantNodos(){
+		return cantNodos;
+	}
+	
+	public int getCantAristas(){
+		return cantAristas;
+	}
+	
 	public static void main(String[] arg){
 		MatrizSimetrica m1 = new MatrizSimetrica(4);
 		m1.setVector(1, 2, 32);
