@@ -114,7 +114,7 @@ public class PrimConPrioridad {
 			pw.println(cantidadNodos + " " + cantidadAristas + " " + porcentajeAdyacencia);
 			for(int x = 0; x < cantidadNodos; x++)
 				if(nodoAdyacente.get(x) != null)
-					pw.println(nodoAdyacente.get(x) + " " + x + " " + valorAdyacente.get(x));
+					pw.println(nodoAdyacente.get(x) + " " + x);
 			
 		} catch(Exception e) {
 			e.printStackTrace();

@@ -105,7 +105,7 @@ public class Kruskal {
 			for(int x = 0; x < cantidadNodos; x++)
 				for(int y = x + 1; y < cantidadNodos; y++)
 					if(matrizArbolRecubridorMinimo[x][y] != 0)
-							pw.println(x + " " + y + " " + matrizArbolRecubridorMinimo[x][y]);
+							pw.println(x + " " + y);
 			
 		} catch(Exception e) {
 			e.printStackTrace();

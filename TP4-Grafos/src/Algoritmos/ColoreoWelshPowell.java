@@ -6,17 +6,18 @@ import java.io.FileReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-public class ColoreoSecuencialAleatorio {
+public class ColoreoWelshPowell {
 
 	private Boolean[][] matrizAdyacencia;
 	private Integer cantidadNodos;
 	private Integer cantidadAristas;
 	private Double porcentajeAdyacencia;
+	private ArrayList<Integer> gradoNodo = new ArrayList<Integer>();
 	private ArrayList<Integer> nodos = new ArrayList<Integer>();
 	private ArrayList<Integer> colorNodos = new ArrayList<Integer>();
 	private Integer cantidadColores = 1;
 
-	public ColoreoSecuencialAleatorio() {
+	public ColoreoWelshPowell() {
 
 	}
 
@@ -65,6 +66,7 @@ public class ColoreoSecuencialAleatorio {
 			for (int x = 0; x < cantidadNodos; x++) {
 				for (int y = 0; y < cantidadNodos; y++)
 					matrizAdyacencia[x][y] = false;
+				gradoNodo.add(0);
 				nodos.add(x);
 				colorNodos.add(0);
 			}
@@ -75,8 +77,23 @@ public class ColoreoSecuencialAleatorio {
 				Integer x = Integer.parseInt(lineaSplit[0]);
 				Integer y = Integer.parseInt(lineaSplit[1]);
 
+				gradoNodo.set(x, gradoNodo.get(x) + 1);
+				gradoNodo.set(y, gradoNodo.get(y) + 1);
 				matrizAdyacencia[x][y] = true;
 				matrizAdyacencia[y][x] = true;
+			}
+
+			for (int x = 0; x < cantidadNodos; x++) {
+				for (int y = x + 1; y < cantidadNodos; y++) {
+					if (gradoNodo.get(x) < gradoNodo.get(y)) {
+						Integer auxGrado = gradoNodo.get(x);
+						gradoNodo.set(x, gradoNodo.get(y));
+						gradoNodo.set(y, auxGrado);
+						Integer auxNodo = nodos.get(x);
+						nodos.set(x, nodos.get(y));
+						nodos.set(y, auxNodo);
+					}
+				}
 			}
 		} catch (Exception e1) {
 			e1.printStackTrace();
@@ -108,11 +125,12 @@ public class ColoreoSecuencialAleatorio {
 				pw.close();
 		}
 	}
+
 	public static void main(String[] args) {
-		ColoreoSecuencialAleatorio secuencialAleatorio = new ColoreoSecuencialAleatorio();
-		secuencialAleatorio.cargarDatosDesdeArchivo(new File("grafo.in"));
-		secuencialAleatorio.resolver();
-		secuencialAleatorio.generarArchivoSalida(new File("coloreado.out"));
+		ColoreoWelshPowell welshPowell = new ColoreoWelshPowell();
+		welshPowell.cargarDatosDesdeArchivo(new File("grafo.in"));
+		welshPowell.resolver();
+		welshPowell.generarArchivoSalida(new File("coloreado.out"));
 	}
 
 }
