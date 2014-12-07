@@ -137,7 +137,7 @@ public class PrimConPrioridad {
 		long diff = tFin.getTimeInMillis() - tIni.getTimeInMillis();
 		System.out.println(diff);
 		
-		prim.generarArchivoSalida(new File("arbol.in"));
+		prim.generarArchivoSalida(new File("arbolMinimo.out"));
 	}
 
 }
