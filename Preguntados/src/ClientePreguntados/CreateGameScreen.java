@@ -35,6 +35,7 @@ public class CreateGameScreen extends JFrame {
 	private ArrayList<Integer> questionsID = new ArrayList<Integer>();
 	private CreateGameScreen thisFrame;
 	private static int maxPlayersInGame;
+	private static String gameName;
 	private Connection connection = Connection.getInstance();
 
 	/**
@@ -118,6 +119,7 @@ public class CreateGameScreen extends JFrame {
 				}
 				else{
 					maxPlayersInGame = Integer.parseInt(cantMaxTextField.getText());
+					gameName = nombrePartidaTextField.getText();
 					CreateGamePackage gamerequest = new CreateGamePackage(nombrePartidaTextField.getText(),  Integer.parseInt(cantMaxTextField.getText()), questionsID);
 					connection.sendPackage(gamerequest);
 					setVisible(false);
@@ -188,7 +190,7 @@ public class CreateGameScreen extends JFrame {
 		else{
 			if(!isNumber(cantMaxTextField.getText())){
 				errorCantMaxLabel.setForeground(java.awt.Color.red);
-				errorCantMaxLabel.setText("Por favor, ingrese un número.");
+				errorCantMaxLabel.setText("Por favor, ingrese un nï¿½mero.");
 			}
 			else{
 				if(Integer.parseInt(cantMaxTextField.getText()) < 2){
@@ -214,5 +216,9 @@ public class CreateGameScreen extends JFrame {
 	
 	public static int getMaxPlayersInGame(){
 		return maxPlayersInGame;
+	}
+	
+	public static String getGameName(){
+		return gameName;
 	}
 }

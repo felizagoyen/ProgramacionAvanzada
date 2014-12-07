@@ -12,7 +12,7 @@ public class Question implements Serializable, Package {
 	private String category;
 	private String correctAnswer;
 	private ArrayList<String> wrongAnswers = new ArrayList<String>();
-
+	
 	public Question(Integer id, String question, String category, String correctAnswer,
 			ArrayList<String> wrongAnswers) {
 		this.id = id;

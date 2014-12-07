@@ -154,7 +154,7 @@ public class DataBaseUtil {
 	}
 	
 	public ArrayList<User> getTopTenUsersDB(){
-		ResultSet rs = queryDB("SELECT * FROM `score` ORDER BY `gamesWon` DESC");
+		ResultSet rs = queryDB("SELECT * FROM `score` ORDER BY `gamesWon` DESC, `correctAnswers` DESC, `gamesLost` ASC, `wrongAnswers` ASC");
 		ArrayList<User> topTen = new ArrayList<User>();
 		if(rs != null) {
 			try {
