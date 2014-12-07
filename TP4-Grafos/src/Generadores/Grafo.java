@@ -81,7 +81,7 @@ public class Grafo {
 		}
 	}
 	
-	public void grafoDadoNYProbArista (int cantidad, int prob){ //Prob va de 0 a 1.
+	public void grafoDadoNYProbArista (int cantidad, double prob){ //Prob va de 0 a 1.
 	
 		cantNodos = cantidad;
 		cantAristas = 0;
@@ -107,14 +107,6 @@ public class Grafo {
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
 	public void generadorGrado(int cantidad, int grado){
 		
 		cantNodos = cantidad;
@@ -128,8 +120,8 @@ public class Grafo {
 
 			if(grado%2 == 0){
 			int saltoMax = (grado/2)-1;
-			for(int salto = 0; salto <= saltoMax; salto++){ //en cada pasada de este ciclo se aumenta el "salto" entre nodos
-				for(int i = 0; i < cantNodos; i++){ //recorro todos los nodos creando la arista correspondiente
+			for(int salto = 0; salto <= saltoMax; salto++){ 
+				for(int i = 0; i < cantNodos; i++){ 
 					j = (i+1 +salto) % cantNodos;
 					matrizAdy[i][j] = 1;
 					matrizAdy[j][i] = 1;
