@@ -147,7 +147,7 @@ public class Grafo {
 		}	
 		
 		if(matrizAdy==null){
-			System.out.println("No se puede generar un grafo regular con esas características");
+			System.out.println("No se puede generar un grafo regular con esas caracterï¿½sticas");
 			cantAristas = 0;
 		}
 	}
@@ -214,7 +214,7 @@ public class Grafo {
 	public static void main(String[] args) {
 		Grafo g1 = new Grafo ();
 		
-		g1.grafoDadoNYProbArista(5, 100);
+		g1.grafoDadoNYPorcArista(5, 100);
 		
 		g1.guardarGrafo("grafo 100 50%.in");
 //		
