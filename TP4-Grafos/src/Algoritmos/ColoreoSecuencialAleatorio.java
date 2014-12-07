@@ -3,6 +3,7 @@ package Algoritmos;
 import java.io.File;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import Generadores.MatrizSimetrica;
 
@@ -15,7 +16,10 @@ public class ColoreoSecuencialAleatorio {
 	private ArrayList<Integer> nodos = new ArrayList<Integer>();
 	private ArrayList<Integer> colorNodos = new ArrayList<Integer>();
 	private Integer cantidadColores = 1;
-
+	private Integer maximoGrado;
+	private Integer minimoGrado;
+	private ArrayList<Integer> gradoNodo = new ArrayList<Integer>();
+	
 	public ColoreoSecuencialAleatorio(String ruta) {
 		matrizAdyacencia = new MatrizSimetrica(ruta);
 		this.cantidadNodos = matrizAdyacencia.getCantNodos();
@@ -25,7 +29,19 @@ public class ColoreoSecuencialAleatorio {
 		for(int x = 0; x < cantidadNodos; x++) {
 			nodos.add(x);
 			colorNodos.add(0);
+			gradoNodo.add(0);
 		}
+		
+		for(int x = 0; x < cantidadNodos; x++) 
+			for (int y = x + 1; y < cantidadNodos; y++) 
+			if(matrizAdyacencia.getVector(x, y) == 1) {
+				gradoNodo.set(x, gradoNodo.get(x) + 1);
+				gradoNodo.set(y, gradoNodo.get(y) + 1);
+			}
+		
+		Collections.sort(gradoNodo);
+		this.minimoGrado = gradoNodo.get(0);
+		this.maximoGrado = gradoNodo.get(cantidadNodos - 1);
 	}
 
 	public void resolver() {
@@ -58,7 +74,8 @@ public class ColoreoSecuencialAleatorio {
 		try {
 			pw = new PrintWriter(archivo);
 			pw.println(cantidadNodos + " " + cantidadAristas + " "
-					+ porcentajeAdyacencia + " " + cantidadColores);
+					+ cantidadColores + " " + porcentajeAdyacencia + " "
+					+ maximoGrado + " " + minimoGrado);
 
 			for (int x = 0; x < cantidadNodos; x++) {
 				Integer nodo = nodos.get(x);

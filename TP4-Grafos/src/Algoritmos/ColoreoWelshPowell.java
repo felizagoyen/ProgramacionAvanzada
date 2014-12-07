@@ -16,7 +16,9 @@ public class ColoreoWelshPowell {
 	private ArrayList<Integer> nodos = new ArrayList<Integer>();
 	private ArrayList<Integer> colorNodos = new ArrayList<Integer>();
 	private Integer cantidadColores = 1;
-
+	private Integer maximoGrado;
+	private Integer minimoGrado;
+	
 	public ColoreoWelshPowell(String ruta) {
 		
 		matrizAdyacencia = new MatrizSimetrica(ruta);
@@ -47,6 +49,10 @@ public class ColoreoWelshPowell {
 					nodos.set(x, nodos.get(y));
 					nodos.set(y, auxNodo);
 				}
+		
+		this.maximoGrado = gradoNodo.get(0);
+		this.minimoGrado = gradoNodo.get(cantidadNodos - 1);
+		
 	}
 
 	public void resolver() {
@@ -79,7 +85,8 @@ public class ColoreoWelshPowell {
 		try {
 			pw = new PrintWriter(archivo);
 			pw.println(cantidadNodos + " " + cantidadAristas + " "
-					+ porcentajeAdyacencia + " " + cantidadColores);
+					+ cantidadColores + " " + porcentajeAdyacencia + " "
+					+ maximoGrado + " " + minimoGrado);
 
 			for (int x = 0; x < cantidadNodos; x++) {
 				Integer nodo = nodos.get(x);

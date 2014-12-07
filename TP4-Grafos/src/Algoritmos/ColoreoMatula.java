@@ -16,7 +16,9 @@ public class ColoreoMatula {
 	private ArrayList<Integer> nodos = new ArrayList<Integer>();
 	private ArrayList<Integer> colorNodos = new ArrayList<Integer>();
 	private Integer cantidadColores = 1;
-
+	private Integer maximoGrado;
+	private Integer minimoGrado;
+	
 	public ColoreoMatula(String ruta) {
 		
 		matrizAdyacencia = new MatrizSimetrica(ruta);
@@ -47,6 +49,9 @@ public class ColoreoMatula {
 					nodos.set(x, nodos.get(y));
 					nodos.set(y, auxNodo);
 				}
+		
+		this.minimoGrado = gradoNodo.get(0);
+		this.maximoGrado = gradoNodo.get(cantidadNodos - 1);
 	}
 
 	public void resolver() {
@@ -79,7 +84,8 @@ public class ColoreoMatula {
 		try {
 			pw = new PrintWriter(archivo);
 			pw.println(cantidadNodos + " " + cantidadAristas + " "
-					+ porcentajeAdyacencia + " " + cantidadColores);
+					+ cantidadColores + " " + porcentajeAdyacencia + " "
+					+ maximoGrado + " " + minimoGrado);
 
 			for (int x = 0; x < cantidadNodos; x++) {
 				Integer nodo = nodos.get(x);
