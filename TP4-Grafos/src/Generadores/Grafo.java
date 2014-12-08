@@ -315,7 +315,7 @@ public class Grafo {
 			pw.println(cantNodos + " " +  cantAristas + " " + (int)porcentajeAdy + " " + gradoMax + " " + gradoMin);
 			for (int i = 0; i < cantNodos; i++)
 				for (int j = i+1; j < cantNodos; j++){
-					if (matrizAdy [i][j] != 0){
+					if (matrizAdy [i][j] != inf){
 						pw.println(i + " " + j + " " + matrizAdy[i][j]);
 					}
 				}
