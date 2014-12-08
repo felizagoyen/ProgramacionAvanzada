@@ -1,0 +1,14 @@
+#Fat Jar Configuration File
+#Sat Dec 06 11:33:56 ART 2014
+onejar.license.required=true
+manifest.classpath=
+manifest.removesigners=true
+onejar.checkbox=false
+jarname=Cliente.jar
+manifest.mergeall=true
+manifest.mainclass=Client.Client
+manifest.file=<createnew>
+jarname.isextern=false
+onejar.expand=
+excludes=<po|Preguntados>~Server/;<jar|mysql-connector-java-5.1.29-bin.jar>
+includes=
