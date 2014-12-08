@@ -249,7 +249,7 @@ public class Grafo {
 			for (int j = posiciones[i]; j < posiciones [i+1]; j++){
 				for (int k = j; k < posiciones[i+1]; k++){
 					
-					if(Math.random() < 0.8){
+					if(Math.random() < 0.7){
 					rand = (int)((Math.random()*99)+1);
 					matrizAdy [j][k] = rand;
 					matrizAdy [k][j] = rand;
