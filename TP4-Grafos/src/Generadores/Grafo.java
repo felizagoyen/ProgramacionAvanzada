@@ -110,7 +110,7 @@ public class Grafo {
 	}
 	
 	
-	public void generadorGrado(int cantidad, int grado){
+	public void grafoRegularDadoGradoYN(int cantidad, int grado){
 		
 		cantNodos = cantidad;
 		porcentajeAdy = ((double)grado/(cantNodos-1))*100;
@@ -121,7 +121,6 @@ public class Grafo {
 			matrizAdy = new int [cantNodos][cantNodos];
 			int j;
 
-			if(grado%2 == 0){
 			int saltoMax = (grado/2)-1;
 			for(int salto = 0; salto <= saltoMax; salto++){ 
 				for(int i = 0; i < cantNodos; i++){ 
@@ -130,7 +129,7 @@ public class Grafo {
 					matrizAdy[j][i] = 1;
 					}			
 				}	
-			}
+
 			
 			if((grado % 2) != 0){ 
 				for(int i=0; i<cantNodos/2 ;i++){
@@ -142,9 +141,50 @@ public class Grafo {
 		}	
 		
 		if(matrizAdy==null){
-			System.out.println("No se puede generar un grafo regular con esas caracter�sticas");
+			System.out.println("No se puede generar un grafo regular con esas caracteristicas");
 			cantAristas = 0;
 		}
+	}
+	
+	public void grafoRegularDadoPorcYN (int cantidad, int porcentaje){
+		cantNodos = cantidad;
+		porcentajeAdy = porcentaje;
+		
+		int grado = (int)((porcentajeAdy*(cantNodos-1))/100);
+		
+		cantNodos = cantidad;
+		cantAristas = (cantNodos*grado)/2;
+		matrizAdy = null;
+		
+		if((cantNodos % 2)==0 || (grado % 2)==0) {
+			matrizAdy = new int [cantNodos][cantNodos];
+			int j;
+
+			int saltoMax = (grado/2)-1;
+			for(int salto = 0; salto <= saltoMax; salto++){ 
+				for(int i = 0; i < cantNodos; i++){ 
+					j = (i+1 +salto) % cantNodos;
+					matrizAdy[i][j] = 1;
+					matrizAdy[j][i] = 1;
+					}			
+				}	
+
+			
+			if((grado % 2) != 0){ 
+				for(int i=0; i<cantNodos/2 ;i++){
+					j = i+cantNodos/2; 
+					matrizAdy [i][j] = 1;
+					matrizAdy [j][i] = 1;
+				}
+			}
+		}	
+		
+		if(matrizAdy==null){
+			System.out.println("No se puede generar un grafo regular con esas caracteristicas");
+			cantAristas = 0;
+		}
+
+		
 	}
 	
 
@@ -200,7 +240,7 @@ public class Grafo {
 	public static void main(String[] args) {
 		Grafo g1 = new Grafo ();
 		
-		g1.grafoDadoNYProbArista(5, 0.7);
+		g1.grafoRegularDadoPorcYN(10, 50);
 		
 		System.out.println(g1.cantNodos + " " + g1.cantAristas + " " + (int)g1.porcentajeAdy);
 		
