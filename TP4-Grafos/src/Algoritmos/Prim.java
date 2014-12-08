@@ -10,6 +10,7 @@ public class Prim {
 	private int cantAristas;
 	private int[][] matrizAdy;
 	private double porcentajeAdy;	
+	ArrayList<String> arbol = new ArrayList<String>();
 	
 	public Prim(String ruta){
 		File archivo = null;
@@ -51,7 +52,6 @@ public class Prim {
 		boolean[] conjSolucion = new boolean[cantNodos];
 		boolean bandera = false;
 		int min, fila, columna;
-		ArrayList<String> arbol = new ArrayList<String>();
 		int costo = 0;
 		
 		conjSolucion[0] = true;
@@ -101,13 +101,9 @@ public class Prim {
 			
 			porcentajeAdy = (int)porcentajeAdy;
 			
-			pw.println(cantNodos + " " +  cantAristas + " " + porcentajeAdy);
-			for (int i = 0; i < cantNodos; i++)
-				for (int j = i+1; j < cantNodos; j++){
-					if (matrizAdy [i][j] != 0){
-						pw.println(i + " " + j + " " + matrizAdy[i][j]);
-					}
-				}
+			pw.println(cantNodos + " " +  arbol.size() + " " + porcentajeAdy);
+			for(String eachPar: arbol)
+				pw.println(eachPar);
 			
 		}catch (Exception e){
 			e.printStackTrace();
