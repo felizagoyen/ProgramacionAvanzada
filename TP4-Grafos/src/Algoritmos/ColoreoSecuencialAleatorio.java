@@ -92,7 +92,7 @@ public class ColoreoSecuencialAleatorio {
 	public static void main(String[] args) {
 		ColoreoSecuencialAleatorio secuencialAleatorio = new ColoreoSecuencialAleatorio("grafo2.in");
 		secuencialAleatorio.resolver();
-		secuencialAleatorio.generarArchivoSalida(new File("coloreado.out"));
+		secuencialAleatorio.generarArchivoSalida(new File("coloreo.out"));
 	}
 
 }

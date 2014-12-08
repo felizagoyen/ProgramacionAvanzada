@@ -39,7 +39,7 @@ public class Grafo {
 					matrizAdy[i][j] = inf;
 				}
 			
-			for (int i = 0; i < (cantNodos* (cantNodos-1))/2; i++){
+			for (int i = 0; i < cantAristas; i++){
 				datos = br.readLine().split(" ");
 				matrizAdy[Integer.parseInt(datos[0])][Integer.parseInt(datos[1])] = Integer.parseInt(datos[2]);
 			}
@@ -379,13 +379,13 @@ public class Grafo {
 		
 
 //		g1.grafoRegularDadoPorcYN(5, 50);
-		g1.grafoDadoNYProbArista(4, 0.60);
+		g1.grafoDadoNYProbArista(6, 0.60);
 		g1.guardarGrafo("grafo2.in");
 		System.out.println(g1.cantNodos + " " + g1.cantAristas + " " + (int)g1.porcentajeAdy);
 
-		g1.grafoNPartito(10, 3);
+//		g1.grafoNPartito(10, 3);
 		
-		System.out.println(g1.cantNodos + " " + g1.cantAristas + " " + (int)g1.porcentajeAdy + " " + g1.gradoMax + " " + g1.gradoMin);
+//		System.out.println(g1.cantNodos + " " + g1.cantAristas + " " + (int)g1.porcentajeAdy + " " + g1.gradoMax + " " + g1.gradoMin);
 
 		
 		for (int i = 0; i < g1.cantNodos; i++)

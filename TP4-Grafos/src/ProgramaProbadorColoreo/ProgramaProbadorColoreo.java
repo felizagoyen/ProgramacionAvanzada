@@ -6,13 +6,13 @@ import java.io.FileReader;
 
 import Generadores.Grafo;
 
-public class ProgramaProbador {
+public class ProgramaProbadorColoreo {
 	private Grafo grafo;
 	private int[] vectorColoreo;
 	private int cantNodos;
 	private final static int inf = 100000;
 	
-	public ProgramaProbador() {
+	public ProgramaProbadorColoreo() {
 		
 	}
 	
@@ -57,12 +57,12 @@ public class ProgramaProbador {
 	}
 	
 	public static void main(String[] args) {
-		ProgramaProbador p1 = new ProgramaProbador();
-		p1.leerArchivos("grafo2.in", "coloreado.out");
+		ProgramaProbadorColoreo p1 = new ProgramaProbadorColoreo();
+		p1.leerArchivos("grafo2.in", "coloreo.out");
 		
-		for (int i = 0; i <4 ;i++) {
+		for (int i = 0; i <p1.grafo.getCantNodos() ;i++) {
 			System.out.println("");
-			for (int j = 0; j < 4; j++)
+			for (int j = 0; j < p1.grafo.getCantNodos(); j++)
 				System.out.print(p1.grafo.getMatrizAdy()[i][j] + "\t");
 			
 		}
