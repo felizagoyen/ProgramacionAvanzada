@@ -88,7 +88,7 @@ public class Grafo {
 		matrizAdy = new int[cantNodos][cantNodos];
 		
 		for (int i = 0; i < cantNodos; i++)
-			for (int j = i; i < cantNodos; i++){
+			for (int j = i; j < cantNodos; j++){
 				matrizAdy[i][j] = inf;
 				matrizAdy[j][i] = inf;
 			}
@@ -96,14 +96,17 @@ public class Grafo {
 		int costo = inf;
 		double rand; 
 		for (int i = 0; i < cantNodos; i++)
-			for (int j = i+1 ; i < cantNodos; i++){
+			for (int j = i+1 ; j < cantNodos; j++){
 				rand = Math.random();
-				if (rand < prob)
-					costo = (int)Math.random()*100;
+				if (rand < prob){
+					costo = (int)(Math.random()*100);
 					matrizAdy[i][j] = costo;
 					matrizAdy[j][i] = costo;
 					cantAristas++;
+				}
 			}
+		int aristasMax = (int) ((cantNodos * (cantNodos - 1))/2);
+		porcentajeAdy = (cantAristas*100)/aristasMax;
 	}
 	
 	
@@ -144,16 +147,7 @@ public class Grafo {
 		}
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	public void guardarGrafo (String ruta){
 		
 		File archivo = null;
@@ -206,9 +200,16 @@ public class Grafo {
 	public static void main(String[] args) {
 		Grafo g1 = new Grafo ();
 		
-		g1.grafoDadoNYPorcArista(5, 100);
+		g1.grafoDadoNYProbArista(5, 0.7);
 		
-		g1.guardarGrafo("grafo 100 50%.in");
+		System.out.println(g1.cantNodos + " " + g1.cantAristas + " " + (int)g1.porcentajeAdy);
+		
+		for (int i = 0; i < g1.cantNodos; i++)
+			for (int j = i+1; j < g1.cantNodos; j++)
+				if(g1.matrizAdy[i][j] != inf)
+				System.out.println(i + " " + j + " " + g1.matrizAdy[i][j]);
+		
+//		g1.guardarGrafo("grafo 100 50%.in");
 //		
 //		GregorianCalendar tIni = new GregorianCalendar();
 //		
