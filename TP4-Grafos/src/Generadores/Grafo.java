@@ -239,7 +239,7 @@ public class Grafo {
 		
 		int[] cantidades = new int [n];
 		
-		cantidades = generarTamañoSubGrafos(cantNodos, n);
+		cantidades = generarTamanioSubGrafos(cantNodos, n);
 		
 		int[] posiciones = new int [n+1];
 		posiciones[0] = 0;
@@ -331,7 +331,7 @@ public class Grafo {
 		}
 	}
 	
-	public int[] generarTamañoSubGrafos (int cantNodos, int n){
+	public int[] generarTamanioSubGrafos (int cantNodos, int n){
 		
 		
 		int[] cantidades = new int[n];
