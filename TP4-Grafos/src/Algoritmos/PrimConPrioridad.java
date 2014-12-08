@@ -6,55 +6,70 @@ import java.io.FileReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
-import java.util.HashMap;
+import java.util.PriorityQueue;
+
+class Nodo implements Comparable<Nodo> {
+	Integer nodo;
+	Integer valor;
+	
+	public Nodo(Integer nodo, Integer valor){
+		this.nodo = nodo; 
+		this.valor = valor;
+	}
+	public int compareTo(Nodo other){
+		if(this.valor > other.valor)
+			return 1;
+		if(this.valor < other.valor)
+			return -1;
+		return 0;
+	}
+	
+	public Integer getNodo() {
+		return nodo;
+	}
+	
+	public Integer getValor() {
+		return valor;
+	}
+}
 
 public class PrimConPrioridad {
 
 	private Integer cantidadNodos;
 	private Integer cantidadAristas;
 	private Double porcentajeAdyacencia;
-	private ArrayList<ArrayList<HashMap<Integer,Integer>>> listaAdyacencia;
-	private ArrayList<Integer> colaDePrioridad = new ArrayList<Integer>();
+	private ArrayList<ArrayList<Nodo>> listaAdyacencia;
 	private ArrayList<Integer> valorAdyacente = new ArrayList<Integer>();
 	private ArrayList<Integer> nodoAdyacente = new ArrayList<Integer>();
+	private ArrayList<Boolean> visitado = new ArrayList<Boolean>();
 	
 	public PrimConPrioridad() {
 		
 	}
 	
 	public void resolver() {
-		Integer nodoCola = 0;
+		PriorityQueue<Nodo> colaDePrioridad = new PriorityQueue<Nodo>();
+		Nodo nodoCola;
 		valorAdyacente.set(0, 0);
+		colaDePrioridad.add(new Nodo(0,0));
 		
 		while(colaDePrioridad.isEmpty() == false) {
-			nodoCola = minimoCola();
+			nodoCola = colaDePrioridad.poll();
 			Integer valor = Integer.MAX_VALUE;
 			
-			for(HashMap<Integer, Integer> cadaNodo: listaAdyacencia.get(nodoCola)) {
-				valor = (Integer) cadaNodo.values().toArray()[0];
-				Integer nodo = (Integer) cadaNodo.keySet().toArray()[0];
-				if(colaDePrioridad.contains(nodo) && valor < valorAdyacente.get(nodo)) {
-					valorAdyacente.set(nodo, valor);
-					nodoAdyacente.set(nodo, nodoCola);
+			if(visitado.get(nodoCola.getNodo()) == false) {
+				visitado.set(nodoCola.getNodo(), true);
+				for(Nodo cadaNodo: listaAdyacencia.get(nodoCola.getNodo())) {
+					valor = (Integer) cadaNodo.getValor();
+					Integer nodo = (Integer) cadaNodo.getNodo();
+					if(visitado.get(nodo) == false && valor < valorAdyacente.get(nodo)) {
+						valorAdyacente.set(nodo, valor);
+						nodoAdyacente.set(nodo, nodoCola.getNodo());
+						colaDePrioridad.add(new Nodo(nodo, valor));
+					}
 				}
 			}
 		}
-	}
-	
-	private Integer minimoCola() {
-		Integer minimo = Integer.MAX_VALUE;
-		Integer nodoMinimo = colaDePrioridad.get(0);
-
-		for(Integer cadaValor: valorAdyacente) {
-			Integer nodo = valorAdyacente.indexOf(cadaValor);
-			if(cadaValor < minimo && colaDePrioridad.contains(nodo)) {
-				minimo = cadaValor;
-				nodoMinimo = nodo;
-			}
-		}
-
-		colaDePrioridad.remove(nodoMinimo);
-		return nodoMinimo;
 	}
 	
 	public void cargarDatosDesdeArchivo(File archivo) {
@@ -73,28 +88,23 @@ public class PrimConPrioridad {
 			this.cantidadAristas = Integer.parseInt(lineaSplit[1]);
 			this.porcentajeAdyacencia = Double.parseDouble(lineaSplit[2]);
 			
-			listaAdyacencia = new ArrayList<ArrayList<HashMap<Integer, Integer>>>();
+			listaAdyacencia = new ArrayList<ArrayList<Nodo>>();
 			
 			for(int x = 0; x < cantidadNodos; x++) {
-				listaAdyacencia.add(x,new ArrayList<HashMap<Integer, Integer>>());
+				listaAdyacencia.add(x,new ArrayList<Nodo>());
 				nodoAdyacente.add(null);
 				valorAdyacente.add(Integer.MAX_VALUE);
-				colaDePrioridad.add(x);
+				visitado.add(false);
 			}
 
-			HashMap<Integer, Integer> nodo = null;
 			while((linea = br.readLine()) != null) {
 				lineaSplit = linea.split(" ");
 				
 				Integer x = Integer.parseInt(lineaSplit[0]);
 				Integer y = Integer.parseInt(lineaSplit[1]);
 				Integer valor = Integer.parseInt(lineaSplit[2]);
-				nodo = new HashMap<Integer, Integer>();
-				nodo.put(y, valor);
-				listaAdyacencia.get(x).add(nodo);
-				nodo = new HashMap<Integer, Integer>();
-				nodo.put(x, valor);
-				listaAdyacencia.get(y).add(nodo);
+				listaAdyacencia.get(x).add(new Nodo(y, valor));
+				listaAdyacencia.get(y).add(new Nodo(x, valor));
 			}
 		} catch(Exception e1) {
 			e1.printStackTrace();
