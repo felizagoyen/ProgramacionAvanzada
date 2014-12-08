@@ -9,8 +9,8 @@ import java.util.GregorianCalendar;
 import java.util.PriorityQueue;
 
 class Nodo implements Comparable<Nodo> {
-	Integer nodo;
-	Integer valor;
+	private Integer nodo;
+	private Integer valor;
 	
 	public Nodo(Integer nodo, Integer valor){
 		this.nodo = nodo; 
@@ -42,6 +42,7 @@ public class PrimConPrioridad {
 	private ArrayList<Integer> valorAdyacente = new ArrayList<Integer>();
 	private ArrayList<Integer> nodoAdyacente = new ArrayList<Integer>();
 	private ArrayList<Boolean> visitado = new ArrayList<Boolean>();
+	private Integer costo;
 	
 	public PrimConPrioridad() {
 		
@@ -52,15 +53,15 @@ public class PrimConPrioridad {
 		Nodo nodoCola;
 		valorAdyacente.set(0, 0);
 		colaDePrioridad.add(new Nodo(0,0));
+		costo = 0;
 		
 		while(colaDePrioridad.isEmpty() == false) {
 			nodoCola = colaDePrioridad.poll();
-			Integer valor = Integer.MAX_VALUE;
 			
 			if(visitado.get(nodoCola.getNodo()) == false) {
 				visitado.set(nodoCola.getNodo(), true);
 				for(Nodo cadaNodo: listaAdyacencia.get(nodoCola.getNodo())) {
-					valor = (Integer) cadaNodo.getValor();
+					Integer valor = (Integer) cadaNodo.getValor();
 					Integer nodo = (Integer) cadaNodo.getNodo();
 					if(visitado.get(nodo) == false && valor < valorAdyacente.get(nodo)) {
 						valorAdyacente.set(nodo, valor);
@@ -70,6 +71,9 @@ public class PrimConPrioridad {
 				}
 			}
 		}
+		for(int x = 0; x < cantidadNodos; x++)
+			if(nodoAdyacente.get(x) != null)
+				costo += valorAdyacente.get(x);	
 	}
 	
 	public void cargarDatosDesdeArchivo(File archivo) {
@@ -97,8 +101,8 @@ public class PrimConPrioridad {
 				visitado.add(false);
 			}
 
-			while((linea = br.readLine()) != null) {
-				lineaSplit = linea.split(" ");
+			for(int z = 0; z < cantidadAristas; z++) {
+				lineaSplit = br.readLine().split(" ");
 				
 				Integer x = Integer.parseInt(lineaSplit[0]);
 				Integer y = Integer.parseInt(lineaSplit[1]);
@@ -122,10 +126,12 @@ public class PrimConPrioridad {
 		PrintWriter pw = null;
 		try {
 			pw = new PrintWriter(archivo);
-			pw.println(cantidadNodos + " " + cantidadAristas + " " + porcentajeAdyacencia);
+			porcentajeAdyacencia = ((nodoAdyacente.size() - 1)*(cantidadNodos-1)*50.0) / (cantidadNodos * (cantidadNodos-1));
+
+			pw.println(cantidadNodos + " " + (nodoAdyacente.size() - 1) + " " + porcentajeAdyacencia);
 			for(int x = 0; x < cantidadNodos; x++)
 				if(nodoAdyacente.get(x) != null)
-					pw.println(nodoAdyacente.get(x) + " " + x);
+					pw.println(nodoAdyacente.get(x) + " " + x + " " + valorAdyacente.get(x));
 			
 		} catch(Exception e) {
 			e.printStackTrace();

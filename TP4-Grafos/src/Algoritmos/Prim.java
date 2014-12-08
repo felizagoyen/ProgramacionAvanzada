@@ -85,7 +85,7 @@ public class Prim {
 		for (int i = 0; i < cantNodos; i++)
 			if (!conjSolucion[i])
 				return 0;
-		
+
 		return costo;	
 		
 	}
@@ -99,7 +99,7 @@ public class Prim {
 			archivo = new File (ruta);
 			pw = new PrintWriter (archivo);
 			
-			porcentajeAdy = (int)porcentajeAdy;
+			porcentajeAdy = (arbol.size()*(cantNodos-1)*50.0) / (cantNodos * (cantNodos-1));
 			
 			pw.println(cantNodos + " " +  arbol.size() + " " + porcentajeAdy);
 			for(String eachPar: arbol)

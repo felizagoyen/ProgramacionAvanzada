@@ -4,24 +4,26 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 public class Kruskal {
-	Integer matrizAdyacencia[][];
-	Integer cantidadNodos;
-	Integer cantidadAristas;
-	Double porcentajeAdyacencia;
-	Integer centinela[];
-	Integer matrizArbolRecubridorMinimo[][];	
+	private Integer matrizAdyacencia[][];
+	private Integer cantidadNodos;
+	private Integer cantidadAristas;
+	private Double porcentajeAdyacencia;
+	private Integer centinela[];
+	private ArrayList<String> arbolRecubridorMinimo = new ArrayList<String>();	
+	private Integer costo;
 	
 	public Kruskal() {
 	}
-	
 	
 	public void resolver() {
 		Integer nodoA = 0;
 		Integer nodoB = 0;
 		Integer aristasRecorridas = 1;
+		costo = 0;
 		
 		while(aristasRecorridas < cantidadNodos) {
 			Integer minimo = Integer.MAX_VALUE;
@@ -36,9 +38,8 @@ public class Kruskal {
 						
 			if(!centinela[nodoA].equals(centinela[nodoB])) {
 				Integer centinelaB = centinela[nodoB];
-				matrizArbolRecubridorMinimo[nodoA][nodoB] = minimo;
-				matrizArbolRecubridorMinimo[nodoB][nodoA] = minimo;
-				
+				arbolRecubridorMinimo.add(nodoA + " " + nodoB + " " + minimo);
+				costo += minimo;
 				for(int x = 0; x < cantidadNodos; x++)
 					if(centinela[x].equals(centinelaB))
 						centinela[x] = centinela[nodoA];
@@ -62,22 +63,18 @@ public class Kruskal {
 			
 			this.cantidadNodos = Integer.parseInt(lineaSplit[0]);
 			this.cantidadAristas = Integer.parseInt(lineaSplit[1]);
-			this.porcentajeAdyacencia = Double.parseDouble(lineaSplit[2]);
 			
 			centinela = new Integer[cantidadNodos];
 			this.matrizAdyacencia = new Integer[cantidadNodos][cantidadNodos];
-			matrizArbolRecubridorMinimo = new Integer[cantidadNodos][cantidadNodos];
 			
 			for(int x = 0; x < cantidadNodos; x++) {
-				for(int y = 0; y < cantidadNodos; y++) { 
-					matrizArbolRecubridorMinimo[x][y] = 0;
+				for(int y = 0; y < cantidadNodos; y++) 
 					matrizAdyacencia[x][y] = Integer.MAX_VALUE;
-				}
 				centinela[x] = x;
 			}
 			
-			while((linea = br.readLine()) != null) {
-				lineaSplit = linea.split(" ");
+			for(int z = 0; z < cantidadAristas; z++) {
+				lineaSplit = br.readLine().split(" ");
 				int x = Integer.parseInt(lineaSplit[0]);
 				int y = Integer.parseInt(lineaSplit[1]);
 				int valor = Integer.parseInt(lineaSplit[2]);
@@ -102,11 +99,11 @@ public class Kruskal {
 		PrintWriter pw = null;
 		try {
 			pw = new PrintWriter(archivo);
-			pw.println(cantidadNodos + " " + cantidadAristas + " " + porcentajeAdyacencia);
-			for(int x = 0; x < cantidadNodos; x++)
-				for(int y = x + 1; y < cantidadNodos; y++)
-					if(matrizArbolRecubridorMinimo[x][y] != 0)
-							pw.println(x + " " + y);
+			porcentajeAdyacencia = (arbolRecubridorMinimo.size()*(cantidadNodos-1)*50.0) / (cantidadNodos * (cantidadNodos-1));
+			pw.println(cantidadNodos + " " + arbolRecubridorMinimo.size() + " " + porcentajeAdyacencia);
+
+			for(String cadaPar: arbolRecubridorMinimo)
+				pw.println(cadaPar);
 			
 		} catch(Exception e) {
 			e.printStackTrace();
