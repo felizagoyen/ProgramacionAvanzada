@@ -377,16 +377,16 @@ public class Grafo {
 	public static void main(String[] args) {
 		Grafo g1 = new Grafo ();
 		
-<<<<<<< HEAD
+
 //		g1.grafoRegularDadoPorcYN(5, 50);
 		g1.grafoDadoNYProbArista(4, 0.60);
 		g1.guardarGrafo("grafo2.in");
 		System.out.println(g1.cantNodos + " " + g1.cantAristas + " " + (int)g1.porcentajeAdy);
-=======
+
 		g1.grafoNPartito(10, 3);
 		
 		System.out.println(g1.cantNodos + " " + g1.cantAristas + " " + (int)g1.porcentajeAdy + " " + g1.gradoMax + " " + g1.gradoMin);
->>>>>>> 6a095abf75258f7ba66ea57bd433f819c9af8962
+
 		
 		for (int i = 0; i < g1.cantNodos; i++)
 			for (int j = i+1; j < g1.cantNodos; j++)
