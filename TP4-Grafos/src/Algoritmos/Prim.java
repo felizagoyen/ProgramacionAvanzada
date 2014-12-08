@@ -10,7 +10,8 @@ public class Prim {
 	private int cantAristas;
 	private int[][] matrizAdy;
 	private double porcentajeAdy;	
-	ArrayList<String> arbol = new ArrayList<String>();
+	private ArrayList<String> arbol = new ArrayList<String>();
+	private int[] cantAdy;
 	
 	public Prim(String ruta){
 		File archivo = null;
@@ -29,6 +30,7 @@ public class Prim {
 			cantAristas = Integer.parseInt(datos[1]);
 			porcentajeAdy = Double.parseDouble(datos[2]);
 			matrizAdy = new int[cantNodos][cantNodos];
+			cantAdy = new int[cantNodos];
 			
 			for (int i = 0; i < cantAristas; i++){
 				datos = br.readLine().split(" ");
@@ -73,9 +75,11 @@ public class Prim {
 							}
 			if (!bandera){
 				arbol.add(fila + " " + columna + " " + min);
+				cantAdy[fila]++;
+				cantAdy[columna]++;
 				costo += min;
 				if (!conjSolucion[columna])
-				conjSolucion[columna] = true;
+					conjSolucion[columna] = true;
 				else{
 					conjSolucion[fila] = true;
 				}
@@ -98,10 +102,11 @@ public class Prim {
 		try{
 			archivo = new File (ruta);
 			pw = new PrintWriter (archivo);
+			Arrays.sort(cantAdy);
 			
 			porcentajeAdy = (arbol.size()*(cantNodos-1)*50.0) / (cantNodos * (cantNodos-1));
 			
-			pw.println(cantNodos + " " +  arbol.size() + " " + porcentajeAdy);
+			pw.println(cantNodos + " " +  arbol.size() + " " + porcentajeAdy + " " + cantAdy[cantNodos- 1] + " " + cantAdy[0]);
 			for(String eachPar: arbol)
 				pw.println(eachPar);
 			

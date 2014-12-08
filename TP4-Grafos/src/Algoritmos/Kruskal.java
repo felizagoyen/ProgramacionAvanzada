@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.GregorianCalendar;
 
 public class Kruskal {
@@ -15,6 +16,7 @@ public class Kruskal {
 	private Integer centinela[];
 	private ArrayList<String> arbolRecubridorMinimo = new ArrayList<String>();	
 	private Integer costo;
+	private ArrayList<Integer> cantidadAdyacentes = new ArrayList<Integer>();
 	
 	public Kruskal() {
 	}
@@ -40,6 +42,8 @@ public class Kruskal {
 				Integer centinelaB = centinela[nodoB];
 				arbolRecubridorMinimo.add(nodoA + " " + nodoB + " " + minimo);
 				costo += minimo;
+				cantidadAdyacentes.set(nodoA, cantidadAdyacentes.get(nodoA) + 1);
+				cantidadAdyacentes.set(nodoB, cantidadAdyacentes.get(nodoB) + 1);
 				for(int x = 0; x < cantidadNodos; x++)
 					if(centinela[x].equals(centinelaB))
 						centinela[x] = centinela[nodoA];
@@ -71,6 +75,7 @@ public class Kruskal {
 				for(int y = 0; y < cantidadNodos; y++) 
 					matrizAdyacencia[x][y] = Integer.MAX_VALUE;
 				centinela[x] = x;
+				cantidadAdyacentes.add(0);
 			}
 			
 			for(int z = 0; z < cantidadAristas; z++) {
@@ -100,7 +105,10 @@ public class Kruskal {
 		try {
 			pw = new PrintWriter(archivo);
 			porcentajeAdyacencia = (arbolRecubridorMinimo.size()*(cantidadNodos-1)*50.0) / (cantidadNodos * (cantidadNodos-1));
-			pw.println(cantidadNodos + " " + arbolRecubridorMinimo.size() + " " + porcentajeAdyacencia);
+			Collections.sort(cantidadAdyacentes);
+			
+			pw.println(cantidadNodos + " " + arbolRecubridorMinimo.size() + " " + porcentajeAdyacencia + " " 
+									 + cantidadAdyacentes.get(cantidadNodos - 1) + " " + cantidadAdyacentes.get(0));
 
 			for(String cadaPar: arbolRecubridorMinimo)
 				pw.println(cadaPar);

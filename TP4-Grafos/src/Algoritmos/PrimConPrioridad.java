@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.PriorityQueue;
 
@@ -43,6 +44,7 @@ public class PrimConPrioridad {
 	private ArrayList<Integer> nodoAdyacente = new ArrayList<Integer>();
 	private ArrayList<Boolean> visitado = new ArrayList<Boolean>();
 	private Integer costo;
+	private ArrayList<Integer> cantidadAdyacentes = new ArrayList<Integer>();
 	
 	public PrimConPrioridad() {
 		
@@ -71,9 +73,12 @@ public class PrimConPrioridad {
 				}
 			}
 		}
-		for(int x = 0; x < cantidadNodos; x++)
-			if(nodoAdyacente.get(x) != null)
-				costo += valorAdyacente.get(x);	
+		for(int x = 0; x < cantidadNodos; x++) 
+			if(nodoAdyacente.get(x) != null) {
+				costo += valorAdyacente.get(x);
+				cantidadAdyacentes.set(x, cantidadAdyacentes.get(x) + 1);
+				cantidadAdyacentes.set(nodoAdyacente.get(x), cantidadAdyacentes.get(nodoAdyacente.get(x)) + 1);
+			}
 	}
 	
 	public void cargarDatosDesdeArchivo(File archivo) {
@@ -99,6 +104,7 @@ public class PrimConPrioridad {
 				nodoAdyacente.add(null);
 				valorAdyacente.add(Integer.MAX_VALUE);
 				visitado.add(false);
+				cantidadAdyacentes.add(0);
 			}
 
 			for(int z = 0; z < cantidadAristas; z++) {
@@ -126,9 +132,12 @@ public class PrimConPrioridad {
 		PrintWriter pw = null;
 		try {
 			pw = new PrintWriter(archivo);
-			porcentajeAdyacencia = ((nodoAdyacente.size() - 1)*(cantidadNodos-1)*50.0) / (cantidadNodos * (cantidadNodos-1));
 
-			pw.println(cantidadNodos + " " + (nodoAdyacente.size() - 1) + " " + porcentajeAdyacencia);
+			porcentajeAdyacencia = ((nodoAdyacente.size() - 1)*(cantidadNodos-1)*50.0) / (cantidadNodos * (cantidadNodos-1));
+			Collections.sort(cantidadAdyacentes);
+			
+			pw.println(cantidadNodos + " " + (nodoAdyacente.size() - 1) + " " + porcentajeAdyacencia
+									 + " " + cantidadAdyacentes.get(cantidadNodos - 1) + " " + cantidadAdyacentes.get(0));
 			for(int x = 0; x < cantidadNodos; x++)
 				if(nodoAdyacente.get(x) != null)
 					pw.println(nodoAdyacente.get(x) + " " + x + " " + valorAdyacente.get(x));
