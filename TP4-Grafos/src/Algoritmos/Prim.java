@@ -72,7 +72,7 @@ public class Prim {
 								columna = j;
 							}
 			if (!bandera){
-				arbol.add(fila + " " + columna);
+				arbol.add(fila + " " + columna + " " + min);
 				costo += min;
 				if (!conjSolucion[columna])
 				conjSolucion[columna] = true;
