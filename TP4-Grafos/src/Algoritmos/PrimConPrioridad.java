@@ -38,7 +38,7 @@ public class PrimConPrioridad {
 
 	private Integer cantidadNodos;
 	private Integer cantidadAristas;
-	private Double porcentajeAdyacencia;
+	private Integer porcentajeAdyacencia;
 	private ArrayList<ArrayList<Nodo>> listaAdyacencia;
 	private ArrayList<Integer> valorAdyacente = new ArrayList<Integer>();
 	private ArrayList<Integer> nodoAdyacente = new ArrayList<Integer>();
@@ -95,7 +95,6 @@ public class PrimConPrioridad {
 			
 			this.cantidadNodos = Integer.parseInt(lineaSplit[0]);
 			this.cantidadAristas = Integer.parseInt(lineaSplit[1]);
-			this.porcentajeAdyacencia = Double.parseDouble(lineaSplit[2]);
 			
 			listaAdyacencia = new ArrayList<ArrayList<Nodo>>();
 			
@@ -133,12 +132,10 @@ public class PrimConPrioridad {
 		try {
 			pw = new PrintWriter(archivo);
 
-			porcentajeAdyacencia = (double) ((cantidadNodos - 1) * 100) / (((cantidadNodos -1) * cantidadNodos)/2);
+			porcentajeAdyacencia = (int) ((cantidadNodos - 1) * 100) / (((cantidadNodos -1) * cantidadNodos)/2);
 			Collections.sort(cantidadAdyacentes);
 			
-			double porc = porcentajeAdyacencia;
-			
-			pw.println(cantidadNodos + " " + (nodoAdyacente.size() - 1) + " " + (int)porc
+			pw.println(cantidadNodos + " " + (nodoAdyacente.size() - 1) + " " + porcentajeAdyacencia
 									 + " " + cantidadAdyacentes.get(cantidadNodos - 1) + " " + cantidadAdyacentes.get(0));
 			for(int x = 0; x < cantidadNodos; x++)
 				if(nodoAdyacente.get(x) != null)

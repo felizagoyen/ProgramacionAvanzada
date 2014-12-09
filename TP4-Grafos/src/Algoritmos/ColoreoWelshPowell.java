@@ -11,7 +11,7 @@ public class ColoreoWelshPowell {
 	private MatrizSimetrica matrizAdyacencia;
 	private Integer cantidadNodos;
 	private Integer cantidadAristas;
-	private Double porcentajeAdyacencia;
+	private Integer porcentajeAdyacencia;
 	private ArrayList<Integer> gradoNodo = new ArrayList<Integer>();
 	private ArrayList<Integer> nodos = new ArrayList<Integer>();
 	private ArrayList<Integer> colorNodos = new ArrayList<Integer>();
@@ -24,7 +24,7 @@ public class ColoreoWelshPowell {
 		matrizAdyacencia = new MatrizSimetrica(ruta);
 		this.cantidadNodos = matrizAdyacencia.getCantNodos();
 		this.cantidadAristas = matrizAdyacencia.getCantAristas();
-		this.porcentajeAdyacencia = (cantidadAristas*(cantidadNodos-1)*50.0) / (cantidadNodos * (cantidadNodos-1));
+		this.porcentajeAdyacencia = (int) ((cantidadNodos - 1) * 100) / (((cantidadNodos -1) * cantidadNodos)/2);
 
 		for(int x = 0; x < cantidadNodos; x++) {
 			gradoNodo.add(0);

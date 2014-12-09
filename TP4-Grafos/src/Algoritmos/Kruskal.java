@@ -12,7 +12,7 @@ public class Kruskal {
 	private Integer matrizAdyacencia[][];
 	private Integer cantidadNodos;
 	private Integer cantidadAristas;
-	private Double porcentajeAdyacencia;
+	private Integer porcentajeAdyacencia;
 	private Integer centinela[];
 	private ArrayList<String> arbolRecubridorMinimo = new ArrayList<String>();	
 	private Integer costo;
@@ -104,11 +104,10 @@ public class Kruskal {
 		PrintWriter pw = null;
 		try {
 			pw = new PrintWriter(archivo);
-			porcentajeAdyacencia = (double) ((cantidadNodos - 1) * 100) / (((cantidadNodos -1) * cantidadNodos)/2);
+			porcentajeAdyacencia = (int) ((cantidadNodos - 1) * 100) / (((cantidadNodos -1) * cantidadNodos)/2);
 			Collections.sort(cantidadAdyacentes);
-			double porc = porcentajeAdyacencia;
 			
-			pw.println(cantidadNodos + " " + arbolRecubridorMinimo.size() + " " + (int)porc + " " 
+			pw.println(cantidadNodos + " " + arbolRecubridorMinimo.size() + " " + porcentajeAdyacencia + " " 
 									 + cantidadAdyacentes.get(cantidadNodos - 1) + " " + cantidadAdyacentes.get(0));
 
 			for(String cadaPar: arbolRecubridorMinimo)

@@ -9,7 +9,7 @@ public class Prim {
 	private int cantNodos;
 	private int cantAristas;
 	private int[][] matrizAdy;
-	private double porcentajeAdy;	
+	private int porcentajeAdy;	
 	private ArrayList<String> arbol = new ArrayList<String>();
 	private int[] cantAdy;
 	
@@ -28,7 +28,7 @@ public class Prim {
 			
 			cantNodos = Integer.parseInt(datos[0]);
 			cantAristas = Integer.parseInt(datos[1]);
-			porcentajeAdy = Double.parseDouble(datos[2]);
+			porcentajeAdy = Integer.parseInt(datos[2]);
 			matrizAdy = new int[cantNodos][cantNodos];
 			cantAdy = new int[cantNodos];
 			
@@ -108,9 +108,9 @@ public class Prim {
 			pw = new PrintWriter (archivo);
 			Arrays.sort(cantAdy);
 
-			porcentajeAdy = (double) ((cantNodos - 1) * 100) / (((cantNodos - 1) * cantNodos)/2);
+			porcentajeAdy = (int) ((cantNodos - 1) * 100) / (((cantNodos - 1) * cantNodos)/2);
 			
-			pw.println(cantNodos + " " +  arbol.size() + " " + (int)porcentajeAdy + " " + cantAdy[cantNodos- 1] + " " + cantAdy[0]);
+			pw.println(cantNodos + " " +  arbol.size() + " " + porcentajeAdy + " " + cantAdy[cantNodos- 1] + " " + cantAdy[0]);
 			for(String eachPar: arbol)
 				pw.println(eachPar);
 			
