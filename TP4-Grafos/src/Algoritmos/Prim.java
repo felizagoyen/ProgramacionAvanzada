@@ -32,6 +32,10 @@ public class Prim {
 			matrizAdy = new int[cantNodos][cantNodos];
 			cantAdy = new int[cantNodos];
 			
+			for (int i = 0; i < cantNodos; i++)
+				for (int j = 0; j < cantNodos; j++)
+					matrizAdy[i][j] = inf;
+			
 			for (int i = 0; i < cantAristas; i++){
 				datos = br.readLine().split(" ");
 				matrizAdy[Integer.parseInt(datos[0])][Integer.parseInt(datos[1])] = Integer.parseInt(datos[2]);
