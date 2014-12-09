@@ -1,6 +1,7 @@
 package ProgramaProbadorColoreo;
 
 import java.io.BufferedReader;
+
 import java.io.File;
 import java.io.FileReader;
 
@@ -11,6 +12,8 @@ public class ProgramaProbadorColoreo {
 	private int[] vectorColoreo;
 	private int cantNodos;
 	private final static int inf = 100000;
+	
+	
 	
 	public ProgramaProbadorColoreo() {
 		
@@ -36,7 +39,8 @@ public class ProgramaProbadorColoreo {
 			for(int i = 0; i < cantNodos; i++){
 				linea = br.readLine();
 				datos = linea.split(" ");
-				vectorColoreo[i] = Integer.parseInt(datos[1]);
+				int nodo = Integer.parseInt(datos[0]);
+				vectorColoreo[nodo] = Integer.parseInt(datos[1]);
 			}
 		}catch(Exception e){
 			e.printStackTrace();
