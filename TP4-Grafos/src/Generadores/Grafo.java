@@ -63,7 +63,7 @@ public class Grafo {
 
 	
 	
-	public void grafoDadoNYPorcArista (int cantidad, int porcentaje){
+	public void grafoDadoNYPorcentajeAdy (int cantidad, int porcentaje){
 		cantNodos = cantidad;
 		porcentajeAdy = porcentaje;
 		cantAristas = (int) ((cantNodos * (cantNodos-1) /2) * (porcentajeAdy/100));
@@ -377,13 +377,35 @@ public class Grafo {
 	public static void main(String[] args) {
 		Grafo g1 = new Grafo ();
 		
-
-//		g1.grafoRegularDadoPorcYN(5, 50);
-		g1.grafoNPartito(50, 8);
-//		g1.guardarGrafo("grafo2.in");
+		g1.grafoDadoNYPorcentajeAdy(200, 50);
+		g1.guardarGrafo("200 nodos 50% ady.in");
+	
+		g1.grafoDadoNYPorcentajeAdy(200, 75);
+		g1.guardarGrafo("200 nodos 75% ady.in");
+		
+		g1.grafoDadoNYPorcentajeAdy(200, 95);
+		g1.guardarGrafo("200 nodos 95% ady.in");
+	
+		g1.grafoDadoNYPorcentajeAdy(300, 50);
+		g1.guardarGrafo("300 nodos 50% ady.in");
+	
+		g1.grafoDadoNYPorcentajeAdy(300, 75);
+		g1.guardarGrafo("300 nodos 75% ady.in");
+		
+		g1.grafoDadoNYPorcentajeAdy(300, 95);
+		g1.guardarGrafo("300 nodos 95% ady.in");
+	
+		g1.grafoDadoNYPorcentajeAdy(400, 50);
+		g1.guardarGrafo("400 nodos 50% ady.in");
+	
+		g1.grafoDadoNYPorcentajeAdy(400, 75);
+		g1.guardarGrafo("400 nodos 75% ady.in");
+		
+		g1.grafoDadoNYPorcentajeAdy(400, 95);
+		g1.guardarGrafo("400 nodos 95% ady.in");
+	
+		
 //		System.out.println(g1.cantNodos + " " + g1.cantAristas + " " + (int)g1.porcentajeAdy);
-
-//		g1.grafoNPartito(10, 3);
 		
 //		System.out.println(g1.cantNodos + " " + g1.cantAristas + " " + (int)g1.porcentajeAdy + " " + g1.gradoMax + " " + g1.gradoMin);
 

@@ -136,7 +136,9 @@ public class PrimConPrioridad {
 			porcentajeAdyacencia = (double) ((cantidadNodos - 1) * 100) / (((cantidadNodos -1) * cantidadNodos)/2);
 			Collections.sort(cantidadAdyacentes);
 			
-			pw.println(cantidadNodos + " " + (nodoAdyacente.size() - 1) + " " + porcentajeAdyacencia
+			double porc = porcentajeAdyacencia;
+			
+			pw.println(cantidadNodos + " " + (nodoAdyacente.size() - 1) + " " + (int)porc
 									 + " " + cantidadAdyacentes.get(cantidadNodos - 1) + " " + cantidadAdyacentes.get(0));
 			for(int x = 0; x < cantidadNodos; x++)
 				if(nodoAdyacente.get(x) != null)
@@ -154,15 +156,16 @@ public class PrimConPrioridad {
 	
 	public static void main(String[] args) {
 		PrimConPrioridad prim = new PrimConPrioridad();
-		prim.cargarDatosDesdeArchivo(new File("grafo.in"));
 		
+		prim.cargarDatosDesdeArchivo(new File("400 nodos 95% ady.in"));
 		GregorianCalendar tIni = new GregorianCalendar();
 		prim.resolver();
 		GregorianCalendar tFin = new GregorianCalendar();
 		long diff = tFin.getTimeInMillis() - tIni.getTimeInMillis();
 		System.out.println(diff);
+		prim.generarArchivoSalida(new File("Prim prioridad 400 nodos 95% ady.out"));
 		
-		prim.generarArchivoSalida(new File("arbolMinimo.out"));
+		
 	}
 
 }

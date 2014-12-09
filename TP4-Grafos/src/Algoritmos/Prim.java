@@ -110,7 +110,7 @@ public class Prim {
 
 			porcentajeAdy = (double) ((cantNodos - 1) * 100) / (((cantNodos - 1) * cantNodos)/2);
 			
-			pw.println(cantNodos + " " +  arbol.size() + " " + porcentajeAdy + " " + cantAdy[cantNodos- 1] + " " + cantAdy[0]);
+			pw.println(cantNodos + " " +  arbol.size() + " " + (int)porcentajeAdy + " " + cantAdy[cantNodos- 1] + " " + cantAdy[0]);
 			for(String eachPar: arbol)
 				pw.println(eachPar);
 			
@@ -127,14 +127,14 @@ public class Prim {
 
 	
 	public static void main(String[] args) {
-		Prim prim = new Prim("grafo.in");
 		
+		Prim prim = new Prim("400 nodos 50% ady.in");
 		GregorianCalendar tIni = new GregorianCalendar();
 		prim.resolver();
 		GregorianCalendar tFin = new GregorianCalendar();
 		long diff = tFin.getTimeInMillis() - tIni.getTimeInMillis();
 		System.out.println(diff);
-
-		prim.guardarGrafo("arbolMinimo.out");
+		prim.guardarGrafo("Prim con matriz 400 nodos 50% ady.out");
+		
 	}
 }

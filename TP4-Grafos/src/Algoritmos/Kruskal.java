@@ -106,8 +106,9 @@ public class Kruskal {
 			pw = new PrintWriter(archivo);
 			porcentajeAdyacencia = (double) ((cantidadNodos - 1) * 100) / (((cantidadNodos -1) * cantidadNodos)/2);
 			Collections.sort(cantidadAdyacentes);
+			double porc = porcentajeAdyacencia;
 			
-			pw.println(cantidadNodos + " " + arbolRecubridorMinimo.size() + " " + porcentajeAdyacencia + " " 
+			pw.println(cantidadNodos + " " + arbolRecubridorMinimo.size() + " " + (int)porc + " " 
 									 + cantidadAdyacentes.get(cantidadNodos - 1) + " " + cantidadAdyacentes.get(0));
 
 			for(String cadaPar: arbolRecubridorMinimo)
@@ -125,7 +126,7 @@ public class Kruskal {
 	public static void main(String[] args) {
 	
 		Kruskal kruskal = new Kruskal();
-		kruskal.cargarDatosDesdeArchivo(new File("grafo.in"));
+		kruskal.cargarDatosDesdeArchivo(new File("400 nodos 95% ady.in"));
 
 		GregorianCalendar tIni = new GregorianCalendar();
 		kruskal.resolver();
@@ -133,7 +134,7 @@ public class Kruskal {
 		long diff = tFin.getTimeInMillis() - tIni.getTimeInMillis();
 		System.out.println(diff);
 
-		kruskal.generarArchivoSalida(new File("arbolMinimo.out"));
+		kruskal.generarArchivoSalida(new File("Kruskal 400 nodos 95%.out"));
 		
 	}
 
