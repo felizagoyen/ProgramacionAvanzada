@@ -41,7 +41,10 @@ public class Grafo {
 			
 			for (int i = 0; i < cantAristas; i++){
 				datos = br.readLine().split(" ");
-				matrizAdy[Integer.parseInt(datos[0])][Integer.parseInt(datos[1])] = Integer.parseInt(datos[2]);
+				if(datos.length == 3)
+					matrizAdy[Integer.parseInt(datos[0])][Integer.parseInt(datos[1])] = Integer.parseInt(datos[2]);
+				else
+					matrizAdy[Integer.parseInt(datos[0])][Integer.parseInt(datos[1])] = 1;
 			}
 			
 			

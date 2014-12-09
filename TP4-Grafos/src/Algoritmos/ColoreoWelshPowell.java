@@ -101,7 +101,7 @@ public class ColoreoWelshPowell {
 	}
 
 	public static void main(String[] args) {
-		ColoreoWelshPowell welshPowell = new ColoreoWelshPowell("grafo.in");
+		ColoreoWelshPowell welshPowell = new ColoreoWelshPowell("Prim con matriz 200 nodos 50% ady.out");
 		welshPowell.resolver();
 		welshPowell.generarArchivoSalida(new File("coloreado.out"));
 	}

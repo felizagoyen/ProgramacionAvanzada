@@ -128,13 +128,13 @@ public class Prim {
 	
 	public static void main(String[] args) {
 		
-		Prim prim = new Prim("400 nodos 50% ady.in");
+		Prim prim = new Prim("200 nodos 50% ady.in");
 		GregorianCalendar tIni = new GregorianCalendar();
 		prim.resolver();
 		GregorianCalendar tFin = new GregorianCalendar();
 		long diff = tFin.getTimeInMillis() - tIni.getTimeInMillis();
 		System.out.println(diff);
-		prim.guardarGrafo("Prim con matriz 400 nodos 50% ady.out");
+		prim.guardarGrafo("Prim con matriz 200 nodos 50% ady.out");
 		
 	}
 }

@@ -62,15 +62,15 @@ public class ProgramaProbadorColoreo {
 	
 	public static void main(String[] args) {
 		ProgramaProbadorColoreo p1 = new ProgramaProbadorColoreo();
-		p1.leerArchivos("grafo2.in", "coloreo.out");
+		p1.leerArchivos("Prim con matriz 200 nodos 50% ady.out", "coloreado.out");
 		
-		for (int i = 0; i <p1.grafo.getCantNodos() ;i++) {
-			System.out.println("");
-			for (int j = 0; j < p1.grafo.getCantNodos(); j++)
-				System.out.print(p1.grafo.getMatrizAdy()[i][j] + "\t");
-			
-		}
-		
+//		for (int i = 0; i <p1.grafo.getCantNodos() ;i++) {
+//			System.out.println("");
+//			for (int j = 0; j < p1.grafo.getCantNodos(); j++)
+//				System.out.print(p1.grafo.getMatrizAdy()[i][j] + "\t");
+//			
+//		}
+//		
 		
 		if(p1.bienColoreado()){
 			System.out.println("\nEsta bien coloreado");
