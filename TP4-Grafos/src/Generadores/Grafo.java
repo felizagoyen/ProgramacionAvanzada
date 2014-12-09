@@ -338,7 +338,7 @@ public class Grafo {
 		int auxNodos = cantNodos;
 		
 		for (int i = 0; i < n-1; i++){
-			cantidades[i] = (int)(((Math.random()+0.25)*(auxNodos/2)-1)+1);
+			cantidades[i] = (int)(((Math.random()+0.5)*auxNodos)/6);
 			auxNodos -= cantidades[i];
 		}
 		
@@ -379,19 +379,19 @@ public class Grafo {
 		
 
 //		g1.grafoRegularDadoPorcYN(5, 50);
-		g1.grafoDadoNYProbArista(6, 0.60);
-		g1.guardarGrafo("grafo2.in");
-		System.out.println(g1.cantNodos + " " + g1.cantAristas + " " + (int)g1.porcentajeAdy);
+		g1.grafoNPartito(50, 8);
+//		g1.guardarGrafo("grafo2.in");
+//		System.out.println(g1.cantNodos + " " + g1.cantAristas + " " + (int)g1.porcentajeAdy);
 
 //		g1.grafoNPartito(10, 3);
 		
 //		System.out.println(g1.cantNodos + " " + g1.cantAristas + " " + (int)g1.porcentajeAdy + " " + g1.gradoMax + " " + g1.gradoMin);
 
-		
-		for (int i = 0; i < g1.cantNodos; i++)
-			for (int j = i+1; j < g1.cantNodos; j++)
-				if(g1.matrizAdy[i][j] != inf)
-				System.out.println(i + " " + j + " " + g1.matrizAdy[i][j]);
+//		
+//		for (int i = 0; i < g1.cantNodos; i++)
+//			for (int j = i+1; j < g1.cantNodos; j++)
+//				if(g1.matrizAdy[i][j] != inf)
+//				System.out.println(i + " " + j + " " + g1.matrizAdy[i][j]);
 					
 	}
 }
