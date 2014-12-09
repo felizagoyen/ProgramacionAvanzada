@@ -133,14 +133,14 @@ public class PrimConPrioridad {
 		try {
 			pw = new PrintWriter(archivo);
 
-			porcentajeAdyacencia = ((nodoAdyacente.size() - 1)*(cantidadNodos-1)*50.0) / (cantidadNodos * (cantidadNodos-1));
+			porcentajeAdyacencia = (double) ((cantidadNodos - 1) * 100) / (((cantidadNodos -1) * cantidadNodos)/2);
 			Collections.sort(cantidadAdyacentes);
 			
 			pw.println(cantidadNodos + " " + (nodoAdyacente.size() - 1) + " " + porcentajeAdyacencia
 									 + " " + cantidadAdyacentes.get(cantidadNodos - 1) + " " + cantidadAdyacentes.get(0));
 			for(int x = 0; x < cantidadNodos; x++)
 				if(nodoAdyacente.get(x) != null)
-					pw.println(nodoAdyacente.get(x) + " " + x + " " + valorAdyacente.get(x));
+					pw.println(nodoAdyacente.get(x) + " " + x);// + " " + valorAdyacente.get(x));
 			
 		} catch(Exception e) {
 			e.printStackTrace();

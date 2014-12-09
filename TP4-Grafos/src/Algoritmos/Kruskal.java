@@ -40,7 +40,7 @@ public class Kruskal {
 						
 			if(!centinela[nodoA].equals(centinela[nodoB])) {
 				Integer centinelaB = centinela[nodoB];
-				arbolRecubridorMinimo.add(nodoA + " " + nodoB + " " + minimo);
+				arbolRecubridorMinimo.add(nodoA + " " + nodoB);// + " " + minimo);
 				costo += minimo;
 				cantidadAdyacentes.set(nodoA, cantidadAdyacentes.get(nodoA) + 1);
 				cantidadAdyacentes.set(nodoB, cantidadAdyacentes.get(nodoB) + 1);
@@ -104,7 +104,7 @@ public class Kruskal {
 		PrintWriter pw = null;
 		try {
 			pw = new PrintWriter(archivo);
-			porcentajeAdyacencia = (arbolRecubridorMinimo.size()*(cantidadNodos-1)*50.0) / (cantidadNodos * (cantidadNodos-1));
+			porcentajeAdyacencia = (double) ((cantidadNodos - 1) * 100) / (((cantidadNodos -1) * cantidadNodos)/2);
 			Collections.sort(cantidadAdyacentes);
 			
 			pw.println(cantidadNodos + " " + arbolRecubridorMinimo.size() + " " + porcentajeAdyacencia + " " 

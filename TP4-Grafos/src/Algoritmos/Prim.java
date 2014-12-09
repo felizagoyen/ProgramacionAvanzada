@@ -78,7 +78,7 @@ public class Prim {
 								columna = j;
 							}
 			if (!bandera){
-				arbol.add(fila + " " + columna + " " + min);
+				arbol.add(fila + " " + columna);// + " " + min);
 				cantAdy[fila]++;
 				cantAdy[columna]++;
 				costo += min;
@@ -107,8 +107,8 @@ public class Prim {
 			archivo = new File (ruta);
 			pw = new PrintWriter (archivo);
 			Arrays.sort(cantAdy);
-			
-			porcentajeAdy = (arbol.size()*(cantNodos-1)*50.0) / (cantNodos * (cantNodos-1));
+
+			porcentajeAdy = (double) ((cantNodos - 1) * 100) / (((cantNodos - 1) * cantNodos)/2);
 			
 			pw.println(cantNodos + " " +  arbol.size() + " " + porcentajeAdy + " " + cantAdy[cantNodos- 1] + " " + cantAdy[0]);
 			for(String eachPar: arbol)
